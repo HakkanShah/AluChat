@@ -11,39 +11,48 @@ import {
   Fade,
   IconButton,
   useMediaQuery,
-  Drawer,
   AppBar,
-  Toolbar,
-  Container
+  Container,
+  Avatar,
+  Badge,
+  Tooltip,
+  Zoom,
+  Fab,
+  Snackbar,
+  Alert
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import PersonIcon from '@mui/icons-material/Person';
-import MenuIcon from '@mui/icons-material/Menu';
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import io from 'socket.io-client';
 
 const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#00ff9d',
+      main: '#2196f3',
+      light: '#64b5f6',
+      dark: '#1976d2',
     },
     secondary: {
-      main: '#ff00ff',
+      main: '#f50057',
+      light: '#ff4081',
+      dark: '#c51162',
     },
     background: {
-      default: '#0a1929',
-      paper: '#001e3c',
+      default: '#121212',
+      paper: '#1e1e1e',
     },
   },
   typography: {
-    fontFamily: '"Orbitron", "Roboto", sans-serif',
+    fontFamily: '"Poppins", "Roboto", sans-serif',
   },
   components: {
     MuiPaper: {
       styleOverrides: {
         root: {
-          backgroundImage: 'linear-gradient(45deg, #001e3c 30%, #0a1929 90%)',
+          backgroundImage: 'linear-gradient(145deg, #1e1e1e 0%, #2d2d2d 100%)',
           backdropFilter: 'blur(10px)',
           border: '1px solid rgba(255, 255, 255, 0.1)',
         },
@@ -58,7 +67,8 @@ function App() {
   const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' });
   const messagesEndRef = useRef(null);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const userId = 'user-' + Math.random().toString(36).substr(2, 9);
@@ -79,11 +89,21 @@ function App() {
         sender: 'bot',
         timestamp: data.timestamp 
       }]);
+      setSnackbar({
+        open: true,
+        message: 'New message received!',
+        severity: 'success'
+      });
     });
 
     socket.on('error', (data) => {
       console.error('Error:', data.message);
       setIsTyping(false);
+      setSnackbar({
+        open: true,
+        message: 'Error: ' + data.message,
+        severity: 'error'
+      });
     });
 
     return () => {
@@ -104,6 +124,7 @@ function App() {
       setIsTyping(true);
       socket.emit('sendMessage', { message, userId });
       setMessage('');
+      setShowEmojiPicker(false);
     }
   };
 
@@ -114,8 +135,13 @@ function App() {
     }
   };
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  const handleEmojiClick = (emoji) => {
+    setMessage(prev => prev + emoji);
+    setShowEmojiPicker(false);
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
 
   const chatInterface = (
@@ -129,22 +155,22 @@ function App() {
       <Box sx={{ 
         flex: 1, 
         overflow: 'auto', 
-        p: 3,
+        p: { xs: 2, sm: 3 },
         display: 'flex',
         flexDirection: 'column',
         gap: 2,
         position: 'relative',
         zIndex: 1,
         '&::-webkit-scrollbar': {
-          width: '8px',
+          width: '6px',
         },
         '&::-webkit-scrollbar-track': {
-          background: 'rgba(255, 255, 255, 0.1)',
-          borderRadius: '4px',
+          background: 'rgba(255, 255, 255, 0.05)',
+          borderRadius: '3px',
         },
         '&::-webkit-scrollbar-thumb': {
-          background: 'linear-gradient(45deg, #00ff9d, #ff00ff)',
-          borderRadius: '4px',
+          background: 'rgba(255, 255, 255, 0.2)',
+          borderRadius: '3px',
         },
       }}>
         {chatHistory.map((msg, index) => (
@@ -156,63 +182,72 @@ function App() {
                 gap: 1,
                 justifyContent: msg.sender === 'user' ? 'flex-end' : 'flex-start',
                 mb: 2,
-                maxWidth: '85%',
+                maxWidth: { xs: '90%', sm: '85%' },
                 ml: msg.sender === 'user' ? 'auto' : '0',
-                mr: msg.sender === 'user' ? '0' : 'auto'
+                mr: msg.sender === 'user' ? '0' : 'auto',
+                transform: 'translateY(0)',
+                transition: 'transform 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                }
               }}
             >
               {msg.sender === 'bot' && (
-                <Box sx={{ 
-                  position: 'relative',
-                  '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: '-10px',
-                    left: '-10px',
-                    right: '-10px',
-                    bottom: '-10px',
-                    background: 'radial-gradient(circle at 50% 50%, rgba(0,255,157,0.1) 0%, transparent 70%)',
-                    borderRadius: '50%',
-                    zIndex: -1,
-                    animation: 'pulse 2s infinite'
-                  }
-                }}>
-                  <SmartToyIcon sx={{ color: 'primary.main', fontSize: 30 }} />
-                </Box>
+                <Tooltip title="AI Assistant" TransitionComponent={Zoom}>
+                  <Badge
+                    overlap="circular"
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    variant="dot"
+                    sx={{
+                      '& .MuiBadge-badge': {
+                        backgroundColor: '#44b700',
+                        color: '#44b700',
+                        boxShadow: '0 0 0 2px #1e1e1e',
+                        '&::after': {
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '100%',
+                          height: '100%',
+                          borderRadius: '50%',
+                          animation: 'ripple 1.2s infinite ease-in-out',
+                          border: '1px solid currentColor',
+                          content: '""',
+                        },
+                      },
+                    }}
+                  >
+                    <Avatar sx={{ bgcolor: 'primary.main' }}>
+                      <SmartToyIcon />
+                    </Avatar>
+                  </Badge>
+                </Tooltip>
               )}
               {msg.sender === 'user' && (
-                <Box sx={{ 
-                  position: 'relative',
-                  '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: '-10px',
-                    left: '-10px',
-                    right: '-10px',
-                    bottom: '-10px',
-                    background: 'radial-gradient(circle at 50% 50%, rgba(255,0,255,0.1) 0%, transparent 70%)',
-                    borderRadius: '50%',
-                    zIndex: -1,
-                    animation: 'pulse 2s infinite'
-                  }
-                }}>
-                  <PersonIcon sx={{ color: 'secondary.main', fontSize: 30 }} />
-                </Box>
+                <Tooltip title="You" TransitionComponent={Zoom}>
+                  <Avatar sx={{ bgcolor: 'secondary.main' }}>
+                    <PersonIcon />
+                  </Avatar>
+                </Tooltip>
               )}
               <Paper
+                elevation={0}
                 sx={{
                   p: 2,
                   maxWidth: '100%',
                   bgcolor: msg.sender === 'user' 
-                    ? 'rgba(255,0,255,0.1)' 
-                    : 'rgba(0,255,157,0.1)',
+                    ? 'rgba(245, 0, 87, 0.1)' 
+                    : 'rgba(33, 150, 243, 0.1)',
                   border: msg.sender === 'user'
-                    ? '1px solid rgba(255,0,255,0.2)'
-                    : '1px solid rgba(0,255,157,0.2)',
+                    ? '1px solid rgba(245, 0, 87, 0.2)'
+                    : '1px solid rgba(33, 150, 243, 0.2)',
                   borderRadius: 3,
-                  boxShadow: '0 0 20px rgba(0,255,157,0.1)',
                   backdropFilter: 'blur(10px)',
                   position: 'relative',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+                  },
                   '&::before': {
                     content: '""',
                     position: 'absolute',
@@ -221,15 +256,15 @@ function App() {
                     right: 0,
                     bottom: 0,
                     background: msg.sender === 'user'
-                      ? 'radial-gradient(circle at 50% 50%, rgba(255,0,255,0.1) 0%, transparent 100%)'
-                      : 'radial-gradient(circle at 50% 50%, rgba(0,255,157,0.1) 0%, transparent 100%)',
+                      ? 'radial-gradient(circle at 50% 50%, rgba(245, 0, 87, 0.1) 0%, transparent 100%)'
+                      : 'radial-gradient(circle at 50% 50%, rgba(33, 150, 243, 0.1) 0%, transparent 100%)',
                     borderRadius: 3,
                     zIndex: -1,
                   }
                 }}
               >
                 <Typography variant="body1" sx={{ 
-                  color: msg.sender === 'user' ? 'secondary.main' : 'primary.main',
+                  color: msg.sender === 'user' ? 'secondary.light' : 'primary.light',
                   fontWeight: 500,
                   fontSize: { xs: '0.9rem', sm: '1rem' }
                 }}>
@@ -256,7 +291,33 @@ function App() {
             ml: 1,
             animation: 'fadeIn 0.3s ease-in'
           }}>
-            <SmartToyIcon sx={{ color: 'primary.main' }} />
+            <Badge
+              overlap="circular"
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              variant="dot"
+              sx={{
+                '& .MuiBadge-badge': {
+                  backgroundColor: '#44b700',
+                  color: '#44b700',
+                  boxShadow: '0 0 0 2px #1e1e1e',
+                  '&::after': {
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '50%',
+                    animation: 'ripple 1.2s infinite ease-in-out',
+                    border: '1px solid currentColor',
+                    content: '""',
+                  },
+                },
+              }}
+            >
+              <Avatar sx={{ bgcolor: 'primary.main' }}>
+                <SmartToyIcon />
+              </Avatar>
+            </Badge>
             <CircularProgress size={20} sx={{ color: 'primary.main' }} />
           </Box>
         )}
@@ -264,8 +325,8 @@ function App() {
       </Box>
 
       <Box sx={{ 
-        p: 2, 
-        borderTop: '1px solid rgba(0,255,157,0.2)',
+        p: { xs: 1.5, sm: 2 }, 
+        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
         background: 'rgba(0,0,0,0.2)',
         backdropFilter: 'blur(10px)',
         position: 'sticky',
@@ -275,8 +336,22 @@ function App() {
         <Box sx={{ 
           display: 'flex', 
           gap: 1,
-          maxWidth: '100%'
+          maxWidth: '100%',
+          position: 'relative'
         }}>
+          <Tooltip title="Add Emoji" TransitionComponent={Zoom}>
+            <IconButton
+              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              sx={{
+                color: 'primary.main',
+                '&:hover': {
+                  bgcolor: 'rgba(33, 150, 243, 0.1)',
+                }
+              }}
+            >
+              <EmojiEmotionsIcon />
+            </IconButton>
+          </Tooltip>
           <TextField
             fullWidth
             variant="outlined"
@@ -298,35 +373,77 @@ function App() {
                 },
               },
               '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: 'rgba(0,255,157,0.2)',
+                borderColor: 'rgba(255,255,255,0.1)',
               },
               '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: 'rgba(0,255,157,0.4)',
+                borderColor: 'rgba(255,255,255,0.2)',
               },
               '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                 borderColor: 'primary.main',
               },
             }}
           />
-          <IconButton
-            onClick={handleSend}
-            disabled={!message.trim()}
+          <Tooltip title="Send Message" TransitionComponent={Zoom}>
+            <IconButton
+              onClick={handleSend}
+              disabled={!message.trim()}
+              sx={{
+                bgcolor: 'primary.main',
+                color: 'white',
+                '&:hover': {
+                  bgcolor: 'primary.dark',
+                  transform: 'scale(1.1)',
+                },
+                '&.Mui-disabled': {
+                  bgcolor: 'rgba(255,255,255,0.1)',
+                },
+                minWidth: '48px',
+                height: '48px',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              <SendIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+        {showEmojiPicker && (
+          <Paper
             sx={{
-              bgcolor: 'primary.main',
-              color: 'black',
-              '&:hover': {
-                bgcolor: 'primary.dark',
-              },
-              '&.Mui-disabled': {
-                bgcolor: 'rgba(255,255,255,0.1)',
-              },
-              minWidth: '48px',
-              height: '48px'
+              position: 'absolute',
+              bottom: '100%',
+              left: 0,
+              mb: 1,
+              p: 1,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(8, 1fr)',
+              gap: 0.5,
+              maxHeight: '200px',
+              overflow: 'auto',
+              bgcolor: 'rgba(0,0,0,0.8)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: 2,
+              animation: 'fadeIn 0.3s ease-in'
             }}
           >
-            <SendIcon />
-          </IconButton>
-        </Box>
+            {['😀', '😂', '🤣', '😊', '😍', '🥰', '😘', '😎', '😭', '😤', '😡', '🤬', '🤯', '😳', '🥵', '🥶', '😱', '😨', '😰', '😢', '😭', '😤', '😡', '🤬'].map((emoji, index) => (
+              <IconButton
+                key={index}
+                onClick={() => handleEmojiClick(emoji)}
+                sx={{
+                  fontSize: '1.5rem',
+                  '&:hover': {
+                    bgcolor: 'rgba(255,255,255,0.1)',
+                    transform: 'scale(1.1)',
+                  },
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                {emoji}
+              </IconButton>
+            ))}
+          </Paper>
+        )}
       </Box>
     </Box>
   );
@@ -337,14 +454,19 @@ function App() {
       <Box sx={{ display: 'flex', height: '100vh' }}>
         <AppBar 
           position="fixed" 
+          elevation={0}
           sx={{ 
-            bgcolor: 'rgba(0,0,0,0.8)',
+            bgcolor: 'rgba(18, 18, 18, 0.8)',
             backdropFilter: 'blur(10px)',
-            borderBottom: '1px solid rgba(0,255,157,0.2)',
-            height: '80px',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+            height: { xs: '60px', sm: '70px' },
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            transition: 'all 0.3s ease',
+            '&:hover': {
+              bgcolor: 'rgba(18, 18, 18, 0.9)',
+            }
           }}
         >
           <Container maxWidth="xl">
@@ -353,48 +475,70 @@ function App() {
               alignItems: 'center', 
               justifyContent: 'center',
               gap: 2,
-              position: 'relative',
-              '&::before': {
-                content: '""',
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '200px',
-                height: '200px',
-                background: 'radial-gradient(circle at center, rgba(0,255,157,0.2) 0%, transparent 70%)',
-                borderRadius: '50%',
-                zIndex: -1,
-                animation: 'pulse 4s infinite'
-              }
+              position: 'relative'
             }}>
-              <SmartToyIcon sx={{ 
-                color: 'primary.main', 
-                fontSize: 40,
-                animation: 'float 3s ease-in-out infinite'
-              }} />
+              <Tooltip title="AI Assistant" TransitionComponent={Zoom}>
+                <Badge
+                  overlap="circular"
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  variant="dot"
+                  sx={{
+                    '& .MuiBadge-badge': {
+                      backgroundColor: '#44b700',
+                      color: '#44b700',
+                      boxShadow: '0 0 0 2px #1e1e1e',
+                      '&::after': {
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: '50%',
+                        animation: 'ripple 1.2s infinite ease-in-out',
+                        border: '1px solid currentColor',
+                        content: '""',
+                      },
+                    },
+                  }}
+                >
+                  <Avatar 
+                    sx={{ 
+                      bgcolor: 'primary.main',
+                      width: { xs: 40, sm: 48 },
+                      height: { xs: 40, sm: 48 },
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        transform: 'scale(1.1)',
+                      }
+                    }}
+                  >
+                    <SmartToyIcon sx={{ fontSize: { xs: 24, sm: 28 } }} />
+                  </Avatar>
+                </Badge>
+              </Tooltip>
               <Typography 
-                variant="h2" 
+                variant={isMobile ? "h5" : "h4"}
                 sx={{ 
-                  background: 'linear-gradient(45deg, #00ff9d, #ff00ff)',
+                  fontWeight: 700,
+                  letterSpacing: '1px',
+                  background: 'linear-gradient(45deg, #2196f3, #f50057)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                  fontWeight: 'bold',
-                  textShadow: '0 0 10px rgba(0,255,157,0.5)',
-                  letterSpacing: '4px',
-                  animation: 'glow 2s ease-in-out infinite',
-                  fontFamily: 'Orbitron',
+                  fontFamily: 'Poppins',
                   position: 'relative',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    transform: 'scale(1.05)',
+                  },
                   '&::after': {
                     content: '""',
                     position: 'absolute',
-                    bottom: '-5px',
+                    bottom: '-4px',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    width: '80%',
+                    width: '60%',
                     height: '2px',
-                    background: 'linear-gradient(90deg, transparent, #00ff9d, transparent)',
-                    animation: 'glow 2s ease-in-out infinite'
+                    background: 'linear-gradient(90deg, transparent, #2196f3, transparent)',
                   }
                 }}
               >
@@ -408,9 +552,9 @@ function App() {
           component="main"
           sx={{
             flexGrow: 1,
-            p: 3,
-            mt: '80px',
-            height: 'calc(100vh - 80px)',
+            p: { xs: 1, sm: 3 },
+            mt: { xs: '60px', sm: '70px' },
+            height: { xs: 'calc(100vh - 60px)', sm: 'calc(100vh - 70px)' },
             overflow: 'hidden',
             position: 'relative',
             '&::before': {
@@ -420,20 +564,24 @@ function App() {
               left: 0,
               right: 0,
               bottom: 0,
-              background: 'radial-gradient(circle at 50% 50%, rgba(0,255,157,0.1) 0%, rgba(255,0,255,0.1) 100%)',
+              background: 'radial-gradient(circle at 50% 50%, rgba(33, 150, 243, 0.1) 0%, rgba(245, 0, 87, 0.1) 100%)',
               zIndex: 0,
             }
           }}
         >
           <Paper 
-            elevation={24} 
+            elevation={0}
             sx={{ 
               height: '100%', 
               display: 'flex', 
               flexDirection: 'column',
-              borderRadius: 4,
+              borderRadius: { xs: 0, sm: 4 },
               overflow: 'hidden',
               position: 'relative',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+              },
               '&::before': {
                 content: '""',
                 position: 'absolute',
@@ -441,19 +589,8 @@ function App() {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                background: 'radial-gradient(circle at 50% 50%, rgba(0,255,157,0.15) 0%, rgba(255,0,255,0.15) 100%)',
+                background: 'radial-gradient(circle at 50% 50%, rgba(33, 150, 243, 0.1) 0%, rgba(245, 0, 87, 0.1) 100%)',
                 zIndex: 0,
-              },
-              '&::after': {
-                content: '""',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: 'linear-gradient(45deg, rgba(0,255,157,0.1) 0%, rgba(255,0,255,0.1) 100%)',
-                zIndex: 0,
-                animation: 'pulse 4s ease-in-out infinite'
               }
             }}
           >
@@ -461,6 +598,20 @@ function App() {
           </Paper>
         </Box>
       </Box>
+      <Snackbar 
+        open={snackbar.open} 
+        autoHideDuration={3000} 
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert 
+          onClose={handleCloseSnackbar} 
+          severity={snackbar.severity}
+          sx={{ width: '100%' }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </ThemeProvider>
   );
 }
