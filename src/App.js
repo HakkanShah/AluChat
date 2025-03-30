@@ -61,7 +61,7 @@ const theme = createTheme({
   },
 });
 
-const socket = io('http://localhost:5003');
+const socket = io(process.env.REACT_APP_BACKEND_URL || 'http://localhost:5003');
 
 function App() {
   const [message, setMessage] = useState('');
