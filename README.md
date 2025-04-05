@@ -1,1 +1,1 @@
-#AluChat is a personal AI Chatbot.
+# AluChat is a personal AI Chatbot.
