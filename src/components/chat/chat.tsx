@@ -38,10 +38,15 @@ export default function Chat() {
   const [vibeMessage, setVibeMessage] = useState('');
   const [systemMessage, setSystemMessage] = useState<string | null>(null);
   const [isSwitching, setIsSwitching] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTo({
+        top: scrollAreaRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
   };
 
   useEffect(() => {
@@ -109,7 +114,7 @@ export default function Chat() {
   };
 
   return (
-    <div className={cn("relative flex h-full flex-col bg-background", 
+    <div className={cn("relative flex h-full max-h-svh flex-col bg-background", 
         mode === 'Bad Bro' ? 'font-bro' : '',
         isSwitching && (mode === 'Bad Bro' ? 'animate-glitch' : 'animate-flash')
       )}
@@ -136,8 +141,7 @@ export default function Chat() {
             </div>
         </div>
       </header>
-      <div className="flex-1 overflow-hidden">
-        <ScrollArea className="h-full">
+      <div className="flex-1 overflow-y-auto" ref={scrollAreaRef}>
           <div className="space-y-6 p-4 md:p-6">
             {messages.map((message) => (
               <ChatMessage key={message.id} message={message} mode={mode}/>
@@ -166,9 +170,7 @@ export default function Chat() {
                   </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
           </div>
-        </ScrollArea>
       </div>
       <footer className="flex-shrink-0 border-t bg-background p-4 md:p-6">
         <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
