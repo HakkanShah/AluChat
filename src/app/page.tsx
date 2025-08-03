@@ -1,5 +1,5 @@
-import { ChatLayout } from '@/components/chat/chat-layout';
+import { redirect } from 'next/navigation';
 
 export default function Home() {
-  return <ChatLayout />;
+  redirect('/auth');
 }
