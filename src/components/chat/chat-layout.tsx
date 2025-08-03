@@ -12,7 +12,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
-import { Icons } from '@/components/icons';
 import Chat from '@/components/chat/chat';
 import { useAuth } from '../providers/auth-provider';
 import { LogOut, Pencil, MoreVertical, Trash, Github, Instagram, Facebook, Linkedin, Mail } from 'lucide-react';
@@ -114,7 +113,7 @@ function ChatLayoutContent() {
         <SidebarHeader>
           <div className="flex items-center justify-between p-2">
             <div className='flex items-center gap-2'>
-              <Icons.logo className="size-8 text-primary" />
+              <div className="size-8 rounded-full bg-primary/20" />
               <h1 className="text-xl font-headline font-semibold">AluChat</h1>
             </div>
           </div>
@@ -196,7 +195,7 @@ function ChatLayoutContent() {
               <div className="flex items-center gap-2">
                 <Avatar className="hidden h-10 w-10 border-2 border-primary md:flex">
                   <AvatarFallback>
-                    <Icons.logo className="p-1" />
+                    <div className="size-full rounded-full bg-primary/20" />
                   </AvatarFallback>
                 </Avatar>
                 <div>
