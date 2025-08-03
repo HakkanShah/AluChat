@@ -1,9 +1,9 @@
 
 "use client";
 import { useState } from 'react';
-import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { ArrowUp } from 'lucide-react';
+import TextareaAutosize from 'react-textarea-autosize';
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
@@ -29,27 +29,31 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
   };
 
   return (
-    <div className="relative mx-auto w-full max-w-2xl">
-      <form onSubmit={handleSubmit} className="relative w-full">
-        <Textarea
-          placeholder="Message AluChat..."
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={handleKeyDown}
-          rows={1}
-          className="min-h-[48px] rounded-2xl border-2 border-input pr-12 md:pr-16 resize-none shadow-sm"
-          disabled={isLoading}
-        />
-        <Button
-          type="submit"
-          size="icon"
-          className="absolute top-1/2 right-2 md:right-3 -translate-y-1/2 rounded-full"
-          disabled={isLoading || !message.trim()}
-          aria-label="Send message"
+    <div className="mx-auto w-full max-w-2xl">
+        <form 
+            onSubmit={handleSubmit} 
+            className="relative flex w-full items-end rounded-full border bg-background"
         >
-          <ArrowUp className="size-5" />
-        </Button>
-      </form>
+            <TextareaAutosize
+                placeholder="Message AluChat..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyDown={handleKeyDown}
+                rows={1}
+                maxRows={5}
+                className="flex-1 resize-none bg-transparent p-3 focus:outline-none"
+                disabled={isLoading}
+            />
+            <Button
+                type="submit"
+                size="icon"
+                className="m-1 rounded-full"
+                disabled={isLoading || !message.trim()}
+                aria-label="Send message"
+            >
+                <ArrowUp className="size-5" />
+            </Button>
+        </form>
     </div>
   );
 }
