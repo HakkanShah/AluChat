@@ -1,0 +1,57 @@
+import {
+  SidebarProvider,
+  Sidebar,
+  SidebarHeader,
+  SidebarContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarFooter,
+  SidebarInset,
+} from '@/components/ui/sidebar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Separator } from '@/components/ui/separator';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { Icons } from '@/components/icons';
+import Chat from '@/components/chat/chat';
+
+export function ChatLayout() {
+  return (
+    <SidebarProvider>
+      <Sidebar className="border-r bg-card" variant="sidebar" collapsible="icon">
+        <SidebarHeader>
+          <div className="flex items-center gap-2 p-2">
+            <Icons.logo className="size-8 text-primary" />
+            <h1 className="text-xl font-headline font-semibold">AluChat</h1>
+          </div>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton isActive>Chat with Alu</SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarContent>
+        <SidebarFooter>
+          <Separator className="my-1" />
+           <div className="flex items-center justify-between p-2">
+            <div className="flex items-center gap-3">
+              <Avatar className="h-10 w-10">
+                <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="profile picture" />
+                <AvatarFallback>U</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col">
+                <span className="font-semibold">User</span>
+                <span className="text-xs text-muted-foreground">Online</span>
+              </div>
+            </div>
+            <ThemeToggle />
+          </div>
+        </SidebarFooter>
+      </Sidebar>
+      <SidebarInset>
+        <Chat />
+      </SidebarInset>
+    </SidebarProvider>
+  );
+}
