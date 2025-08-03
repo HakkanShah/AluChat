@@ -11,6 +11,7 @@ interface ChatMessageProps {
 
 export function ChatMessage({ message, mode }: ChatMessageProps) {
   const isUser = message.role === 'user';
+  const isGoodBro = mode === 'Good Bro';
 
   return (
     <div className={cn('flex items-start gap-4', 
@@ -18,7 +19,7 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
       )}
     >
       {!isUser && (
-        <Avatar className="h-10 w-10 border-2 border-primary">
+        <Avatar className="h-10 w-10 border-2 border-primary shadow-lg">
           <AvatarFallback>
             <Icons.logo className="p-1" />
           </AvatarFallback>
@@ -26,19 +27,19 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
       )}
       <div
         className={cn(
-          'max-w-[75%] rounded-2xl px-4 py-3 shadow-md',
+          'max-w-[75%] rounded-2xl px-4 py-3 shadow-lg',
           isUser
             ? 'bg-primary text-primary-foreground rounded-br-none'
-            : 'bg-card text-card-foreground rounded-bl-none',
-          mode === 'Bad Bro' && !isUser ? 'font-bro border border-accent/50 shadow-accent/20' : '',
-          !isUser ? 'backdrop-blur-md bg-opacity-50' : '',
-          mode === 'Good Bro' && !isUser ? 'border border-border/20' : ''
+            : 'rounded-bl-none',
+          isGoodBro && !isUser ? 'bg-background/80 backdrop-blur-md border border-border/20' : '',
+          !isGoodBro && !isUser ? 'font-bro bg-card/80 backdrop-blur-md border border-accent/20 shadow-accent/20' : '',
+          isGoodBro && !isUser ? 'text-foreground' : 'text-card-foreground',
         )}
       >
         <p className="whitespace-pre-wrap">{message.content}</p>
       </div>
       {isUser && (
-        <Avatar className="h-10 w-10">
+        <Avatar className="h-10 w-10 shadow-lg">
           <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="profile picture" />
           <AvatarFallback>U</AvatarFallback>
         </Avatar>

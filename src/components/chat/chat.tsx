@@ -114,12 +114,14 @@ export default function Chat() {
   };
 
   return (
-    <div className={cn("relative flex h-full max-h-svh flex-col bg-background", 
+    <div className={cn(
+        "relative flex h-full max-h-svh flex-col", 
+        mode === 'Good Bro' ? 'good-bro-bg' : 'bad-bro-bg',
         mode === 'Bad Bro' ? 'font-bro' : '',
         isSwitching && (mode === 'Bad Bro' ? 'animate-glitch' : 'animate-flash')
       )}
     >
-      <header className="flex-shrink-0 border-b p-4">
+      <header className="flex-shrink-0 border-b p-4 backdrop-blur-sm bg-background/50">
         <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Avatar className="h-10 w-10 border-2 border-primary">
@@ -172,7 +174,7 @@ export default function Chat() {
             )}
           </div>
       </div>
-      <footer className="flex-shrink-0 border-t bg-background p-4 md:p-6">
+      <footer className="flex-shrink-0 border-t bg-background/50 backdrop-blur-sm p-4 md:p-6">
         <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
       </footer>
     </div>
