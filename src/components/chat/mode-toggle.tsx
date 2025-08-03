@@ -1,7 +1,7 @@
 
 "use client";
 import { cn } from '@/lib/utils';
-import { BrainCircuit, Sword } from 'lucide-react';
+import { BrainCircuit, Skull } from 'lucide-react';
 
 interface ModeToggleProps {
   mode: 'Good Bro' | 'Bad Bro';
@@ -38,7 +38,7 @@ export function ModeToggle({ mode, onModeChange }: ModeToggleProps) {
         )}
         aria-pressed={isBadBro}
       >
-        <Sword className="size-5" />
+        <Skull className="size-5" />
         Bad Bro
       </button>
     </div>
