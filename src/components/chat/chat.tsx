@@ -45,6 +45,7 @@ export default function Chat({
   const [isSwitching, setIsSwitching] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
+
   useEffect(() => {
     if (messages.length === 0) {
       setMessages([initialMessage]);
@@ -122,49 +123,47 @@ export default function Chat({
   };
 
   return (
-    <div className="flex-1 flex flex-col h-full">
-        <div className={cn(
-            "relative flex h-full max-h-svh flex-col", 
-            mode === 'Good Bro' ? 'good-bro-bg' : 'bad-bro-bg',
-            mode === 'Bad Bro' ? 'font-bro' : '',
-            isSwitching && (mode === 'Bad Bro' ? 'animate-glitch' : 'animate-flash')
-          )}
-        >
-        <div className="flex-1 overflow-y-auto" ref={scrollAreaRef}>
-            <div className="space-y-6 p-2 md:p-6">
-              {messages.map((message) => (
-                <ChatMessage key={message.id} message={message} mode={mode}/>
-              ))}
-              {systemMessage && (
-                  <div className="flex justify-center my-2 animate-slide-in-left">
-                    <div className="text-xs text-muted-foreground bg-card/80 backdrop-blur-md rounded-full px-3 py-1">
-                      {systemMessage}
-                    </div>
+    <div className={cn(
+        "relative flex-1 flex flex-col h-full", 
+        mode === 'Good Bro' ? 'good-bro-bg' : 'bad-bro-bg',
+        mode === 'Bad Bro' ? 'font-bro' : '',
+        isSwitching && (mode === 'Bad Bro' ? 'animate-glitch' : 'animate-flash')
+      )}
+    >
+      <div className="flex-1 overflow-y-auto" ref={scrollAreaRef}>
+          <div className="space-y-6 p-2 md:p-6">
+            {messages.map((message) => (
+              <ChatMessage key={message.id} message={message} mode={mode}/>
+            ))}
+            {systemMessage && (
+                <div className="flex justify-center my-2 animate-slide-in-left">
+                  <div className="text-xs text-muted-foreground bg-card/80 backdrop-blur-md rounded-full px-3 py-1">
+                    {systemMessage}
                   </div>
-                )}
-              {isLoading && (
-                <div className="flex items-start gap-4 animate-slide-in-left">
-                    <Avatar className="h-10 w-10 border-2 border-primary">
-                        <AvatarFallback><Icons.logo className="p-1" /></AvatarFallback>
-                    </Avatar>
-                    <div className="max-w-[75%] rounded-2xl rounded-bl-none bg-muted px-4 py-3 backdrop-blur-md bg-opacity-50">
-                        <div className="flex flex-col">
-                          <div className="flex gap-1.5 items-center">
-                              <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-0"></span>
-                              <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-150"></span>
-                              <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-300"></span>
-                          </div>
-                          {mode === 'Bad Bro' && <p className="text-sm text-muted-foreground mt-2">{vibeMessage}</p>}
-                        </div>
-                    </div>
                 </div>
               )}
-            </div>
-        </div>
-        <footer className="flex-shrink-0 border-t bg-background/50 backdrop-blur-sm p-2 md:p-4">
-          <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
-        </footer>
+            {isLoading && (
+              <div className="flex items-start gap-4 animate-slide-in-left">
+                  <Avatar className="h-10 w-10 border-2 border-primary">
+                      <AvatarFallback><Icons.logo className="p-1" /></AvatarFallback>
+                  </Avatar>
+                  <div className="max-w-[75%] rounded-2xl rounded-bl-none bg-muted px-4 py-3 backdrop-blur-md bg-opacity-50">
+                      <div className="flex flex-col">
+                        <div className="flex gap-1.5 items-center">
+                            <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-0"></span>
+                            <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-150"></span>
+                            <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-300"></span>
+                        </div>
+                        {mode === 'Bad Bro' && <p className="text-sm text-muted-foreground mt-2">{vibeMessage}</p>}
+                      </div>
+                  </div>
+              </div>
+            )}
+          </div>
       </div>
+      <footer className="flex-shrink-0 border-t bg-background/50 backdrop-blur-sm p-2 md:p-4">
+        <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
+      </footer>
     </div>
   );
 }
