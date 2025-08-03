@@ -134,7 +134,7 @@ export default function Chat() {
           </Button>
         </div>
       </header>
-      <main className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-y-auto">
         <ScrollArea className="h-full">
           <div className="space-y-6 p-4 md:p-6">
             {messages.map((message) => (
@@ -167,7 +167,7 @@ export default function Chat() {
             <div ref={messagesEndRef} />
           </div>
         </ScrollArea>
-      </main>
+      </div>
       <footer className="flex-shrink-0 border-t bg-background p-4 md:p-6">
         <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
       </footer>
