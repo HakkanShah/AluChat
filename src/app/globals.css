@@ -10,7 +10,7 @@
     --card-foreground: 210 20% 98%;
     --popover: 224 71.4% 4.1%;
     --popover-foreground: 210 20% 98%;
-    --primary: 266 85% 66%;
+    --primary: 210 100% 50%;
     --primary-foreground: 210 20% 98%;
     --secondary: 215 27.9% 16.9%;
     --secondary-foreground: 210 20% 98%;
@@ -22,7 +22,7 @@
     --destructive-foreground: 210 20% 98%;
     --border: 215 27.9% 16.9%;
     --input: 215 27.9% 16.9%;
-    --ring: 266 85% 66%;
+    --ring: 210 100% 50%;
     --radius: 0.5rem;
   }
 
@@ -33,7 +33,7 @@
     --card-foreground: 210 20% 98%;
     --popover: 224 71.4% 4.1%;
     --popover-foreground: 210 20% 98%;
-    --primary: 266 85% 66%;
+    --primary: 210 100% 50%;
     --primary-foreground: 210 20% 98%;
     --secondary: 215 27.9% 16.9%;
     --secondary-foreground: 210 20% 98%;
@@ -45,29 +45,29 @@
     --destructive-foreground: 210 20% 98%;
     --border: 215 27.9% 16.9%;
     --input: 215 27.9% 16.9%;
-    --ring: 266 85% 66%;
+    --ring: 210 100% 50%;
   }
 
   .light {
-    --background: 200 50% 98%;
+    --background: 220 20% 96.1%;
     --foreground: 224 71.4% 4.1%;
-    --card: 200 50% 98%;
+    --card: 220 20% 96.1%;
     --card-foreground: 224 71.4% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 71.4% 4.1%;
-    --primary: 266 85% 66%;
+    --primary: 210 100% 50%;
     --primary-foreground: 210 20% 98%;
-    --secondary: 210 20% 91.1%;
+    --secondary: 220 14.3% 93.1%;
     --secondary-foreground: 224 71.4% 4.1%;
-    --muted: 210 20% 91.1%;
+    --muted: 220 14.3% 93.1%;
     --muted-foreground: 217.9 10.6% 64.9%;
     --accent: 25 95% 53%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 266 85% 66%;
+    --border: 220 5.9% 90%;
+    --input: 220 5.9% 90%;
+    --ring: 210 100% 50%;
   }
 }
 
@@ -95,17 +95,18 @@
   }
   
   .good-bro-bg {
-    background-color: #f0f9ff;
+    background-color: hsl(var(--background));
     background-image:
-      radial-gradient(at 20% 20%, hsla(266, 85%, 66%, 0.1) 0px, transparent 50%),
-      radial-gradient(at 80% 0%, hsla(338, 91%, 60%, 0.1) 0px, transparent 50%),
-      radial-gradient(at 80% 80%, hsla(200, 50%, 98%, 0) 0px, transparent 50%);
+      radial-gradient(at 10% 20%, hsla(210, 100%, 50%, 0.15) 0px, transparent 50%),
+      radial-gradient(at 80% 10%, hsla(25, 95%, 53%, 0.1) 0px, transparent 50%),
+      radial-gradient(at 90% 90%, hsla(338, 91%, 60%, 0.1) 0px, transparent 50%),
+      radial-gradient(at 20% 90%, hsla(266, 85%, 66%, 0.1) 0px, transparent 50%);
   }
 
   .bad-bro-bg {
     background-color: #020817;
     background-image:
-      radial-gradient(at 20% 20%, hsla(266, 85%, 66%, 0.15) 0px, transparent 50%),
+      radial-gradient(at 20% 20%, hsla(210, 100%, 50%, 0.15) 0px, transparent 50%),
       radial-gradient(at 80% 0%, hsla(338, 91%, 60%, 0.15) 0px, transparent 50%),
       radial-gradient(at 80% 80%, hsla(224, 71.4%, 4.1%, 0) 0px, transparent 50%);
   }

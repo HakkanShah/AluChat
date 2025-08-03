@@ -33,7 +33,9 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
             : 'rounded-bl-none',
           isGoodBro && !isUser ? 'bg-background/80 backdrop-blur-md border border-border/20' : '',
           !isGoodBro && !isUser ? 'font-bro bg-card/80 backdrop-blur-md border border-accent/20 shadow-accent/20' : '',
-          isGoodBro && !isUser ? 'text-foreground' : 'text-card-foreground',
+          isGoodBro ? 'text-foreground' : 'text-card-foreground',
+          !isUser && isGoodBro && 'text-foreground',
+          !isUser && !isGoodBro && 'text-primary-foreground',
         )}
       >
         <p className="whitespace-pre-wrap">{message.content}</p>
