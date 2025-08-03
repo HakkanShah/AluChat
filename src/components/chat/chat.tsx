@@ -4,7 +4,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { MoreVertical } from 'lucide-react';
+import { MoreVertical, Trash } from 'lucide-react';
 import { ChatInput } from './chat-input';
 import { ChatMessage } from './chat-message';
 import { ModeToggle } from './mode-toggle';
@@ -14,6 +14,24 @@ import { Icons } from '../icons';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 
 const vibeCheckMessages = [
   "Checking if you're down bad...",
@@ -28,15 +46,18 @@ const modeSwitchMessages = {
   'Bad Bro': "Ayo, the demon's out 😈",
 };
 
+const initialMessage: Message = { id: '1', content: 'What\'s up? Ask me anything!', role: 'assistant', timestamp: Date.now() };
+
 export default function Chat() {
   const { toast } = useToast();
   const { setTheme } = useTheme();
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([initialMessage]);
   const [mode, setMode] = useState<'Good Bro' | 'Bad Bro'>('Good Bro');
   const [isLoading, setIsLoading] = useState(false);
   const [vibeMessage, setVibeMessage] = useState('');
   const [systemMessage, setSystemMessage] = useState<string | null>(null);
   const [isSwitching, setIsSwitching] = useState(false);
+  const [isClearAlertOpen, setIsClearAlertOpen] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -51,12 +72,6 @@ export default function Chat() {
   useEffect(() => {
     scrollToBottom();
   }, [messages, isLoading, systemMessage]);
-  
-  useEffect(() => {
-    setMessages([
-        { id: '1', content: 'What\'s up? Ask me anything!', role: 'assistant', timestamp: Date.now() }
-    ]);
-  }, []);
 
   const handleModeChange = (newMode: 'Good Bro' | 'Bad Bro') => {
     setMode(newMode);
@@ -66,6 +81,15 @@ export default function Chat() {
     setTimeout(() => setSystemMessage(null), 2000); // Hide message after 2 seconds
     setTimeout(() => setIsSwitching(false), 500); // Animation duration
   }
+
+  const handleClearChat = () => {
+    setMessages([initialMessage]);
+    toast({
+      title: "Chat Cleared",
+      description: "Your conversation history has been wiped.",
+    });
+    setIsClearAlertOpen(false);
+  };
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -135,10 +159,39 @@ export default function Chat() {
             </div>
             <div className="flex items-center gap-1 md:gap-4">
               <ModeToggle mode={mode} onModeChange={handleModeChange} />
-              <Button variant="ghost" size="icon">
-                <MoreVertical />
-                <span className="sr-only">More options</span>
-              </Button>
+              <AlertDialog open={isClearAlertOpen} onOpenChange={setIsClearAlertOpen}>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon">
+                        <MoreVertical />
+                        <span className="sr-only">More options</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <AlertDialogTrigger asChild>
+                        <DropdownMenuItem className="text-destructive focus:text-destructive">
+                          <Trash className="mr-2 h-4 w-4" />
+                          Clear History
+                        </DropdownMenuItem>
+                      </AlertDialogTrigger>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        This action cannot be undone. This will permanently delete your
+                        current chat history.
+                    </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleClearChat} className="bg-destructive hover:bg-destructive/90">
+                        Clear
+                    </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
         </div>
       </header>
@@ -178,4 +231,3 @@ export default function Chat() {
       </footer>
     </div>
   );
-}
