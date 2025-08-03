@@ -114,6 +114,13 @@
   .animate-slide-in-right {
     animation: slide-in-right 0.3s ease-out forwards;
   }
+  .animate-flash {
+    animation: flash 0.5s ease-out;
+  }
+  .animate-glitch {
+    animation: glitch 0.4s ease-in-out;
+  }
+
   @keyframes slide-in-left {
     from {
       opacity: 0;
@@ -133,5 +140,23 @@
       opacity: 1;
       transform: translateX(0);
     }
+  }
+  @keyframes flash {
+    0% {
+      opacity: 0.5;
+      filter: brightness(1.5);
+    }
+    100% {
+      opacity: 1;
+      filter: brightness(1);
+    }
+  }
+  @keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-3px, 3px); }
+    40% { transform: translate(-3px, -3px); }
+    60% { transform: translate(3px, 3px); }
+    80% { transform: translate(3px, -3px); }
+    100% { transform: translate(0); }
   }
 }

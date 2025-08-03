@@ -37,6 +37,7 @@ export default function Chat() {
   const [isLoading, setIsLoading] = useState(false);
   const [vibeMessage, setVibeMessage] = useState('');
   const [systemMessage, setSystemMessage] = useState<string | null>(null);
+  const [isSwitching, setIsSwitching] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -57,7 +58,9 @@ export default function Chat() {
     setMode(newMode);
     setTheme(newMode === 'Good Bro' ? 'light' : 'dark');
     setSystemMessage(modeSwitchMessages[newMode]);
+    setIsSwitching(true);
     setTimeout(() => setSystemMessage(null), 2000); // Hide message after 2 seconds
+    setTimeout(() => setIsSwitching(false), 500); // Animation duration
   }
 
   useEffect(() => {
@@ -106,7 +109,11 @@ export default function Chat() {
   };
 
   return (
-    <div className={cn("flex h-full flex-col bg-background", mode === 'Bad Bro' ? 'font-bro' : '')}>
+    <div className={cn("flex h-full flex-col bg-background", 
+        mode === 'Bad Bro' ? 'font-bro' : '',
+        isSwitching && (mode === 'Bad Bro' ? 'animate-glitch' : 'animate-flash')
+      )}
+    >
       <header className="flex items-center justify-between border-b p-4">
         <div className="flex items-center gap-3">
           <Avatar className="h-10 w-10 border-2 border-primary">
