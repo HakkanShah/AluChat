@@ -92,11 +92,16 @@ const SidebarProvider = React.forwardRef<
 })
 SidebarProvider.displayName = "SidebarProvider"
 
+interface SidebarProps extends React.ComponentProps<"div"> {
+  open: boolean
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
 const Sidebar = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<"div">
->(({ className, children, ...props }, ref) => {
-  const { isMobile, open, setOpen } = useSidebar()
+  SidebarProps
+>(({ className, children, open, setOpen, ...props }, ref) => {
+  const { isMobile } = useSidebar()
   const state = open ? 'expanded' : 'collapsed';
 
   const commonContent = (
