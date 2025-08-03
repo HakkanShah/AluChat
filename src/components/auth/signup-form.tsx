@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,7 +20,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -39,6 +40,8 @@ const formSchema = z.object({
 
 export function SignupForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
   const { login } = useAuth();
@@ -117,9 +120,27 @@ export function SignupForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input type="password" placeholder="••••••••" {...field} disabled={isLoading} />
-              </FormControl>
+               <div className="relative">
+                <FormControl>
+                  <Input 
+                    type={showPassword ? "text" : "password"} 
+                    placeholder="••••••••" {...field} 
+                    disabled={isLoading}
+                    className="pr-10"
+                  />
+                </FormControl>
+                <Button 
+                  type="button" 
+                  variant="ghost" 
+                  size="icon" 
+                  className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
+                  onClick={() => setShowPassword(!showPassword)}
+                  disabled={isLoading}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                </Button>
+              </div>
               <FormMessage />
             </FormItem>
           )}
@@ -130,9 +151,27 @@ export function SignupForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Confirm Password</FormLabel>
-              <FormControl>
-                <Input type="password" placeholder="••••••••" {...field} disabled={isLoading} />
-              </FormControl>
+              <div className="relative">
+                <FormControl>
+                  <Input 
+                    type={showConfirmPassword ? "text" : "password"} 
+                    placeholder="••••••••" {...field} 
+                    disabled={isLoading}
+                    className="pr-10"
+                  />
+                </FormControl>
+                <Button 
+                  type="button" 
+                  variant="ghost" 
+                  size="icon" 
+                  className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  disabled={isLoading}
+                  aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                >
+                  {showConfirmPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                </Button>
+              </div>
               <FormMessage />
             </FormItem>
           )}
