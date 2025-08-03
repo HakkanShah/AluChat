@@ -6,7 +6,6 @@ import {
   SidebarHeader,
   SidebarContent,
   SidebarFooter,
-  SidebarInset,
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
@@ -113,7 +112,7 @@ export function ChatLayout() {
 
   return (
     <SidebarProvider>
-      <Sidebar open={isSidebarOpen} setOpen={setIsSidebarOpen}>
+       <Sidebar open={isSidebarOpen} setOpen={setIsSidebarOpen}>
         <SidebarHeader>
           <div className="flex items-center justify-between p-2">
             <div className='flex items-center gap-2'>
@@ -191,73 +190,67 @@ export function ChatLayout() {
           </div>
         </SidebarFooter>
       </Sidebar>
-      <SidebarInset>
-        <div className="relative flex h-full max-h-svh flex-col">
-            <header className="flex-shrink-0 border-b p-2 md:p-4 backdrop-blur-sm bg-background/50 z-10">
-              <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 md:gap-3">
-                    <div className="md:hidden">
-                      <SidebarTrigger onClick={() => setIsSidebarOpen(true)} />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Avatar className="hidden h-10 w-10 border-2 border-primary md:flex">
-                        <AvatarFallback>
-                          <Icons.logo className="p-1" />
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <h2 className="font-headline text-lg font-semibold tracking-wider">AluChat</h2>
-                        <p className="text-xs md:text-sm text-muted-foreground">Your AI Companion</p>
-                      </div>
+      <div className="relative flex h-full max-h-svh flex-col flex-1">
+          <header className="flex-shrink-0 border-b p-2 md:p-4 backdrop-blur-sm bg-background/50 z-10">
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 md:gap-3">
+                  <div className="md:hidden">
+                    <SidebarTrigger onClick={() => setIsSidebarOpen(true)} />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Avatar className="hidden h-10 w-10 border-2 border-primary md:flex">
+                      <AvatarFallback>
+                        <Icons.logo className="p-1" />
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <h2 className="font-headline text-lg font-semibold tracking-wider">AluChat</h2>
+                      <p className="text-xs md:text-sm text-muted-foreground">Your AI Companion</p>
                     </div>
                   </div>
-                   <div className="flex items-center gap-1 md:gap-2">
-                    <ModeToggle mode={mode} onModeChange={handleModeChange} />
-                    <AlertDialog open={isClearAlertOpen} onOpenChange={setIsClearAlertOpen}>
-                      <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                              <MoreVertical />
-                              <span className="sr-only">More options</span>
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                              <DropdownMenuItem onSelect={() => setIsClearAlertOpen(true)} className="text-destructive focus:text-destructive">
-                                <Trash className="mr-2 h-4 w-4" />
-                                Clear History
-                              </DropdownMenuItem>
-                          </DropdownMenuContent>
-                      </DropdownMenu>
-                      <AlertDialogContent>
-                          <AlertDialogHeader>
-                          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                          <AlertDialogDescription>
-                              This action cannot be undone. This will permanently delete your
-                              current chat history.
-                          </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction onClick={handleClearChat} className="bg-destructive hover:bg-destructive/90">
-                              Clear
-                          </AlertDialogAction>
-                          </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </div>
-              </div>
-            </header>
-            <Chat 
-              mode={mode} 
-              onModeChange={handleModeChange}
-              messages={messages}
-              setMessages={setMessages}
-              isClearAlertOpen={isClearAlertOpen}
-              setIsClearAlertOpen={setIsClearAlertOpen}
-              onClearChat={handleClearChat}
-            />
-        </div>
-      </SidebarInset>
+                </div>
+                 <div className="flex items-center gap-1 md:gap-2">
+                  <ModeToggle mode={mode} onModeChange={handleModeChange} />
+                  <AlertDialog open={isClearAlertOpen} onOpenChange={setIsClearAlertOpen}>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon">
+                            <MoreVertical />
+                            <span className="sr-only">More options</span>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuItem onSelect={() => setIsClearAlertOpen(true)} className="text-destructive focus:text-destructive">
+                              <Trash className="mr-2 h-4 w-4" />
+                              Clear History
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete your
+                            current chat history.
+                        </Description>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleClearChat} className="bg-destructive hover:bg-destructive/90">
+                            Clear
+                        </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
+            </div>
+          </header>
+          <Chat 
+            mode={mode} 
+            messages={messages}
+            setMessages={setMessages}
+          />
+      </div>
     </SidebarProvider>
   );
 }

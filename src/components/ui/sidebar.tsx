@@ -2,28 +2,14 @@
 "use client"
 
 import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
 import { PanelLeft, X } from "lucide-react"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent, SheetOverlay, SheetPortal } from "@/components/ui/sheet"
-import { Skeleton } from "@/components/ui/skeleton"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 
-const SIDEBAR_COOKIE_NAME = "sidebar_state"
-const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
-const SIDEBAR_WIDTH = "16rem"
-const SIDEBAR_WIDTH_ICON = "3.5rem"
 
 type SidebarContext = {
   isMobile: boolean
@@ -68,31 +54,22 @@ const SidebarProvider = React.forwardRef<
 
   return (
     <SidebarContext.Provider value={contextValue}>
-      <TooltipProvider delayDuration={0}>
-        <div
-          ref={ref}
-          style={
-            {
-              "--sidebar-width": SIDEBAR_WIDTH,
-              "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
-              ...style,
-            } as React.CSSProperties
-          }
-          className={cn(
-            "group/sidebar-wrapper flex min-h-svh w-full",
-            className
-          )}
-          {...props}
-        >
-          {children}
-        </div>
-      </TooltipProvider>
+      <div
+        ref={ref}
+        className={cn(
+          "group/sidebar-wrapper flex min-h-svh w-full",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </div>
     </SidebarContext.Provider>
   )
 })
 SidebarProvider.displayName = "SidebarProvider"
 
-interface SidebarProps extends React.ComponentProps<"div"> {
+interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -120,7 +97,7 @@ const Sidebar = React.forwardRef<
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetPortal>
           <SheetOverlay />
-          <SheetContent side="left" className="w-[--sidebar-width] p-0">
+          <SheetContent side="left" className="w-[16rem] p-0">
             {commonContent}
              <Button 
                 variant="ghost" size="icon" 
@@ -140,7 +117,7 @@ const Sidebar = React.forwardRef<
       data-state={state}
       className={cn(
         "hidden md:flex h-svh transition-[width] duration-300 ease-in-out",
-        state === 'expanded' ? 'w-[--sidebar-width]' : 'w-[--sidebar-width-icon]',
+        state === 'expanded' ? 'w-[16rem]' : 'w-[3.5rem]',
         className
       )}
     >
@@ -171,23 +148,6 @@ const SidebarTrigger = React.forwardRef<
   )
 })
 SidebarTrigger.displayName = "SidebarTrigger"
-
-const SidebarInset = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<"main">
->(({ className, ...props }, ref) => {
-  return (
-    <main
-      ref={ref}
-      className={cn(
-        "relative flex min-h-svh flex-1 flex-col bg-background",
-        className
-      )}
-      {...props}
-    />
-  )
-})
-SidebarInset.displayName = "SidebarInset"
 
 const SidebarHeader = React.forwardRef<
   HTMLDivElement,
@@ -241,112 +201,11 @@ const SidebarFooter = React.forwardRef<
 SidebarFooter.displayName = "SidebarFooter"
 
 
-const SidebarMenu = React.forwardRef<
-  HTMLUListElement,
-  React.ComponentProps<"ul">
->(({ className, ...props }, ref) => (
-  <ul
-    ref={ref}
-    className={cn("flex w-full min-w-0 flex-col gap-1 p-2", className)}
-    {...props}
-  />
-))
-SidebarMenu.displayName = "SidebarMenu"
-
-const SidebarMenuItem = React.forwardRef<
-  HTMLLIElement,
-  React.ComponentProps<"li">
->(({ className, ...props }, ref) => (
-  <li
-    ref={ref}
-    className={cn("group/menu-item relative", className)}
-    {...props}
-  />
-))
-SidebarMenuItem.displayName = "SidebarMenuItem"
-
-
-const SidebarMenuButton = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentProps<"button"> & {
-    asChild?: boolean
-    isActive?: boolean
-    tooltip?: string | React.ComponentProps<typeof TooltipContent>
-  }
->(
-  (
-    {
-      asChild = false,
-      isActive = false,
-      tooltip,
-      className,
-      children,
-      ...props
-    },
-    ref
-  ) => {
-    const { open } = useSidebar();
-    const Comp = asChild ? Slot : "button"
-
-    const buttonContent = (
-      <>
-        {React.Children.map(children, (child, index) => {
-          if (React.isValidElement(child) && child.type === 'span' && !open) {
-            return null;
-          }
-          if(React.isValidElement(child) && typeof child.type !== "string" && (child.type.name === 'MoreVertical' || child.type.name === 'Pencil')) {
-            return !open ? null : child;
-          }
-          if (React.isValidElement(child) && !open && React.Children.count(children) > 1 && index > 0) {
-            return null;
-          }
-          return child;
-        })}
-      </>
-    );
-
-    const button = (
-       <Comp
-        ref={ref}
-        data-active={isActive}
-        className={cn(
-          "flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-primary transition-all hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 active:bg-accent active:text-accent-foreground disabled:pointer-events-none disabled:opacity-50",
-          "data-[active=true]:bg-accent data-[active=true]:font-medium data-[active=true]:text-accent-foreground",
-          !open && "justify-center",
-          className
-        )}
-        {...props}
-      >
-        {buttonContent}
-      </Comp>
-    )
-
-    if (!tooltip || open) {
-      return button
-    }
-    
-    return (
-      <Tooltip>
-        <TooltipTrigger asChild>{button}</TooltipTrigger>
-        <TooltipContent side="right" align="center">
-            {tooltip}
-        </TooltipContent>
-      </Tooltip>
-    )
-  }
-)
-SidebarMenuButton.displayName = "SidebarMenuButton"
-
-
 export {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarInset,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
   useSidebar,

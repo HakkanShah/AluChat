@@ -29,17 +29,12 @@ const initialMessage: Message = { id: '1', content: 'What\'s up? Ask me anything
 
 interface ChatProps {
   mode: 'Good Bro' | 'Bad Bro';
-  onModeChange: (mode: 'Good Bro' | 'Bad Bro') => void;
   messages: Message[];
   setMessages: (messages: Message[]) => void;
-  isClearAlertOpen: boolean;
-  setIsClearAlertOpen: (isOpen: boolean) => void;
-  onClearChat: () => void;
 }
 
 export default function Chat({ 
   mode, 
-  onModeChange,
   messages,
   setMessages,
 }: ChatProps) {
