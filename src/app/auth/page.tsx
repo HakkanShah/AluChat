@@ -20,7 +20,7 @@ export default function AuthPage() {
         <Icons.logo className="size-8 text-primary" />
         <h1 className="text-xl font-headline font-semibold">AluChat</h1>
       </div>
-      <Tabs defaultValue="login" className="w-full max-w-md">
+      <Tabs defaultValue="login" className="w-full max-w-md" loop={false}>
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="login">Login</TabsTrigger>
           <TabsTrigger value="signup">Sign Up</TabsTrigger>
