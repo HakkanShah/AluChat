@@ -109,12 +109,12 @@ export default function Chat() {
   };
 
   return (
-    <div className={cn("flex h-full flex-col bg-background", 
+    <div className={cn("relative flex h-full flex-col bg-background", 
         mode === 'Bad Bro' ? 'font-bro' : '',
         isSwitching && (mode === 'Bad Bro' ? 'animate-glitch' : 'animate-flash')
       )}
     >
-      <header className="flex items-center justify-between border-b p-4">
+      <header className="flex-shrink-0 flex items-center justify-between border-b p-4">
         <div className="flex items-center gap-3">
           <Avatar className="h-10 w-10 border-2 border-primary">
             <AvatarFallback>
@@ -122,7 +122,7 @@ export default function Chat() {
             </AvatarFallback>
           </Avatar>
           <div>
-            <h2 className="font-headline text-lg font-semibold tracking-wider">Alu</h2>
+            <h2 className="font-headline text-lg font-semibold tracking-wider">AluChat</h2>
             <p className="text-sm text-muted-foreground">Your Desi AI Bestie</p>
           </div>
         </div>
@@ -168,7 +168,7 @@ export default function Chat() {
           </div>
         </ScrollArea>
       </main>
-      <footer className="border-t bg-background p-4 md:p-6">
+      <footer className="flex-shrink-0 border-t bg-background p-4 md:p-6">
         <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
       </footer>
     </div>
