@@ -72,11 +72,13 @@ export default function Chat() {
       role: 'user',
       timestamp: Date.now(),
     };
-    setMessages((prev) => [...prev, userMessage]);
+    
+    const newMessages = [...messages, userMessage];
+    setMessages(newMessages);
     setIsLoading(true);
 
     try {
-      const responseContent = await getAiResponse(content, mode);
+      const responseContent = await getAiResponse(content, mode, newMessages.slice(0, -1));
       const botMessage: Message = {
         id: String(Date.now() + 1),
         content: responseContent,
