@@ -7,7 +7,6 @@ import { ChatInput } from './chat-input';
 import { ChatMessage } from './chat-message';
 import type { Message } from '@/lib/types';
 import { getAiResponse } from '@/lib/actions';
-import { Icons } from '../icons';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
@@ -145,7 +144,9 @@ export default function Chat({
             {isLoading && (
               <div className="flex items-start gap-4 animate-slide-in-left">
                   <Avatar className="h-10 w-10 border-2 border-primary">
-                      <AvatarFallback><Icons.logo className="p-1" /></AvatarFallback>
+                      <AvatarFallback>
+                        <div className="size-full rounded-full bg-primary/20" />
+                      </AvatarFallback>
                   </Avatar>
                   <div className="max-w-[75%] rounded-2xl rounded-bl-none bg-muted px-4 py-3 backdrop-blur-md bg-opacity-50">
                       <div className="flex flex-col">

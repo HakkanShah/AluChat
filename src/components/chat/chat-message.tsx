@@ -3,14 +3,13 @@
 import { cn } from '@/lib/utils';
 import type { Message } from '@/lib/types';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Icons } from '@/components/icons';
 import { useAuth } from '../providers/auth-provider';
 
 
 function getInitials(name: string | null | undefined) {
   if (!name) return 'U';
   const names = name.split(' ');
-  if (names.length > 1) {
+  if (names.length > 1 && names[1]) {
     return `${names[0][0]}${names[1][0]}`.toUpperCase();
   }
   return name[0].toUpperCase();
@@ -33,7 +32,7 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
       {!isUser && (
         <Avatar className="h-10 w-10 border-2 border-primary shadow-lg">
           <AvatarFallback>
-            <Icons.logo className="p-1" />
+            <div className="size-full rounded-full bg-primary/20" />
           </AvatarFallback>
         </Avatar>
       )}
