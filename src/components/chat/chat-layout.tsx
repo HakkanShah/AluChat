@@ -188,7 +188,7 @@ function ChatLayoutContent() {
           </div>
         </SidebarFooter>
       </Sidebar>
-      <div className="flex h-full max-h-svh flex-col flex-1">
+      <div className="flex h-svh flex-col flex-1">
         <header className="flex-shrink-0 border-b p-2 md:p-4 backdrop-blur-sm bg-background/50 z-10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 md:gap-3">
@@ -224,7 +224,7 @@ function ChatLayoutContent() {
             </div>
           </div>
         </header>
-        <main className='flex-1 flex flex-col'>
+        <main className='flex-1 flex flex-col min-h-0'>
              <Chat 
                 mode={mode} 
                 messages={messages}

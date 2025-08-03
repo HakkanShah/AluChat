@@ -130,8 +130,8 @@ export default function Chat({
         isSwitching && (mode === 'Bad Bro' ? 'animate-glitch' : 'animate-flash')
       )}
     >
-      <div className="flex-1 overflow-y-auto" ref={scrollAreaRef}>
-          <div className="space-y-6 p-2 md:p-6">
+      <div className="flex-1 overflow-y-auto p-2 md:p-6" ref={scrollAreaRef}>
+          <div className="space-y-6">
             {messages.map((message) => (
               <ChatMessage key={message.id} message={message} mode={mode}/>
             ))}
