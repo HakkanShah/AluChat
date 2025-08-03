@@ -4,7 +4,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { MoreVertical } from 'lucide-react';
 import { ChatInput } from './chat-input';
 import { ChatMessage } from './chat-message';
@@ -121,9 +120,9 @@ export default function Chat() {
         isSwitching && (mode === 'Bad Bro' ? 'animate-glitch' : 'animate-flash')
       )}
     >
-      <header className="flex-shrink-0 border-b p-4 backdrop-blur-sm bg-background/50">
+      <header className="flex-shrink-0 border-b p-2 md:p-4 backdrop-blur-sm bg-background/50">
         <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 md:gap-3">
               <Avatar className="h-10 w-10 border-2 border-primary">
                 <AvatarFallback>
                   <Icons.logo className="p-1" />
@@ -131,10 +130,10 @@ export default function Chat() {
               </Avatar>
               <div>
                 <h2 className="font-headline text-lg font-semibold tracking-wider">AluChat</h2>
-                <p className="text-sm text-muted-foreground">Your Desi AI Bestie</p>
+                <p className="text-xs md:text-sm text-muted-foreground">Your Desi AI Bestie</p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1 md:gap-4">
               <ModeToggle mode={mode} onModeChange={handleModeChange} />
               <Button variant="ghost" size="icon">
                 <MoreVertical />
@@ -144,7 +143,7 @@ export default function Chat() {
         </div>
       </header>
       <div className="flex-1 overflow-y-auto" ref={scrollAreaRef}>
-          <div className="space-y-6 p-4 md:p-6">
+          <div className="space-y-6 p-2 md:p-6">
             {messages.map((message) => (
               <ChatMessage key={message.id} message={message} mode={mode}/>
             ))}
@@ -174,7 +173,7 @@ export default function Chat() {
             )}
           </div>
       </div>
-      <footer className="flex-shrink-0 border-t bg-background/50 backdrop-blur-sm p-4 md:p-6">
+      <footer className="flex-shrink-0 border-t bg-background/50 backdrop-blur-sm p-2 md:p-4">
         <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
       </footer>
     </div>

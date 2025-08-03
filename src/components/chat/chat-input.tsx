@@ -1,3 +1,4 @@
+
 "use client";
 import { useState } from 'react';
 import { Textarea } from '@/components/ui/textarea';
@@ -36,13 +37,13 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
           rows={1}
-          className="min-h-[48px] rounded-2xl border-2 border-input pr-16 resize-none shadow-sm"
+          className="min-h-[48px] rounded-2xl border-2 border-input pr-12 md:pr-16 resize-none shadow-sm"
           disabled={isLoading}
         />
         <Button
           type="submit"
           size="icon"
-          className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full"
+          className="absolute top-1/2 right-2 md:right-3 -translate-y-1/2 rounded-full"
           disabled={isLoading || !message.trim()}
           aria-label="Send message"
         >
