@@ -25,6 +25,10 @@ const formSchema = z.object({
   password: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match.",
+    path: ["confirmPassword"],
 });
 
 export function SignupForm() {
@@ -34,6 +38,7 @@ export function SignupForm() {
       name: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
@@ -77,6 +82,19 @@ export function SignupForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input type="password" placeholder="••••••••" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirm Password</FormLabel>
               <FormControl>
                 <Input type="password" placeholder="••••••••" {...field} />
               </FormControl>
