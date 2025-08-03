@@ -20,6 +20,15 @@ import { useAuth } from '../providers/auth-provider';
 import { useRouter } from 'next/navigation';
 import { LogOut } from 'lucide-react';
 
+function getInitials(name: string | null | undefined) {
+  if (!name) return 'U';
+  const names = name.split(' ');
+  if (names.length > 1) {
+    return `${names[0][0]}${names[1][0]}`.toUpperCase();
+  }
+  return name[0].toUpperCase();
+}
+
 export function ChatLayout() {
   const { user, logout } = useAuth();
   const router = useRouter();
@@ -51,8 +60,8 @@ export function ChatLayout() {
            <div className="flex items-center justify-between p-2">
             <div className="flex items-center gap-3">
               <Avatar className="h-10 w-10">
-                <AvatarImage src={user?.photoURL ?? `https://placehold.co/100x100.png`} alt="User" data-ai-hint="profile picture" />
-                <AvatarFallback>{user?.displayName?.[0] || 'U'}</AvatarFallback>
+                <AvatarImage src={user?.photoURL ?? undefined} alt={user?.displayName ?? "User"} data-ai-hint="profile picture" />
+                <AvatarFallback>{getInitials(user?.displayName)}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
                 <span className="font-semibold">{user?.displayName || "User"}</span>

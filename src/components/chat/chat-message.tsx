@@ -1,15 +1,27 @@
+
 "use client";
 import { cn } from '@/lib/utils';
 import type { Message } from '@/lib/types';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Icons } from '@/components/icons';
+import { useAuth } from '../providers/auth-provider';
 
+
+function getInitials(name: string | null | undefined) {
+  if (!name) return 'U';
+  const names = name.split(' ');
+  if (names.length > 1) {
+    return `${names[0][0]}${names[1][0]}`.toUpperCase();
+  }
+  return name[0].toUpperCase();
+}
 interface ChatMessageProps {
   message: Message;
   mode: 'Good Bro' | 'Bad Bro';
 }
 
 export function ChatMessage({ message, mode }: ChatMessageProps) {
+  const { user } = useAuth();
   const isUser = message.role === 'user';
   const isGoodBro = mode === 'Good Bro';
 
@@ -42,8 +54,8 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
       </div>
       {isUser && (
         <Avatar className="h-10 w-10 shadow-lg">
-          <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="profile picture" />
-          <AvatarFallback>U</AvatarFallback>
+          <AvatarImage src={user?.photoURL ?? undefined} alt={user?.displayName ?? "User"} data-ai-hint="profile picture" />
+          <AvatarFallback>{getInitials(user?.displayName)}</AvatarFallback>
         </Avatar>
       )}
     </div>

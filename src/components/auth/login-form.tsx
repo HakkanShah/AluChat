@@ -56,10 +56,11 @@ export function LoginForm() {
     try {
       // In a real app, you'd call Firebase here.
       // For the dummy version, we'll just log in with a mock user.
+      const name = values.email.split('@')[0];
       login({ 
         email: values.email,
-        displayName: values.email.split('@')[0], 
-        photoURL: `https://placehold.co/100x100.png?text=${values.email[0].toUpperCase()}`
+        displayName: name, 
+        photoURL: `https://placehold.co/100x100.png?text=${name[0].toUpperCase()}`
       });
       
       toast({
