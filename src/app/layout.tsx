@@ -5,7 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'AluChat',
-  description: 'Your GenZ AI Best Friend',
+  description: 'Your AI Companion',
 };
 
 export default function RootLayout({

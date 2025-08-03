@@ -130,7 +130,7 @@ export default function Chat() {
               </Avatar>
               <div>
                 <h2 className="font-headline text-lg font-semibold tracking-wider">AluChat</h2>
-                <p className="text-xs md:text-sm text-muted-foreground">Your Desi AI Bestie</p>
+                <p className="text-xs md:text-sm text-muted-foreground">Your AI Companion</p>
               </div>
             </div>
             <div className="flex items-center gap-1 md:gap-4">
