@@ -19,7 +19,7 @@ import { Icons } from '@/components/icons';
 import Chat from '@/components/chat/chat';
 import { useAuth } from '../providers/auth-provider';
 import { useRouter } from 'next/navigation';
-import { LogOut, Pencil, MoreVertical, Trash, Github, Twitter, Linkedin } from 'lucide-react';
+import { LogOut, Pencil, MoreVertical, Trash, Github, Instagram, Facebook, Linkedin } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { ModeToggle } from './mode-toggle';
@@ -135,8 +135,11 @@ export function ChatLayout() {
                 <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                   <Github className="size-6" />
                 </a>
-                <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-                  <Twitter className="size-6" />
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Instagram className="size-6" />
+                </a>
+                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Facebook className="size-6" />
                 </a>
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                   <Linkedin className="size-6" />
