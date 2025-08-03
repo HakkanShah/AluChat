@@ -134,7 +134,7 @@ export default function Chat() {
           </Button>
         </div>
       </header>
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-hidden">
         <ScrollArea className="h-full">
           <div className="space-y-6 p-4 md:p-6">
             {messages.map((message) => (
