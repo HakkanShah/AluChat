@@ -5,9 +5,8 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/components/providers/auth-provider";
 
 
 import { Button } from "@/components/ui/button";
@@ -42,6 +41,7 @@ export function SignupForm() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
+  const { login } = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,9 +55,16 @@ export function SignupForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
     try {
-        const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
-        await updateProfile(userCredential.user, { displayName: values.name });
+        // In a real app, you'd call Firebase here.
+        // For the dummy version, we'll just log in with the new user's details.
+        login({ 
+            email: values.email, 
+            displayName: values.name,
+            photoURL: `https://placehold.co/100x100.png?text=${values.name[0].toUpperCase()}`
+        });
 
         toast({
             title: "Account Created",
@@ -67,7 +74,7 @@ export function SignupForm() {
     } catch (error: any) {
         toast({
             title: "Sign Up Failed",
-            description: error.message,
+            description: "Something went wrong. Please try again.",
             variant: "destructive",
         });
     } finally {

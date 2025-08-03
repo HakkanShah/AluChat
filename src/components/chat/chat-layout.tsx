@@ -17,17 +17,15 @@ import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icons';
 import Chat from '@/components/chat/chat';
 import { useAuth } from '../providers/auth-provider';
-import { auth } from '@/lib/firebase';
-import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { LogOut } from 'lucide-react';
 
 export function ChatLayout() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const router = useRouter();
 
   const handleSignOut = async () => {
-    await signOut(auth);
+    logout();
     router.push('/auth');
   };
 

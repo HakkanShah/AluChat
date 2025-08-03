@@ -5,8 +5,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { useAuth } from "@/components/providers/auth-provider";
 import { useToast } from "@/hooks/use-toast";
 
 import { Button } from "@/components/ui/button";
@@ -36,6 +35,7 @@ export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
+  const { login } = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -48,8 +48,18 @@ export function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
+      // In a real app, you'd call Firebase here.
+      // For the dummy version, we'll just log in with a mock user.
+      login({ 
+        email: values.email,
+        displayName: values.email.split('@')[0], 
+        photoURL: `https://placehold.co/100x100.png?text=${values.email[0].toUpperCase()}`
+      });
+      
       toast({
         title: "Login Successful",
         description: "Welcome back!",
@@ -58,7 +68,7 @@ export function LoginForm() {
     } catch (error: any) {
       toast({
         title: "Login Failed",
-        description: error.message,
+        description: "Invalid credentials. Please try again.",
         variant: "destructive",
       });
     } finally {

@@ -1,17 +1,29 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
 import { usePathname, useRouter } from 'next/navigation';
 import { Skeleton } from '../ui/skeleton';
+
+// A mock User type
+interface User {
+  displayName: string | null;
+  email: string | null;
+  photoURL: string | null;
+}
 
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
+  login: (user: User) => void;
+  logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType>({ user: null, isLoading: true });
+const AuthContext = createContext<AuthContextType>({ 
+  user: null, 
+  isLoading: true,
+  login: () => {},
+  logout: () => {},
+});
 
 export const useAuth = () => useContext(AuthContext);
 
@@ -22,19 +34,48 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    // Simulate checking for a logged-in user
+    const checkUser = () => {
+      try {
+        const storedUser = sessionStorage.getItem('dummyUser');
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        }
+      } catch (error) {
+        // Could be that sessionStorage is not available
+        console.error("Failed to get user from sessionStorage", error);
+      }
       setIsLoading(false);
-    });
-    return () => unsubscribe();
+    };
+    checkUser();
   }, []);
+
+  const login = (newUser: User) => {
+    setUser(newUser);
+    try {
+      sessionStorage.setItem('dummyUser', JSON.stringify(newUser));
+    } catch (error) {
+       console.error("Failed to save user to sessionStorage", error);
+    }
+  };
+
+  const logout = () => {
+    setUser(null);
+     try {
+      sessionStorage.removeItem('dummyUser');
+    } catch (error) {
+       console.error("Failed to remove user from sessionStorage", error);
+    }
+  };
+
 
   useEffect(() => {
     if (isLoading) return;
 
     const isAuthPage = pathname === '/auth';
+    const isChatPage = pathname === '/chat';
 
-    if (!user && !isAuthPage) {
+    if (!user && isChatPage) {
       router.push('/auth');
     } else if (user && isAuthPage) {
       router.push('/chat');
@@ -57,7 +98,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, isLoading }}>
+    <AuthContext.Provider value={{ user, isLoading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
