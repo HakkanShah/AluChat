@@ -3,17 +3,21 @@ export const Icons = {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      fill="currentColor"
+      fill="none"
       stroke="currentColor"
-      strokeWidth="0.5"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
     >
-      <path d="M16.5,3.5c-3.7-1.4-8.3,0.4-10.4,4.4c-2.1,4-1.2,8.9,2.5,10.3c3.7,1.4,8.3-0.4,10.4-4.4C21.1,9.8,20.2,4.9,16.5,3.5z" />
-      <circle cx="10" cy="10" r="1" />
-      <circle cx="15" cy="10" r="1" />
-      <path d="M9.5 14.5c.3 1 1.2 2 2.5 2s2.2-1 2.5-2" fill="none" strokeWidth="1" />
+      <path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2z" />
+      {/* Good side */}
+      <path d="M12 2v20" />
+      <circle cx="9" cy="10" r="1" fill="currentColor" />
+      <path d="M8 14c.5 1 1.5 1.5 3 1.5" />
+      {/* Bad side */}
+      <path d="M15 9l-1 2" />
+      <path d="M16 15c-.5-1-1.5-1.5-3-1.5" />
     </svg>
   ),
 };
