@@ -31,6 +31,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { SidebarTrigger } from '../ui/sidebar';
 
 
 const vibeCheckMessages = [
@@ -48,11 +49,15 @@ const modeSwitchMessages = {
 
 const initialMessage: Message = { id: '1', content: 'What\'s up? Ask me anything!', role: 'assistant', timestamp: Date.now() };
 
-export default function Chat() {
+interface ChatProps {
+  mode: 'Good Bro' | 'Bad Bro';
+  onModeChange: (mode: 'Good Bro' | 'Bad Bro') => void;
+}
+
+export default function Chat({ mode, onModeChange }: ChatProps) {
   const { toast } = useToast();
   const { setTheme } = useTheme();
   const [messages, setMessages] = useState<Message[]>([initialMessage]);
-  const [mode, setMode] = useState<'Good Bro' | 'Bad Bro'>('Good Bro');
   const [isLoading, setIsLoading] = useState(false);
   const [vibeMessage, setVibeMessage] = useState('');
   const [systemMessage, setSystemMessage] = useState<string | null>(null);
@@ -74,8 +79,7 @@ export default function Chat() {
   }, [messages, isLoading, systemMessage]);
 
   const handleModeChange = (newMode: 'Good Bro' | 'Bad Bro') => {
-    setMode(newMode);
-    setTheme(newMode === 'Good Bro' ? 'light' : 'dark');
+    onModeChange(newMode);
     setSystemMessage(modeSwitchMessages[newMode]);
     setIsSwitching(true);
     setTimeout(() => setSystemMessage(null), 2000); // Hide message after 2 seconds
@@ -145,41 +149,62 @@ export default function Chat() {
             isSwitching && (mode === 'Bad Bro' ? 'animate-glitch' : 'animate-flash')
           )}
         >
-        <header className="flex-shrink-0 border-b p-2 md:p-4 backdrop-blur-sm bg-background/50 flex items-center justify-end">
-              <AlertDialog open={isClearAlertOpen} onOpenChange={setIsClearAlertOpen}>
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <MoreVertical />
-                        <span className="sr-only">More options</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <AlertDialogTrigger asChild>
-                        <DropdownMenuItem className="text-destructive focus:text-destructive">
-                          <Trash className="mr-2 h-4 w-4" />
-                          Clear History
-                        </DropdownMenuItem>
-                      </AlertDialogTrigger>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-                <AlertDialogContent>
-                    <AlertDialogHeader>
-                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                        This action cannot be undone. This will permanently delete your
-                        current chat history.
-                    </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleClearChat} className="bg-destructive hover:bg-destructive/90">
-                        Clear
-                    </AlertDialogAction>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-        </header>
+        <header className="flex-shrink-0 border-b p-2 md:p-4 backdrop-blur-sm bg-background/50 z-10">
+              <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 md:gap-3">
+                    <div className="md:hidden">
+                      <SidebarTrigger />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Avatar className="hidden h-10 w-10 border-2 border-primary md:flex">
+                        <AvatarFallback>
+                          <Icons.logo className="p-1" />
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <h2 className="font-headline text-lg font-semibold tracking-wider">AluChat</h2>
+                        <p className="text-xs md:text-sm text-muted-foreground">Your AI Companion</p>
+                      </div>
+                    </div>
+                  </div>
+                   <div className="flex items-center gap-1 md:gap-2">
+                    <ModeToggle mode={mode} onModeChange={handleModeChange} />
+                    <AlertDialog open={isClearAlertOpen} onOpenChange={setIsClearAlertOpen}>
+                      <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon">
+                              <MoreVertical />
+                              <span className="sr-only">More options</span>
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <AlertDialogTrigger asChild>
+                              <DropdownMenuItem className="text-destructive focus:text-destructive">
+                                <Trash className="mr-2 h-4 w-4" />
+                                Clear History
+                              </DropdownMenuItem>
+                            </AlertDialogTrigger>
+                          </DropdownMenuContent>
+                      </DropdownMenu>
+                      <AlertDialogContent>
+                          <AlertDialogHeader>
+                          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                              This action cannot be undone. This will permanently delete your
+                              current chat history.
+                          </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction onClick={handleClearChat} className="bg-destructive hover:bg-destructive/90">
+                              Clear
+                          </AlertDialogAction>
+                          </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
+              </div>
+            </header>
         <div className="flex-1 overflow-y-auto" ref={scrollAreaRef}>
             <div className="space-y-6 p-2 md:p-6">
               {messages.map((message) => (
