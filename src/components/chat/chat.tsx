@@ -114,24 +114,26 @@ export default function Chat() {
         isSwitching && (mode === 'Bad Bro' ? 'animate-glitch' : 'animate-flash')
       )}
     >
-      <header className="flex-shrink-0 flex items-center justify-between border-b p-4">
-        <div className="flex items-center gap-3">
-          <Avatar className="h-10 w-10 border-2 border-primary">
-            <AvatarFallback>
-              <Icons.logo className="p-1" />
-            </AvatarFallback>
-          </Avatar>
-          <div>
-            <h2 className="font-headline text-lg font-semibold tracking-wider">AluChat</h2>
-            <p className="text-sm text-muted-foreground">Your Desi AI Bestie</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <ModeToggle mode={mode} onModeChange={handleModeChange} />
-          <Button variant="ghost" size="icon">
-            <MoreVertical />
-            <span className="sr-only">More options</span>
-          </Button>
+      <header className="flex-shrink-0 border-b p-4">
+        <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Avatar className="h-10 w-10 border-2 border-primary">
+                <AvatarFallback>
+                  <Icons.logo className="p-1" />
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <h2 className="font-headline text-lg font-semibold tracking-wider">AluChat</h2>
+                <p className="text-sm text-muted-foreground">Your Desi AI Bestie</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <ModeToggle mode={mode} onModeChange={handleModeChange} />
+              <Button variant="ghost" size="icon">
+                <MoreVertical />
+                <span className="sr-only">More options</span>
+              </Button>
+            </div>
         </div>
       </header>
       <div className="flex-1 overflow-hidden">
