@@ -1,3 +1,5 @@
+
+'use client';
 import {
   SidebarProvider,
   Sidebar,
@@ -11,11 +13,25 @@ import {
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
-import { ThemeToggle } from '@/components/theme-toggle';
+import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icons';
 import Chat from '@/components/chat/chat';
+import { useAuth } from '../providers/auth-provider';
+import { auth } from '@/lib/firebase';
+import { signOut } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
+import { LogOut } from 'lucide-react';
 
 export function ChatLayout() {
+  const { user } = useAuth();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await signOut(auth);
+    router.push('/auth');
+  };
+
+
   return (
     <SidebarProvider>
       <Sidebar className="border-r bg-card" variant="sidebar" collapsible="icon">
@@ -37,15 +53,17 @@ export function ChatLayout() {
            <div className="flex items-center justify-between p-2">
             <div className="flex items-center gap-3">
               <Avatar className="h-10 w-10">
-                <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="profile picture" />
-                <AvatarFallback>U</AvatarFallback>
+                <AvatarImage src={user?.photoURL ?? `https://placehold.co/100x100.png`} alt="User" data-ai-hint="profile picture" />
+                <AvatarFallback>{user?.displayName?.[0] || 'U'}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
-                <span className="font-semibold">User</span>
+                <span className="font-semibold">{user?.displayName || "User"}</span>
                 <span className="text-xs text-muted-foreground">Online</span>
               </div>
             </div>
-            <ThemeToggle />
+            <Button variant="ghost" size="icon" onClick={handleSignOut} title="Sign out">
+              <LogOut />
+            </Button>
           </div>
         </SidebarFooter>
       </Sidebar>
