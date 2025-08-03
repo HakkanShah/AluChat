@@ -57,10 +57,20 @@ export function LoginForm() {
       // In a real app, you'd call Firebase here.
       // For the dummy version, we'll just log in with a mock user.
       const name = values.email.split('@')[0];
+      const existingUser = localStorage.getItem('dummyUser');
+      let photoURL = `https://placehold.co/100x100.png?text=${name[0].toUpperCase()}`;
+
+      if (existingUser) {
+        const parsedUser = JSON.parse(existingUser);
+        if(parsedUser.email === values.email) {
+            photoURL = parsedUser.photoURL;
+        }
+      }
+
       login({ 
         email: values.email,
         displayName: name, 
-        photoURL: `https://placehold.co/100x100.png?text=${name[0].toUpperCase()}`
+        photoURL: photoURL
       });
       
       toast({

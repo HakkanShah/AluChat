@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
@@ -16,6 +17,7 @@ interface AuthContextType {
   isLoading: boolean;
   login: (user: User) => void;
   logout: () => void;
+  updateUser: (user: User) => void;
 }
 
 const AuthContext = createContext<AuthContextType>({ 
@@ -23,6 +25,7 @@ const AuthContext = createContext<AuthContextType>({
   isLoading: true,
   login: () => {},
   logout: () => {},
+  updateUser: () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -37,13 +40,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Simulate checking for a logged-in user
     const checkUser = () => {
       try {
-        const storedUser = sessionStorage.getItem('dummyUser');
+        const storedUser = localStorage.getItem('dummyUser');
         if (storedUser) {
           setUser(JSON.parse(storedUser));
         }
       } catch (error) {
         // Could be that sessionStorage is not available
-        console.error("Failed to get user from sessionStorage", error);
+        console.error("Failed to get user from localStorage", error);
       }
       setIsLoading(false);
     };
@@ -53,18 +56,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = (newUser: User) => {
     setUser(newUser);
     try {
-      sessionStorage.setItem('dummyUser', JSON.stringify(newUser));
+      localStorage.setItem('dummyUser', JSON.stringify(newUser));
     } catch (error) {
-       console.error("Failed to save user to sessionStorage", error);
+       console.error("Failed to save user to localStorage", error);
     }
   };
 
   const logout = () => {
     setUser(null);
      try {
-      sessionStorage.removeItem('dummyUser');
+      localStorage.removeItem('dummyUser');
     } catch (error) {
-       console.error("Failed to remove user from sessionStorage", error);
+       console.error("Failed to remove user from localStorage", error);
+    }
+  };
+
+  const updateUser = (updatedUser: User) => {
+    setUser(updatedUser);
+    try {
+        localStorage.setItem('dummyUser', JSON.stringify(updatedUser));
+    } catch (error) {
+        console.error("Failed to update user in localStorage", error);
     }
   };
 
@@ -98,7 +110,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ user, isLoading, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
