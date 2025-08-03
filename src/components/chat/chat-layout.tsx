@@ -225,7 +225,6 @@ function ChatLayoutContent() {
           </div>
         </header>
         <main className='flex-1 flex flex-col'>
-            <div className='flex-1' />
              <Chat 
                 mode={mode} 
                 messages={messages}

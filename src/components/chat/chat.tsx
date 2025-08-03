@@ -124,7 +124,7 @@ export default function Chat({
 
   return (
     <div className={cn(
-        "relative flex-1 flex flex-col h-full", 
+        "flex flex-col h-full", 
         mode === 'Good Bro' ? 'good-bro-bg' : 'bad-bro-bg',
         mode === 'Bad Bro' ? 'font-bro' : '',
         isSwitching && (mode === 'Bad Bro' ? 'animate-glitch' : 'animate-flash')
