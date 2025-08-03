@@ -47,9 +47,7 @@ Reference the previous conversation context when generating your response.
 
 Conversation History:
 {{#each history}}
-{{#if (eq role 'user')}}User: {{content}}
-{{else if (eq role 'assistant')}}AI ({{#if (eq @root.mode 'Good Bro')}}Good Bro{{else}}Bad Bro{{/if}}): {{content}}
-{{/if}}
+{{role}}: {{content}}
 {{/each}}
 
 User: {{{message}}}
