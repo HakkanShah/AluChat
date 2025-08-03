@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #121212;
+  min-height: 100vh;
+  color: #fff;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Material UI Customizations */
+.MuiTextField-root .MuiOutlinedInput-root {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.MuiTextField-root .MuiOutlinedInput-root:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.MuiTextField-root .MuiOutlinedInput-root.Mui-focused {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.MuiTextField-root .MuiInputLabel-root {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.MuiTextField-root .MuiInputLabel-root.Mui-focused {
+  color: #2196f3;
+}
+
+/* Selection */
+::selection {
+  background: rgba(33, 150, 243, 0.3);
+  color: #fff;
+}
+
+
+*:focus {
+  outline: 2px solid #2196f3;
+  outline-offset: 2px;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 600px) {
+  .MuiPaper-root {
+    border-radius: 0 !important;
+  }
+}
+
+/* Message Animations */
+.message-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.message-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.message-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.message-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Glass Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Hover Effects */
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(33, 150, 243, 0.2);
+}
+
+/* Avatar Badge Animation */
+@keyframes avatarPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+
+}
+
+.MuiAvatar-root {
+  transition: transform 0.3s ease;
+}
+
+.MuiAvatar-root:hover {
+  animation: avatarPulse 1s infinite;
+}
+
+/* Input Field Focus Effect */
+.MuiTextField-root .MuiOutlinedInput-root.Mui-focused {
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+/* Send Button Hover Effect */
+.MuiIconButton-root {
+  transition: all 0.3s ease !important;
+}
+
+.MuiIconButton-root:hover {
+  transform: scale(1.1);
+}
+
+/* Message Bubble Hover Effect */
+.MuiPaper-root {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.MuiPaper-root:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Loading Animation */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.loading {
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0.05) 25%, 
+    rgba(255,255,255,0.1) 50%, 
+    rgba(255,255,255,0.05) 75%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+}
