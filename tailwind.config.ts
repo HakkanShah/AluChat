@@ -12,6 +12,8 @@ export default {
       fontFamily: {
         body: ['Inter', 'sans-serif'],
         headline: ['Space Grotesk', 'sans-serif'],
+        bro: ['Comic Neue', 'Chakra Petch', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
         code: ['monospace'],
       },
       colors: {

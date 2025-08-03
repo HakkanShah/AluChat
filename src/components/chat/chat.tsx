@@ -12,12 +12,22 @@ import type { Message } from '@/lib/types';
 import { getAiResponse } from '@/lib/actions';
 import { Icons } from '../icons';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
+
+const vibeCheckMessages = [
+  "Checking if you're down bad...",
+  "Manifesting the right response ✨",
+  "Assembling the memes...",
+  "Consulting the digital elders...",
+  "Translating to GenZ...",
+];
 
 export default function Chat() {
   const { toast } = useToast();
   const [messages, setMessages] = useState<Message[]>([]);
   const [mode, setMode] = useState<'Normal' | 'Bro'>('Normal');
   const [isLoading, setIsLoading] = useState(false);
+  const [vibeMessage, setVibeMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -33,6 +43,17 @@ export default function Chat() {
         { id: '1', content: 'What\'s up? Ask me anything!', role: 'assistant', timestamp: Date.now() }
     ]);
   }, []);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isLoading) {
+      setVibeMessage(vibeCheckMessages[Math.floor(Math.random() * vibeCheckMessages.length)]);
+      interval = setInterval(() => {
+        setVibeMessage(vibeCheckMessages[Math.floor(Math.random() * vibeCheckMessages.length)]);
+      }, 2000);
+    }
+    return () => clearInterval(interval);
+  }, [isLoading]);
 
   const handleSendMessage = async (content: string) => {
     const userMessage: Message = {
@@ -59,6 +80,7 @@ export default function Chat() {
         title: 'Uh oh! Something went wrong.',
         description: "There was a problem with your request. Please try again.",
         variant: 'destructive',
+        className: 'font-mono text-red-400 border-red-400',
       })
     } finally {
       setIsLoading(false);
@@ -66,7 +88,7 @@ export default function Chat() {
   };
 
   return (
-    <div className="flex h-full flex-col bg-background">
+    <div className={cn("flex h-full flex-col bg-background", mode === 'Bro' ? 'font-bro' : '')}>
       <header className="flex items-center justify-between border-b p-4">
         <div className="flex items-center gap-3">
           <Avatar className="h-10 w-10 border-2 border-primary">
@@ -75,7 +97,7 @@ export default function Chat() {
             </AvatarFallback>
           </Avatar>
           <div>
-            <h2 className="font-headline text-lg font-semibold">Alu</h2>
+            <h2 className="font-headline text-lg font-semibold tracking-wider">Alu</h2>
             <p className="text-sm text-muted-foreground">AI Bestie</p>
           </div>
         </div>
@@ -91,18 +113,21 @@ export default function Chat() {
         <ScrollArea className="h-full">
           <div className="space-y-6 p-4 md:p-6">
             {messages.map((message) => (
-              <ChatMessage key={message.id} message={message} />
+              <ChatMessage key={message.id} message={message} mode={mode}/>
             ))}
             {isLoading && (
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-4 animate-slide-in-left">
                   <Avatar className="h-10 w-10 border-2 border-primary">
                       <AvatarFallback><Icons.logo className="p-1" /></AvatarFallback>
                   </Avatar>
-                  <div className="max-w-[75%] rounded-2xl rounded-bl-none bg-muted px-4 py-3">
-                      <div className="flex gap-1.5 items-center">
-                          <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-0"></span>
-                          <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-150"></span>
-                          <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-300"></span>
+                  <div className="max-w-[75%] rounded-2xl rounded-bl-none bg-muted px-4 py-3 backdrop-blur-md bg-opacity-50">
+                      <div className="flex flex-col">
+                        <div className="flex gap-1.5 items-center">
+                            <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-0"></span>
+                            <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-150"></span>
+                            <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-300"></span>
+                        </div>
+                        {mode === 'Bro' && <p className="text-sm text-muted-foreground mt-2">{vibeMessage}</p>}
                       </div>
                   </div>
               </div>
