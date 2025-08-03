@@ -20,8 +20,10 @@ import Chat from '@/components/chat/chat';
 import { useAuth } from '../providers/auth-provider';
 import { useRouter } from 'next/navigation';
 import { LogOut, Pencil } from 'lucide-react';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { ModeToggle } from './mode-toggle';
+import { useTheme } from 'next-themes';
 
 
 function getInitials(name: string | null | undefined) {
@@ -38,6 +40,8 @@ export function ChatLayout() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+  const { setTheme } = useTheme();
+  const [mode, setMode] = useState<'Good Bro' | 'Bad Bro'>('Good Bro');
 
 
   const handleSignOut = async () => {
@@ -49,6 +53,11 @@ export function ChatLayout() {
   const handleAvatarClick = () => {
     fileInputRef.current?.click();
   };
+
+  const handleModeChange = (newMode: 'Good Bro' | 'Bad Bro') => {
+    setMode(newMode);
+    setTheme(newMode === 'Good Bro' ? 'light' : 'dark');
+  }
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -147,6 +156,9 @@ export function ChatLayout() {
                         <p className="text-xs md:text-sm text-muted-foreground">Your AI Companion</p>
                       </div>
                     </div>
+                  </div>
+                   <div className="flex items-center gap-1 md:gap-2">
+                    <ModeToggle mode={mode} onModeChange={handleModeChange} />
                   </div>
               </div>
             </header>

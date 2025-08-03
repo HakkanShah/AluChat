@@ -145,10 +145,7 @@ export default function Chat() {
             isSwitching && (mode === 'Bad Bro' ? 'animate-glitch' : 'animate-flash')
           )}
         >
-        <header className="flex-shrink-0 border-b p-2 md:p-4 backdrop-blur-sm bg-background/50 flex items-center justify-between">
-              <div className="flex items-center gap-1 md:gap-2">
-                <ModeToggle mode={mode} onModeChange={handleModeChange} />
-              </div>
+        <header className="flex-shrink-0 border-b p-2 md:p-4 backdrop-blur-sm bg-background/50 flex items-center justify-end">
               <AlertDialog open={isClearAlertOpen} onOpenChange={setIsClearAlertOpen}>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
