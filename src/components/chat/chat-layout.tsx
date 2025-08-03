@@ -5,12 +5,8 @@ import {
   Sidebar,
   SidebarHeader,
   SidebarContent,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
   SidebarFooter,
   SidebarInset,
-  SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
@@ -18,11 +14,10 @@ import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icons';
 import Chat from '@/components/chat/chat';
 import { useAuth } from '../providers/auth-provider';
-import { useRouter } from 'next/navigation';
-import { LogOut, Pencil, MoreVertical, Trash, Github, Instagram, Facebook, Linkedin } from 'lucide-react';
+import { LogOut, Pencil, MoreVertical, Trash, Github, Instagram, Facebook, Linkedin, Mail } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { ModeToggle } from './mode-toggle';
+import { ModeToggle } from '../chat/mode-toggle';
 import { useTheme } from 'next-themes';
 import {
   DropdownMenu,
@@ -39,8 +34,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { SidebarTrigger } from '../ui/sidebar';
+
 
 function getInitials(name: string | null | undefined) {
   if (!name) return 'U';
@@ -59,6 +55,7 @@ export function ChatLayout() {
   const [mode, setMode] = useState<'Good Bro' | 'Bad Bro'>('Good Bro');
   const [messages, setMessages] = useState<any[]>([]); // Using any for simplicity
   const [isClearAlertOpen, setIsClearAlertOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
 
   const handleSignOut = async () => {
@@ -116,7 +113,7 @@ export function ChatLayout() {
 
   return (
     <SidebarProvider>
-      <Sidebar>
+      <Sidebar open={isSidebarOpen} setOpen={setIsSidebarOpen}>
         <SidebarHeader>
           <div className="flex items-center justify-between p-2">
             <div className='flex items-center gap-2'>
@@ -144,6 +141,19 @@ export function ChatLayout() {
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                   <Linkedin className="size-6" />
                 </a>
+              </div>
+              <Separator />
+               <div className="p-2 text-center bg-card-foreground/5 dark:bg-card-foreground/10 rounded-lg">
+                  <h3 className="font-headline text-md font-semibold">Got Ideas?</h3>
+                  <p className="text-sm text-muted-foreground mt-1 mb-3">
+                    Your feedback helps make AluChat better. Send your suggestions!
+                  </p>
+                  <a href="mailto:hakkanparbej@gmail.com">
+                    <Button variant="outline" size="sm" className="w-full">
+                      <Mail className="mr-2 size-4" />
+                      Send Mail
+                    </Button>
+                  </a>
               </div>
             </div>
         </SidebarContent>
@@ -183,6 +193,60 @@ export function ChatLayout() {
       </Sidebar>
       <SidebarInset>
         <div className="relative flex h-full max-h-svh flex-col">
+            <header className="flex-shrink-0 border-b p-2 md:p-4 backdrop-blur-sm bg-background/50 z-10">
+              <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 md:gap-3">
+                    <div className="md:hidden">
+                      <SidebarTrigger onClick={() => setIsSidebarOpen(true)} />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Avatar className="hidden h-10 w-10 border-2 border-primary md:flex">
+                        <AvatarFallback>
+                          <Icons.logo className="p-1" />
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <h2 className="font-headline text-lg font-semibold tracking-wider">AluChat</h2>
+                        <p className="text-xs md:text-sm text-muted-foreground">Your AI Companion</p>
+                      </div>
+                    </div>
+                  </div>
+                   <div className="flex items-center gap-1 md:gap-2">
+                    <ModeToggle mode={mode} onModeChange={handleModeChange} />
+                    <AlertDialog open={isClearAlertOpen} onOpenChange={setIsClearAlertOpen}>
+                      <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon">
+                              <MoreVertical />
+                              <span className="sr-only">More options</span>
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                              <DropdownMenuItem onSelect={() => setIsClearAlertOpen(true)} className="text-destructive focus:text-destructive">
+                                <Trash className="mr-2 h-4 w-4" />
+                                Clear History
+                              </DropdownMenuItem>
+                          </DropdownMenuContent>
+                      </DropdownMenu>
+                      <AlertDialogContent>
+                          <AlertDialogHeader>
+                          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                              This action cannot be undone. This will permanently delete your
+                              current chat history.
+                          </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction onClick={handleClearChat} className="bg-destructive hover:bg-destructive/90">
+                              Clear
+                          </AlertDialogAction>
+                          </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
+              </div>
+            </header>
             <Chat 
               mode={mode} 
               onModeChange={handleModeChange}
