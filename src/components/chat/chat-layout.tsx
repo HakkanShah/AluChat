@@ -42,7 +42,8 @@ export function ChatLayout() {
 
   const handleSignOut = async () => {
     logout();
-    router.push('/auth');
+    // The redirect is now handled by the AuthProvider's useEffect
+    // router.push('/auth');
   };
 
   const handleAvatarClick = () => {
@@ -128,7 +129,29 @@ export function ChatLayout() {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <Chat />
+        <div className="relative flex h-full max-h-svh flex-col">
+           <header className="flex-shrink-0 border-b p-2 md:p-4 backdrop-blur-sm bg-background/50 z-10">
+              <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 md:gap-3">
+                    <div className="md:hidden">
+                      <SidebarTrigger />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Avatar className="hidden h-10 w-10 border-2 border-primary md:flex">
+                        <AvatarFallback>
+                          <Icons.logo className="p-1" />
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <h2 className="font-headline text-lg font-semibold tracking-wider">AluChat</h2>
+                        <p className="text-xs md:text-sm text-muted-foreground">Your AI Companion</p>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </header>
+            <Chat />
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );

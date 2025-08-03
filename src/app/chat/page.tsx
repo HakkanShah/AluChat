@@ -12,7 +12,9 @@ export default function ChatPage() {
   }
 
   if (!user) {
-    redirect('/auth');
+    // The AuthProvider's useEffect will handle the redirect.
+    // Returning null here prevents the component from trying to render
+    // before the redirect happens, which was causing the error.
     return null;
   }
 
