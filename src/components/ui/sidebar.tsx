@@ -96,7 +96,7 @@ const Sidebar = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div">
 >(({ className, children, ...props }, ref) => {
-  const { isMobile, open } = useSidebar()
+  const { isMobile, open, setOpen } = useSidebar()
   const state = open ? 'expanded' : 'collapsed';
 
   const commonContent = (
@@ -112,7 +112,7 @@ const Sidebar = React.forwardRef<
 
   if (isMobile) {
     return (
-      <Sheet open={open} onOpenChange={(value) => useSidebar().setOpen(value)}>
+      <Sheet open={open} onOpenChange={setOpen}>
         <SheetPortal>
           <SheetOverlay />
           <SheetContent side="left" className="w-[--sidebar-width] p-0">
@@ -120,7 +120,7 @@ const Sidebar = React.forwardRef<
              <Button 
                 variant="ghost" size="icon" 
                 className="absolute top-2 right-2 h-7 w-7" 
-                onClick={() => useSidebar().setOpen(false)}>
+                onClick={() => setOpen(false)}>
                 <X className="size-4" />
                 <span className="sr-only">Close sidebar</span>
             </Button>
@@ -149,7 +149,7 @@ const SidebarTrigger = React.forwardRef<
   React.ElementRef<typeof Button>,
   React.ComponentProps<typeof Button>
 >(({ className, ...props }, ref) => {
-  const { toggle, open } = useSidebar()
+  const { toggle } = useSidebar()
 
   return (
     <Button

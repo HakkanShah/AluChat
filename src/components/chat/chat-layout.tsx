@@ -19,12 +19,28 @@ import { Icons } from '@/components/icons';
 import Chat from '@/components/chat/chat';
 import { useAuth } from '../providers/auth-provider';
 import { useRouter } from 'next/navigation';
-import { LogOut, Pencil } from 'lucide-react';
+import { LogOut, Pencil, MoreVertical, Trash } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { ModeToggle } from './mode-toggle';
 import { useTheme } from 'next-themes';
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 function getInitials(name: string | null | undefined) {
   if (!name) return 'U';
@@ -37,17 +53,16 @@ function getInitials(name: string | null | undefined) {
 
 export function ChatLayout() {
   const { user, logout, updateUser } = useAuth();
-  const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const { setTheme } = useTheme();
   const [mode, setMode] = useState<'Good Bro' | 'Bad Bro'>('Good Bro');
+  const [messages, setMessages] = useState<any[]>([]); // Using any for simplicity
+  const [isClearAlertOpen, setIsClearAlertOpen] = useState(false);
 
 
   const handleSignOut = async () => {
     logout();
-    // The redirect is now handled by the AuthProvider's useEffect
-    // router.push('/auth');
   };
 
   const handleAvatarClick = () => {
@@ -58,6 +73,18 @@ export function ChatLayout() {
     setMode(newMode);
     setTheme(newMode === 'Good Bro' ? 'light' : 'dark');
   }
+
+  const handleClearChat = () => {
+    // This is a placeholder. In a real app, you might lift state up
+    // or use a more robust state management solution.
+    setMessages([]); 
+    toast({
+      title: "Chat Cleared",
+      description: "Your conversation history has been wiped.",
+    });
+    setIsClearAlertOpen(false);
+  };
+
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -91,9 +118,11 @@ export function ChatLayout() {
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader>
-          <div className="flex items-center gap-2 p-2">
-            <Icons.logo className="size-8 text-primary" />
-            <h1 className="text-xl font-headline font-semibold">AluChat</h1>
+          <div className="flex items-center justify-between p-2">
+            <div className='flex items-center gap-2'>
+              <Icons.logo className="size-8 text-primary" />
+              <h1 className="text-xl font-headline font-semibold">AluChat</h1>
+            </div>
           </div>
         </SidebarHeader>
         <SidebarContent>
@@ -139,7 +168,15 @@ export function ChatLayout() {
       </Sidebar>
       <SidebarInset>
         <div className="relative flex h-full max-h-svh flex-col">
-            <Chat mode={mode} onModeChange={handleModeChange} />
+            <Chat 
+              mode={mode} 
+              onModeChange={handleModeChange}
+              messages={messages}
+              setMessages={setMessages}
+              isClearAlertOpen={isClearAlertOpen}
+              setIsClearAlertOpen={setIsClearAlertOpen}
+              onClearChat={handleClearChat}
+            />
         </div>
       </SidebarInset>
     </SidebarProvider>
