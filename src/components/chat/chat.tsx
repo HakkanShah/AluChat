@@ -31,6 +31,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { SidebarTrigger } from '../ui/sidebar';
 
 
 const vibeCheckMessages = [
@@ -147,7 +148,10 @@ export default function Chat() {
       <header className="flex-shrink-0 border-b p-2 md:p-4 backdrop-blur-sm bg-background/50">
         <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 md:gap-3">
-              <Avatar className="h-10 w-10 border-2 border-primary">
+              <div className="md:hidden">
+                 <SidebarTrigger />
+              </div>
+              <Avatar className="hidden h-10 w-10 border-2 border-primary md:flex">
                 <AvatarFallback>
                   <Icons.logo className="p-1" />
                 </AvatarFallback>

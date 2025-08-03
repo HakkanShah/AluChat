@@ -79,9 +79,6 @@ export function ChatLayout() {
 
   return (
     <SidebarProvider>
-       <div className="absolute top-2 left-2 z-20 md:hidden">
-          <SidebarTrigger />
-        </div>
       <Sidebar>
         <SidebarHeader>
           <div className="flex items-center gap-2 p-2">
