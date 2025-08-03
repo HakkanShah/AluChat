@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
@@ -23,6 +24,11 @@ const vibeCheckMessages = [
   "Translating to GenZ...",
 ];
 
+const modeSwitchMessages = {
+  'Good Bro': "Switching to Peace Mode 🌈",
+  'Bad Bro': "Ayo, the demon's out 😈",
+};
+
 export default function Chat() {
   const { toast } = useToast();
   const { setTheme } = useTheme();
@@ -30,6 +36,7 @@ export default function Chat() {
   const [mode, setMode] = useState<'Good Bro' | 'Bad Bro'>('Good Bro');
   const [isLoading, setIsLoading] = useState(false);
   const [vibeMessage, setVibeMessage] = useState('');
+  const [systemMessage, setSystemMessage] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -38,7 +45,7 @@ export default function Chat() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isLoading]);
+  }, [messages, isLoading, systemMessage]);
   
   useEffect(() => {
     setMessages([
@@ -46,13 +53,12 @@ export default function Chat() {
     ]);
   }, []);
 
-  useEffect(() => {
-    if (mode === 'Good Bro') {
-      setTheme('light');
-    } else {
-      setTheme('dark');
-    }
-  }, [mode, setTheme]);
+  const handleModeChange = (newMode: 'Good Bro' | 'Bad Bro') => {
+    setMode(newMode);
+    setTheme(newMode === 'Good Bro' ? 'light' : 'dark');
+    setSystemMessage(modeSwitchMessages[newMode]);
+    setTimeout(() => setSystemMessage(null), 2000); // Hide message after 2 seconds
+  }
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -114,7 +120,7 @@ export default function Chat() {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <ModeToggle mode={mode} onModeChange={setMode} />
+          <ModeToggle mode={mode} onModeChange={handleModeChange} />
           <Button variant="ghost" size="icon">
             <MoreVertical />
             <span className="sr-only">More options</span>
@@ -127,6 +133,13 @@ export default function Chat() {
             {messages.map((message) => (
               <ChatMessage key={message.id} message={message} mode={mode}/>
             ))}
+             {systemMessage && (
+                <div className="flex justify-center my-2 animate-slide-in-left">
+                  <div className="text-xs text-muted-foreground bg-card/80 backdrop-blur-md rounded-full px-3 py-1">
+                    {systemMessage}
+                  </div>
+                </div>
+              )}
             {isLoading && (
               <div className="flex items-start gap-4 animate-slide-in-left">
                   <Avatar className="h-10 w-10 border-2 border-primary">

@@ -1,3 +1,4 @@
+
 "use client";
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
@@ -16,7 +17,7 @@ export function ModeToggle({ mode, onModeChange }: ModeToggleProps) {
 
   return (
     <div className="flex items-center space-x-2">
-      <Label htmlFor="mode-switch" className={cn('flex items-center gap-1', mode === 'Good Bro' ? 'text-primary font-semibold' : 'text-muted-foreground')}>
+      <Label htmlFor="mode-switch" className={cn('flex items-center gap-1 cursor-pointer', mode === 'Good Bro' ? 'text-primary font-semibold' : 'text-muted-foreground')}>
         Good Bro <Brain className={cn("size-5 transition-transform duration-300", mode === 'Good Bro' ? 'rotate-0' : '-rotate-12')} />
       </Label>
       <Switch
@@ -25,7 +26,7 @@ export function ModeToggle({ mode, onModeChange }: ModeToggleProps) {
         onCheckedChange={handleToggle}
         aria-label={`Switch to ${mode === 'Good Bro' ? 'Bad Bro' : 'Good Bro'} mode`}
       />
-      <Label htmlFor="mode-switch" className={cn('flex items-center gap-1', mode === 'Bad Bro' ? 'text-primary font-semibold' : 'text-muted-foreground')}>
+      <Label htmlFor="mode-switch" className={cn('flex items-center gap-1 cursor-pointer', mode === 'Bad Bro' ? 'text-primary font-semibold' : 'text-muted-foreground')}>
         Bad Bro <Drama className={cn("size-5 transition-transform duration-300", mode === 'Bad Bro' ? 'rotate-0' : 'rotate-12')}/>
       </Label>
     </div>
