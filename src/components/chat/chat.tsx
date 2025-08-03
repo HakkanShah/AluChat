@@ -13,6 +13,7 @@ import { getAiResponse } from '@/lib/actions';
 import { Icons } from '../icons';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { useTheme } from 'next-themes';
 
 const vibeCheckMessages = [
   "Checking if you're down bad...",
@@ -24,8 +25,9 @@ const vibeCheckMessages = [
 
 export default function Chat() {
   const { toast } = useToast();
+  const { setTheme } = useTheme();
   const [messages, setMessages] = useState<Message[]>([]);
-  const [mode, setMode] = useState<'Normal' | 'Bro'>('Normal');
+  const [mode, setMode] = useState<'Good Bro' | 'Bad Bro'>('Good Bro');
   const [isLoading, setIsLoading] = useState(false);
   const [vibeMessage, setVibeMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -43,6 +45,14 @@ export default function Chat() {
         { id: '1', content: 'What\'s up? Ask me anything!', role: 'assistant', timestamp: Date.now() }
     ]);
   }, []);
+
+  useEffect(() => {
+    if (mode === 'Good Bro') {
+      setTheme('light');
+    } else {
+      setTheme('dark');
+    }
+  }, [mode, setTheme]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -80,7 +90,7 @@ export default function Chat() {
         title: 'Uh oh! Something went wrong.',
         description: "There was a problem with your request. Please try again.",
         variant: 'destructive',
-        className: 'font-mono text-red-400 border-red-400',
+        className: 'font-mono text-accent-foreground border-accent',
       })
     } finally {
       setIsLoading(false);
@@ -88,7 +98,7 @@ export default function Chat() {
   };
 
   return (
-    <div className={cn("flex h-full flex-col bg-background", mode === 'Bro' ? 'font-bro' : '')}>
+    <div className={cn("flex h-full flex-col bg-background", mode === 'Bad Bro' ? 'font-bro' : '')}>
       <header className="flex items-center justify-between border-b p-4">
         <div className="flex items-center gap-3">
           <Avatar className="h-10 w-10 border-2 border-primary">
@@ -98,7 +108,7 @@ export default function Chat() {
           </Avatar>
           <div>
             <h2 className="font-headline text-lg font-semibold tracking-wider">Alu</h2>
-            <p className="text-sm text-muted-foreground">AI Bestie</p>
+            <p className="text-sm text-muted-foreground">Your Desi AI Bestie</p>
           </div>
         </div>
         <div className="flex items-center gap-4">
@@ -127,7 +137,7 @@ export default function Chat() {
                             <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-150"></span>
                             <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-300"></span>
                         </div>
-                        {mode === 'Bro' && <p className="text-sm text-muted-foreground mt-2">{vibeMessage}</p>}
+                        {mode === 'Bad Bro' && <p className="text-sm text-muted-foreground mt-2">{vibeMessage}</p>}
                       </div>
                   </div>
               </div>

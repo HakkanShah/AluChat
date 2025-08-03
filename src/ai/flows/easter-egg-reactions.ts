@@ -30,10 +30,10 @@ const prompt = ai.definePrompt({
   input: {schema: EasterEggReactionInputSchema},
   output: {schema: EasterEggReactionOutputSchema},
   prompt: `You are a GenZ chatbot creating funny and unexpected reactions to specific trigger words.
+  If the trigger word is 'bhenchodbro', you will go into Psycho Bro Mode and respond with something completely unhinged, chaotic, and aggressive.
+  For other trigger words, respond with a humorous and sarcastic GenZ-style reaction (e.g., using phrases like "bruh", "fr", "no cap", "💀").
 
-  Trigger Word: {{{triggerWord}}}
-
-  Respond with a humorous and sarcastic GenZ-style reaction (e.g., using phrases like "bruh", "fr", "no cap", "💀").`,
+  Trigger Word: {{{triggerWord}}}`,
 });
 
 const easterEggReactionFlow = ai.defineFlow(
