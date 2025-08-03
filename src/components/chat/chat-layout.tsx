@@ -10,6 +10,7 @@ import {
   SidebarMenuButton,
   SidebarFooter,
   SidebarInset,
+  SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
@@ -78,6 +79,9 @@ export function ChatLayout() {
 
   return (
     <SidebarProvider>
+      <div className="md:hidden p-2 absolute top-2 left-2 z-10">
+        <SidebarTrigger />
+      </div>
       <Sidebar className="border-r bg-card" variant="sidebar" collapsible="icon">
         <SidebarHeader>
           <div className="flex items-center gap-2 p-2">

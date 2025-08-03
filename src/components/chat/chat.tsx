@@ -157,7 +157,7 @@ export default function Chat() {
                 <p className="text-xs md:text-sm text-muted-foreground">Your AI Companion</p>
               </div>
             </div>
-            <div className="flex items-center gap-1 md:gap-4">
+            <div className="flex items-center gap-1 md:gap-2">
               <ModeToggle mode={mode} onModeChange={handleModeChange} />
               <AlertDialog open={isClearAlertOpen} onOpenChange={setIsClearAlertOpen}>
                 <DropdownMenu>

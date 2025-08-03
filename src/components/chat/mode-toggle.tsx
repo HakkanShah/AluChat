@@ -12,7 +12,7 @@ export function ModeToggle({ mode, onModeChange }: ModeToggleProps) {
   const isBadBro = mode === 'Bad Bro';
 
   return (
-    <div className="relative flex w-64 items-center rounded-full border-2 border-border bg-muted p-1">
+    <div className="relative flex w-48 md:w-64 items-center rounded-full border-2 border-border bg-muted p-1">
       <div
         className={cn(
           'absolute h-10 w-1/2 rounded-full bg-background shadow-md transition-transform duration-300 ease-in-out',
@@ -28,7 +28,7 @@ export function ModeToggle({ mode, onModeChange }: ModeToggleProps) {
         aria-pressed={!isBadBro}
       >
         <BrainCircuit className="size-5" />
-        Good Bro
+        <span className="hidden md:inline">Good Bro</span>
       </button>
       <button
         onClick={() => onModeChange('Bad Bro')}
@@ -39,7 +39,7 @@ export function ModeToggle({ mode, onModeChange }: ModeToggleProps) {
         aria-pressed={isBadBro}
       >
         <Skull className="size-5" />
-        Bad Bro
+        <span className="hidden md:inline">Bad Bro</span>
       </button>
     </div>
   );
