@@ -55,6 +55,8 @@ function ChatLayoutContent() {
   const [mode, setMode] = useState<'Good Bro' | 'Bad Bro'>('Good Bro');
   const [messages, setMessages] = useState<any[]>([]); // Using any for simplicity
   const [isClearAlertOpen, setIsClearAlertOpen] = useState(false);
+  const { toggle } = useSidebar();
+
 
   const handleSignOut = async () => {
     logout();
@@ -222,11 +224,14 @@ function ChatLayoutContent() {
             </div>
           </div>
         </header>
-        <Chat 
-          mode={mode} 
-          messages={messages}
-          setMessages={setMessages}
-        />
+        <main className='flex-1 flex flex-col'>
+            <div className='flex-1' />
+             <Chat 
+                mode={mode} 
+                messages={messages}
+                setMessages={setMessages}
+                />
+        </main>
       </div>
       <AlertDialog open={isClearAlertOpen} onOpenChange={setIsClearAlertOpen}>
         <AlertDialogContent>
