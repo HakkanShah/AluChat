@@ -19,7 +19,7 @@ import { Icons } from '@/components/icons';
 import Chat from '@/components/chat/chat';
 import { useAuth } from '../providers/auth-provider';
 import { useRouter } from 'next/navigation';
-import { LogOut, Pencil, MoreVertical, Trash } from 'lucide-react';
+import { LogOut, Pencil, MoreVertical, Trash, Github, Twitter, Linkedin } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { ModeToggle } from './mode-toggle';
@@ -126,11 +126,23 @@ export function ChatLayout() {
           </div>
         </SidebarHeader>
         <SidebarContent>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton isActive>Chat with Alu</SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
+           <div className="p-2 space-y-4">
+              <div className="text-center">
+                  <p className="font-headline text-lg">Built with brains & banter.</p>
+                  <p className="text-sm text-muted-foreground">Connect with the creator:</p>
+              </div>
+              <div className="flex justify-center gap-4">
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Github className="size-6" />
+                </a>
+                <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Twitter className="size-6" />
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Linkedin className="size-6" />
+                </a>
+              </div>
+            </div>
         </SidebarContent>
         <SidebarFooter>
           <Separator className="my-1" />
