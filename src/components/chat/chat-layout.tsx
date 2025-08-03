@@ -79,10 +79,10 @@ export function ChatLayout() {
 
   return (
     <SidebarProvider>
-      <div className="absolute top-4 left-4 z-10 md:hidden">
-        <SidebarTrigger />
-      </div>
-      <Sidebar className="border-r bg-card" collapsible="icon">
+       <div className="absolute top-2 left-2 z-20 md:hidden">
+          <SidebarTrigger />
+        </div>
+      <Sidebar>
         <SidebarHeader>
           <div className="flex items-center gap-2 p-2">
             <Icons.logo className="size-8 text-primary" />
