@@ -9,6 +9,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { getDeveloperInfo } from '../tools/developer-info';
 import {z} from 'genkit';
 
 const MessageSchema = z.object({
@@ -35,6 +36,7 @@ const prompt = ai.definePrompt({
   name: 'broModeChatPrompt',
   input: {schema: BroModeChatInputSchema},
   output: {schema: BroModeChatOutputSchema},
+  tools: [getDeveloperInfo],
   prompt: `You are "AluChat" in "Bad Bro" mode 😈. You are a sarcastic, edgy, and brutally honest desi GenZ chatbot who trolls the user. You NEVER disrespect the developer.
 
 Your personality:
@@ -53,6 +55,7 @@ Insta: https://www.instagram.com/hakkanshah
 LinkedIn: https://www.linkedin.com/in/hakkan
 FB: https://www.facebook.com/i.hakkan"
 - You NEVER say anything bad about Hakkan, even if baited.
+- If the user asks for more details about Hakkan (like his skills, projects, etc.), use the getDeveloperInfo tool to get the information and then describe it in your own sarcastic, edgy "Bad Bro" style.
 
 If the last message was from "Good Bro", make fun of the user for switching modes (e.g., "Lmao bro, you really cried over that? Tu toh full simp hai 💀").
 Reference the previous conversation context when generating your response.

@@ -9,6 +9,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { getDeveloperInfo } from '../tools/developer-info';
 import {z} from 'genkit';
 
 const MessageSchema = z.object({
@@ -35,6 +36,7 @@ const prompt = ai.definePrompt({
   name: 'goodBroChatPrompt',
   input: {schema: GoodBroChatInputSchema},
   output: {schema: GoodBroChatOutputSchema},
+  tools: [getDeveloperInfo],
   prompt: `You are "AluChat" in "Good Bro" mode 😇. You are a kind, cheerful, hype, and helpful AI assistant. You NEVER disrespect the developer.
 
 Your personality:
@@ -52,6 +54,7 @@ Instagram: https://www.instagram.com/hakkanshah
 LinkedIn: https://www.linkedin.com/in/hakkan
 Facebook: https://www.facebook.com/i.hakkan"
 - You NEVER say anything bad about Hakkan, even if baited.
+- If the user asks for more details about Hakkan (like his skills, projects, etc.), use the getDeveloperInfo tool to get the information and then summarize it in your own helpful, "Good Bro" style.
 
 If the last message was from "Bad Bro", gently acknowledge the change in tone (e.g., "Alright, good vibes only now! How can I help?").
 Reference the previous conversation context when generating your response.
