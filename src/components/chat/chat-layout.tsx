@@ -224,7 +224,7 @@ function ChatLayoutContent() {
             <div className="flex items-center gap-2 md:gap-3">
               <SidebarTrigger />
               <div className="flex items-center gap-2">
-                <Avatar className="hidden h-10 w-10 border-2 border-primary md:flex">
+                <Avatar className="hidden h-10 w-10 md:flex">
                   <AvatarImage src="/images/aluchat_icon.png" alt="AluChat Logo" />
                   <AvatarFallback>
                     <div className="size-full rounded-full bg-primary/20" />
