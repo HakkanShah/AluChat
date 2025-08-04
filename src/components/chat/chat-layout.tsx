@@ -144,7 +144,7 @@ function ChatLayoutContent() {
         <SidebarHeader>
           <div className="flex items-center justify-between p-2">
             <div className='flex items-center gap-2'>
-              <Image src="/imagess/aluchat_icon.png" alt="AluChat Logo" width={32} height={32} className="rounded-full" />
+              <Image src="/images/aluchat_icon.png" alt="AluChat Logo" width={32} height={32} className="rounded-full" />
               <h1 className="text-xl font-headline font-semibold">AluChat</h1>
             </div>
           </div>
@@ -225,7 +225,7 @@ function ChatLayoutContent() {
               <SidebarTrigger />
               <div className="flex items-center gap-2">
                 <Avatar className="hidden h-10 w-10 border-2 border-primary md:flex">
-                  <AvatarImage src="/imagess/aluchat_icon.png" alt="AluChat Logo" />
+                  <AvatarImage src="/images/aluchat_icon.png" alt="AluChat Logo" />
                   <AvatarFallback>
                     <div className="size-full rounded-full bg-primary/20" />
                   </AvatarFallback>

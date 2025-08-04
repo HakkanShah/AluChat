@@ -17,7 +17,7 @@ export default function AuthPage() {
   return (
     <div className="relative flex min-h-svh flex-col items-center justify-center bg-background good-bro-bg p-4">
       <div className="absolute top-4 left-4 md:top-8 md:left-8 flex items-center gap-2">
-        <Image src="/imagess/aluchat_icon.png" alt="AluChat Logo" width={32} height={32} className="rounded-full" />
+        <Image src="/images/aluchat_icon.png" alt="AluChat Logo" width={32} height={32} className="rounded-full" />
         <h1 className="text-xl font-headline font-semibold">AluChat</h1>
       </div>
       <Tabs defaultValue="login" className="w-full max-w-md" loop={false}>
