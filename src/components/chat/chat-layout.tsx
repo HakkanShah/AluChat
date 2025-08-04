@@ -117,7 +117,7 @@ function ChatLayoutContent() {
         const timer = setTimeout(() => {
             setSystemMessage(null);
             setIsSwitching(false);
-        }, 2000);
+        }, 700);
         return () => clearTimeout(timer);
     }
   }, [isSwitching]);
