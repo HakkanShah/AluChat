@@ -217,13 +217,14 @@ function ChatLayoutContent() {
           </div>
         </SidebarFooter>
       </Sidebar>
-      <div className="flex h-svh flex-col flex-1">
+      <div className="flex h-svh flex-1 flex-col">
         <header className="flex-shrink-0 border-b p-2 md:p-4 backdrop-blur-sm bg-background/50 z-10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 md:gap-3">
               <SidebarTrigger />
               <div className="flex items-center gap-2">
                 <Avatar className="hidden h-10 w-10 border-2 border-primary md:flex">
+                  <AvatarImage src="https://placehold.co/100x100.png" alt="AluChat Logo" data-ai-hint="logo" />
                   <AvatarFallback>
                     <div className="size-full rounded-full bg-primary/20" />
                   </AvatarFallback>
