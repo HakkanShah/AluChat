@@ -130,7 +130,7 @@ export default function Chat({
               )}
             {isLoading && (
               <div className="flex items-start gap-4 animate-slide-in-left">
-                  <Avatar className="h-10 w-10">
+                  <Avatar className="h-10 w-10 border-2 border-primary">
                      <div className="size-full rounded-full bg-primary/20" />
                   </Avatar>
                   <div className="max-w-[75%] rounded-2xl rounded-bl-none bg-muted px-4 py-3 backdrop-blur-md bg-opacity-50">

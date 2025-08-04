@@ -30,7 +30,7 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
       )}
     >
       {!isUser && (
-        <Avatar className="h-10 w-10 shadow-lg">
+        <Avatar className="h-10 w-10 shadow-lg border-2 border-primary">
            <AvatarImage src="/images/aluchat_icon.png" alt="AluChat Logo" />
           <AvatarFallback>
             <div className="size-full rounded-full bg-primary/20" />
