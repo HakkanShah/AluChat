@@ -22,7 +22,7 @@ const getAudioContext = (): AudioContext | null => {
 }
 
 
-// Function to play the "message sent" sound
+// Function to play the "message sent" sound - a short, high-pitched "tick"
 export const playSendSound = () => {
     const context = getAudioContext();
     if (!context) return;
@@ -35,21 +35,21 @@ export const playSendSound = () => {
     const oscillator = context.createOscillator();
     const gainNode = context.createGain();
 
-    oscillator.type = 'sine'; // A simple, clean tone
-    oscillator.frequency.setValueAtTime(600, context.currentTime); // Higher pitch for sending
-    gainNode.gain.setValueAtTime(0.1, context.currentTime); // Start with a low volume
+    oscillator.type = 'triangle'; 
+    oscillator.frequency.setValueAtTime(880, context.currentTime); // Higher pitch for sending (A5)
+    gainNode.gain.setValueAtTime(0.08, context.currentTime); // Start with a low volume
 
-    // Fade out quickly
-    gainNode.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.2);
+    // Fade out very quickly
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.15);
 
     oscillator.connect(gainNode);
     gainNode.connect(context.destination);
 
     oscillator.start();
-    oscillator.stop(context.currentTime + 0.2);
+    oscillator.stop(context.currentTime + 0.15);
 };
 
-// Function to play the "message received" sound
+// Function to play the "message received" sound - a softer, lower-pitched "bloop"
 export const playReceiveSound = () => {
     const context = getAudioContext();
     if (!context) return;
@@ -62,16 +62,16 @@ export const playReceiveSound = () => {
     const oscillator = context.createOscillator();
     const gainNode = context.createGain();
 
-    oscillator.type = 'triangle'; // A slightly softer tone
-    oscillator.frequency.setValueAtTime(440, context.currentTime); // Standard A4 pitch for receiving
+    oscillator.type = 'sine'; // A softer, cleaner tone
+    oscillator.frequency.setValueAtTime(523.25, context.currentTime); // C5 pitch for receiving
     gainNode.gain.setValueAtTime(0.1, context.currentTime);
 
-    // A slightly different fade-out curve
-    gainNode.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.3);
+    // A slightly longer fade-out curve
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.25);
 
     oscillator.connect(gainNode);
     gainNode.connect(context.destination);
 
     oscillator.start();
-    oscillator.stop(context.currentTime + 0.3);
+    oscillator.stop(context.currentTime + 0.25);
 };
