@@ -299,7 +299,7 @@ function ChatLayoutContent() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                   <DropdownMenuItem onSelect={handleShare}>
+                   <DropdownMenuItem onClick={handleShare}>
                     <Share2 className="mr-2 h-4 w-4" />
                     Share with Friends
                   </DropdownMenuItem>
@@ -357,3 +357,5 @@ export function ChatLayout() {
     </SidebarProvider>
   )
 }
+
+    
