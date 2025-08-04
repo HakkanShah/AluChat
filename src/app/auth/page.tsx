@@ -11,12 +11,13 @@ import { LoginForm } from '@/components/auth/login-form';
 import { SignupForm } from '@/components/auth/signup-form';
 import { Button } from '@/components/ui/button';
 import { Github } from 'lucide-react';
+import Image from 'next/image';
 
 export default function AuthPage() {
   return (
     <div className="relative flex min-h-svh flex-col items-center justify-center bg-background good-bro-bg p-4">
       <div className="absolute top-4 left-4 md:top-8 md:left-8 flex items-center gap-2">
-        <div className="size-8 rounded-full bg-primary/20" />
+        <Image src="/imagess/aluchat_icon.png" alt="AluChat Logo" width={32} height={32} className="rounded-full" />
         <h1 className="text-xl font-headline font-semibold">AluChat</h1>
       </div>
       <Tabs defaultValue="login" className="w-full max-w-md" loop={false}>

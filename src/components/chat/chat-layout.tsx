@@ -35,6 +35,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import type { Message } from '@/lib/types';
+import Image from 'next/image';
 
 
 function getInitials(name: string | null | undefined) {
@@ -143,7 +144,7 @@ function ChatLayoutContent() {
         <SidebarHeader>
           <div className="flex items-center justify-between p-2">
             <div className='flex items-center gap-2'>
-              <div className="size-8 rounded-full bg-primary/20" />
+              <Image src="/imagess/aluchat_icon.png" alt="AluChat Logo" width={32} height={32} className="rounded-full" />
               <h1 className="text-xl font-headline font-semibold">AluChat</h1>
             </div>
           </div>
@@ -224,7 +225,7 @@ function ChatLayoutContent() {
               <SidebarTrigger />
               <div className="flex items-center gap-2">
                 <Avatar className="hidden h-10 w-10 border-2 border-primary md:flex">
-                  <AvatarImage src="https://placehold.co/100x100.png" alt="AluChat Logo" data-ai-hint="logo" />
+                  <AvatarImage src="/imagess/aluchat_icon.png" alt="AluChat Logo" />
                   <AvatarFallback>
                     <div className="size-full rounded-full bg-primary/20" />
                   </AvatarFallback>
