@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowUp } from 'lucide-react';
 import TextareaAutosize from 'react-textarea-autosize';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
@@ -12,6 +13,7 @@ interface ChatInputProps {
 
 export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
   const [message, setMessage] = useState('');
+  const isMobile = useIsMobile();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,10 +24,15 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSubmit(e as any);
+    // Desktop: Enter to send, Shift+Enter for new line
+    if (!isMobile) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSubmit(e as any);
+        }
     }
+    // Mobile: Enter for new line, use button to send.
+    // So, we don't do anything special for keydown on mobile.
   };
 
   return (
