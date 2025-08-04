@@ -6,11 +6,11 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '../providers/auth-provider';
 import { Markdown } from '../ui/markdown';
 import { Button } from '../ui/button';
-import { Check, Copy } from 'lucide-react';
+import { Check, Copy, MoreVertical } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 
 
 function getInitials(name: string | null | undefined) {
@@ -35,6 +35,8 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
   const isGoodBro = mode === 'Good Bro';
 
   const onCopy = () => {
+    if (isCopied) return;
+    navigator.clipboard.writeText(message.content);
     setIsCopied(true);
     toast({
       description: "Copied to clipboard!",
@@ -42,8 +44,8 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
     setTimeout(() => setIsCopied(false), 2000);
   };
 
-  const messageContent = (
-    <div
+  const MessageContent = () => (
+     <div
       className={cn(
         'max-w-[75%] rounded-2xl px-4 py-3 shadow-lg group relative',
         isUser
@@ -59,24 +61,11 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
       <div className="whitespace-pre-wrap">
         {isUser ? message.content : <Markdown content={message.content} />}
       </div>
-      <CopyToClipboard text={message.content} onCopy={onCopy}>
-          <Button
-            size="icon"
-            variant="ghost"
-            className={cn(
-              "absolute -top-2 -right-2 size-7 text-muted-foreground transition-all duration-300",
-              isMobile ? "opacity-100" : "opacity-0 group-hover:opacity-100",
-              isCopied && "opacity-100"
-            )}
-          >
-            {isCopied ? <Check className="size-4 text-green-500" /> : <Copy className="size-4" />}
-          </Button>
-      </CopyToClipboard>
     </div>
-  );
+  )
 
   return (
-    <div className={cn('flex items-start gap-3', 
+    <div className={cn('group flex items-start gap-3', 
         isUser ? 'justify-end animate-slide-in-right' : 'justify-start animate-slide-in-left'
       )}
     >
@@ -89,7 +78,33 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
         </Avatar>
       )}
 
-      {messageContent}
+      <div className={cn(
+        "flex items-center gap-2",
+         isUser ? "flex-row-reverse" : "flex-row"
+      )}>
+        <MessageContent />
+         <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button
+                    size="icon"
+                    variant="ghost"
+                    className={cn(
+                    "size-7 text-muted-foreground transition-all duration-300",
+                    isMobile ? "opacity-100" : "opacity-0 group-hover:opacity-100",
+                    )}
+                >
+                    <MoreVertical className="size-4" />
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align={isUser ? "end" : "start"}>
+                <DropdownMenuItem onClick={onCopy}>
+                    {isCopied ? <Check className="mr-2" /> : <Copy className="mr-2" />}
+                    {isCopied ? 'Copied!' : 'Copy'}
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
 
       {isUser && (
         <Avatar className="h-10 w-10 shadow-lg">
