@@ -150,6 +150,10 @@ function ChatLayoutContent() {
       }
     } catch (error) {
       console.error('Error sharing:', error);
+      // Don't show an error toast if the user cancels the share dialog
+      if (error instanceof Error && error.name === 'AbortError') {
+        return;
+      }
       toast({
         title: 'Oops!',
         description: 'Could not share the app at this moment.',
@@ -356,3 +360,5 @@ export function ChatLayout() {
     </SidebarProvider>
   )
 }
+
+    
