@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import type { Message } from '@/lib/types';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '../providers/auth-provider';
+import { Markdown } from '../ui/markdown';
 
 
 function getInitials(name: string | null | undefined) {
@@ -50,7 +51,9 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
           !isUser && !isGoodBro && 'text-primary-foreground',
         )}
       >
-        <p className="whitespace-pre-wrap">{message.content}</p>
+        <div className="whitespace-pre-wrap">
+          {isUser ? message.content : <Markdown content={message.content} />}
+        </div>
       </div>
       {isUser && (
         <Avatar className="h-10 w-10 shadow-lg">
