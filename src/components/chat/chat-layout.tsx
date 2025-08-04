@@ -6,7 +6,6 @@ import {
   SidebarHeader,
   SidebarContent,
   SidebarFooter,
-  useSidebar,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -15,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import Chat from '@/components/chat/chat';
 import { useAuth } from '../providers/auth-provider';
 import { LogOut, Pencil, MoreVertical, Trash, Github, Instagram, Facebook, Linkedin, Mail } from 'lucide-react';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { ModeToggle } from '../chat/mode-toggle';
 import { useTheme } from 'next-themes';
@@ -35,6 +34,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import type { Message } from '@/lib/types';
 
 
 function getInitials(name: string | null | undefined) {
@@ -46,16 +46,21 @@ function getInitials(name: string | null | undefined) {
   return name[0].toUpperCase();
 }
 
+const modeSwitchMessages = {
+  'Good Bro': "Switching to Peace Mode 🌈",
+  'Bad Bro': "Ayo, the demon's out 😈",
+};
+
 function ChatLayoutContent() {
   const { user, logout, updateUser } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const { setTheme } = useTheme();
   const [mode, setMode] = useState<'Good Bro' | 'Bad Bro'>('Good Bro');
-  const [messages, setMessages] = useState<any[]>([]); // Using any for simplicity
+  const [messages, setMessages] = useState<Message[]>([]);
   const [isClearAlertOpen, setIsClearAlertOpen] = useState(false);
-  const { toggle } = useSidebar();
-
+  const [isSwitching, setIsSwitching] = useState(false);
+  const [systemMessage, setSystemMessage] = useState<string | null>(null);
 
   const handleSignOut = async () => {
     logout();
@@ -66,9 +71,23 @@ function ChatLayoutContent() {
   };
 
   const handleModeChange = (newMode: 'Good Bro' | 'Bad Bro') => {
+    if (mode === newMode) return;
+
     setMode(newMode);
     setTheme(newMode === 'Good Bro' ? 'light' : 'dark');
+    setSystemMessage(modeSwitchMessages[newMode]);
+    setIsSwitching(true);
   }
+
+  useEffect(() => {
+    if (isSwitching) {
+        const timer = setTimeout(() => {
+            setSystemMessage(null);
+            setIsSwitching(false);
+        }, 2000);
+        return () => clearTimeout(timer);
+    }
+  }, [isSwitching]);
 
   const handleClearChat = () => {
     setMessages([]);
@@ -228,6 +247,8 @@ function ChatLayoutContent() {
                 mode={mode} 
                 messages={messages}
                 setMessages={setMessages}
+                isSwitching={isSwitching}
+                systemMessage={systemMessage}
                 />
         </main>
       </div>

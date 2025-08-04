@@ -2,13 +2,13 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ChatInput } from './chat-input';
 import { ChatMessage } from './chat-message';
 import type { Message } from '@/lib/types';
 import { getAiResponse } from '@/lib/actions';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { Avatar, AvatarFallback } from '../ui/avatar';
 
 
 const vibeCheckMessages = [
@@ -19,29 +19,26 @@ const vibeCheckMessages = [
   "Translating to GenZ...",
 ];
 
-const modeSwitchMessages = {
-  'Good Bro': "Switching to Peace Mode 🌈",
-  'Bad Bro': "Ayo, the demon's out 😈",
-};
-
 const initialMessage: Message = { id: '1', content: 'What\'s up? Ask me anything!', role: 'assistant', timestamp: Date.now() };
 
 interface ChatProps {
   mode: 'Good Bro' | 'Bad Bro';
   messages: Message[];
   setMessages: (messages: Message[]) => void;
+  isSwitching: boolean;
+  systemMessage: string | null;
 }
 
 export default function Chat({ 
   mode, 
   messages,
   setMessages,
+  isSwitching,
+  systemMessage,
 }: ChatProps) {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [vibeMessage, setVibeMessage] = useState('');
-  const [systemMessage, setSystemMessage] = useState<string | null>(null);
-  const [isSwitching, setIsSwitching] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
 
@@ -64,16 +61,6 @@ export default function Chat({
   useEffect(() => {
     scrollToBottom();
   }, [messages, isLoading, systemMessage]);
-
-  useEffect(() => {
-    if (isSwitching) {
-        const timer = setTimeout(() => {
-            setSystemMessage(null);
-            setIsSwitching(false);
-        }, 2000);
-        return () => clearTimeout(timer);
-    }
-  }, [isSwitching]);
 
 
   useEffect(() => {
