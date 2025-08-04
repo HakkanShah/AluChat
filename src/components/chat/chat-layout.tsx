@@ -46,10 +46,19 @@ function getInitials(name: string | null | undefined) {
   return name[0].toUpperCase();
 }
 
-const modeSwitchMessages = {
-  'Good Bro': "Switching to Peace Mode 🌈",
-  'Bad Bro': "Ayo, the demon's out 😈",
-};
+const goodBroMessages = [
+  "Switching to Peace Mode 🌈",
+  "Aura cleansed. Good vibes only.",
+  "Engaging wholesome protocols.",
+  "Here to help! 😊",
+];
+
+const badBroMessages = [
+  "Ayo, the demon's out 😈",
+  "Alright, let's turn up the heat 🔥",
+  "Mode: Sarcasm. Loading...",
+  "The gloves are off. Let's go 💀",
+];
 
 function ChatLayoutContent() {
   const { user, logout, updateUser } = useAuth();
@@ -71,11 +80,13 @@ function ChatLayoutContent() {
   };
 
   const handleModeChange = (newMode: 'Good Bro' | 'Bad Bro') => {
-    if (mode === newMode) return;
+    if (mode === newMode || isSwitching) return;
 
     setMode(newMode);
     setTheme(newMode === 'Good Bro' ? 'light' : 'dark');
-    setSystemMessage(modeSwitchMessages[newMode]);
+    
+    const messages = newMode === 'Good Bro' ? goodBroMessages : badBroMessages;
+    setSystemMessage(messages[Math.floor(Math.random() * messages.length)]);
     setIsSwitching(true);
   }
 

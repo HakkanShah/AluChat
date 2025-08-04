@@ -113,7 +113,7 @@ export default function Chat({
         "flex flex-col h-full", 
         mode === 'Good Bro' ? 'good-bro-bg' : 'bad-bro-bg',
         mode === 'Bad Bro' ? 'font-bro' : '',
-        isSwitching && (mode === 'Bad Bro' ? 'animate-glitch' : 'animate-flash')
+        isSwitching && (mode === 'Bad Bro' ? 'animate-glitch' : 'animate-awakening')
       )}
     >
       <div className="flex-1 overflow-y-auto p-2 md:p-6" ref={scrollAreaRef}>
@@ -131,9 +131,7 @@ export default function Chat({
             {isLoading && (
               <div className="flex items-start gap-4 animate-slide-in-left">
                   <Avatar className="h-10 w-10 border-2 border-primary">
-                      <AvatarFallback>
-                        <div className="size-full rounded-full bg-primary/20" />
-                      </AvatarFallback>
+                     <div className="size-full rounded-full bg-primary/20" />
                   </Avatar>
                   <div className="max-w-[75%] rounded-2xl rounded-bl-none bg-muted px-4 py-3 backdrop-blur-md bg-opacity-50">
                       <div className="flex flex-col">
