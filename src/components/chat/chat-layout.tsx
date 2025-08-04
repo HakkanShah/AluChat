@@ -156,16 +156,16 @@ function ChatLayoutContent() {
                   <p className="text-sm text-muted-foreground">Connect with the creator:</p>
               </div>
               <div className="flex justify-center gap-4">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="https://github.com/HakkanShah" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                   <Github className="size-6" />
                 </a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="https://www.instagram.com/hakkanshah" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                   <Instagram className="size-6" />
                 </a>
-                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                 <a href="https://www.facebook.com/i.hakkan" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                   <Facebook className="size-6" />
                 </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="https://www.linkedin.com/in/hakkan" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                   <Linkedin className="size-6" />
                 </a>
               </div>
@@ -224,7 +224,7 @@ function ChatLayoutContent() {
             <div className="flex items-center gap-2 md:gap-3">
               <SidebarTrigger />
               <div className="flex items-center gap-2">
-                <Avatar className="hidden h-10 w-10 border-2 border-primary md:flex">
+                <Avatar className="h-10 w-10 border-2 border-primary">
                   <AvatarImage src="/images/aluchat_icon.png" alt="AluChat Logo" />
                   <AvatarFallback>
                     <div className="size-full rounded-full bg-primary/20" />
