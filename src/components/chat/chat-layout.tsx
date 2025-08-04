@@ -133,13 +133,16 @@ function ChatLayoutContent() {
   
   const handleShare = async () => {
     const shareData = {
-      title: 'AluChat',
-      text: "Yo, check out this hilarious AI chatbot! 🌶️ One potato, two personalities – you won't regret it. #AluChat",
+      title: "AluChat – The Spiciest AI Potato 😎🥔",
+      text: "Meet Good Bro and Bad Bro at AluChat – The Desi AI Potato Duo who'll roast, roast, and respect you all at once! 😂 Try it now 👉",
       url: 'https://aluchat.netlify.app/',
     };
     try {
       if (navigator.share) {
         await navigator.share(shareData);
+        toast({
+            title: "Thanks for spreading the potato madness! 🥔🔥",
+        });
       } else {
         // Fallback for browsers that don't support the Web Share API
         await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
@@ -149,7 +152,6 @@ function ChatLayoutContent() {
         });
       }
     } catch (error) {
-      console.error('Error sharing:', error);
       // Don't show an error toast if the user cancels the share dialog
       if (error instanceof Error && error.name === 'AbortError') {
         return;
