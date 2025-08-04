@@ -360,5 +360,3 @@ export function ChatLayout() {
     </SidebarProvider>
   )
 }
-
-    
