@@ -72,14 +72,14 @@ function ChatLayoutContent() {
   const [isClearAlertOpen, setIsClearAlertOpen] = useState(false);
   const [isSwitching, setIsSwitching] = useState(false);
   const [systemMessage, setSystemMessage] = useState<string | null>(null);
-  const [showTutorial, setShowTutorial] = useState(false);
+  const [isTutorialOpen, setIsTutorialOpen] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
 
   useEffect(() => {
     const isNewUser = localStorage.getItem('isNewUser');
     if (isNewUser) {
-      setShowTutorial(true);
-      setTutorialStep(1); // Start the tutorial at step 1
+      setIsTutorialOpen(true);
+      setTutorialStep(1); // Start the tutorial
     }
   }, []);
 
@@ -87,7 +87,7 @@ function ChatLayoutContent() {
     if (tutorialStep < 3) {
       setTutorialStep(prev => prev + 1);
     } else {
-      setShowTutorial(false);
+      setIsTutorialOpen(false);
       localStorage.removeItem('isNewUser');
     }
   };
@@ -257,7 +257,12 @@ function ChatLayoutContent() {
               </div>
             </div>
             <div className="flex items-center gap-1 md:gap-2">
-              <ModeToggle mode={mode} onModeChange={handleModeChange} />
+              <ModeToggle 
+                mode={mode} 
+                onModeChange={handleModeChange} 
+                isTutorialRunning={isTutorialOpen} 
+                tutorialStep={tutorialStep}
+              />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon">
@@ -302,7 +307,11 @@ function ChatLayoutContent() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-      <TutorialDialog open={showTutorial} step={tutorialStep} onNext={handleTutorialNext} />
+      <TutorialDialog 
+        open={isTutorialOpen}
+        step={tutorialStep}
+        onNext={handleTutorialNext}
+      />
     </>
   );
 }
