@@ -341,7 +341,7 @@ function ChatLayoutContent() {
               permanently deleted.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="sm:justify-center flex-col-reverse sm:flex-row gap-2">
+          <AlertDialogFooter className="flex-col-reverse gap-2 sm:flex-row sm:justify-center">
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={handleClearChat} className="bg-destructive hover:bg-destructive/90">
               Yes, clear chat
