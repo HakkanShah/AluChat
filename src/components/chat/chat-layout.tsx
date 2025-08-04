@@ -297,10 +297,6 @@ function ChatLayoutContent() {
                 isTutorialRunning={isTutorialOpen} 
                 tutorialStep={tutorialStep}
               />
-               <Button variant="ghost" size="icon" onClick={handleShare}>
-                <Share2 />
-                <span className="sr-only">Share with Friends</span>
-              </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon">
@@ -309,6 +305,11 @@ function ChatLayoutContent() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
+                   <DropdownMenuItem onSelect={handleShare}>
+                    <Share2 className="mr-2 h-4 w-4" />
+                    Share
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={() => setIsClearAlertOpen(true)} className="text-destructive focus:text-destructive">
                     <Trash className="mr-2 h-4 w-4" />
                     Clear History
