@@ -69,6 +69,9 @@ export function SignupForm() {
             photoURL: `https://placehold.co/100x100.png?text=${values.name[0].toUpperCase()}`
         });
 
+        // Set a flag for the tutorial
+        localStorage.setItem('isNewUser', 'true');
+
         toast({
             title: "Account Created",
             description: "You have successfully signed up!",

@@ -36,6 +36,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import type { Message } from '@/lib/types';
 import Image from 'next/image';
+import { TutorialDialog } from './tutorial-dialog';
 
 
 function getInitials(name: string | null | undefined) {
@@ -71,6 +72,15 @@ function ChatLayoutContent() {
   const [isClearAlertOpen, setIsClearAlertOpen] = useState(false);
   const [isSwitching, setIsSwitching] = useState(false);
   const [systemMessage, setSystemMessage] = useState<string | null>(null);
+  const [isTutorialOpen, setIsTutorialOpen] = useState(false);
+
+  useEffect(() => {
+    const isNewUser = localStorage.getItem('isNewUser');
+    if (isNewUser) {
+      setIsTutorialOpen(true);
+      localStorage.removeItem('isNewUser');
+    }
+  }, []);
 
   const handleSignOut = async () => {
     logout();
@@ -282,6 +292,7 @@ function ChatLayoutContent() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      <TutorialDialog open={isTutorialOpen} onOpenChange={setIsTutorialOpen} />
     </>
   );
 }
