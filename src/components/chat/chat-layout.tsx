@@ -13,7 +13,7 @@ import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import Chat from '@/components/chat/chat';
 import { useAuth } from '../providers/auth-provider';
-import { LogOut, Pencil, MoreVertical, Trash, Github, Instagram, Facebook, Linkedin, Mail } from 'lucide-react';
+import { LogOut, Pencil, MoreVertical, Trash, Github, Instagram, Facebook, Linkedin, Mail, Share2 } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { ModeToggle } from '../chat/mode-toggle';
@@ -22,6 +22,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -128,6 +129,33 @@ function ChatLayoutContent() {
       description: "Your conversation history has been wiped.",
     });
     setIsClearAlertOpen(false);
+  };
+  
+  const handleShare = async () => {
+    const shareData = {
+      title: 'AluChat',
+      text: "Yo, check out this hilarious AI chatbot! 🌶️ One potato, two personalities – you won't regret it. #AluChat",
+      url: 'https://aluchat.netlify.app/',
+    };
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        // Fallback for browsers that don't support the Web Share API
+        await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
+        toast({
+          title: 'Link Copied!',
+          description: 'The share link has been copied to your clipboard.',
+        });
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
+      toast({
+        title: 'Oops!',
+        description: 'Could not share the app at this moment.',
+        variant: 'destructive',
+      });
+    }
   };
 
 
@@ -271,6 +299,11 @@ function ChatLayoutContent() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
+                   <DropdownMenuItem onSelect={handleShare}>
+                    <Share2 className="mr-2 h-4 w-4" />
+                    Share with Friends
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={() => setIsClearAlertOpen(true)} className="text-destructive focus:text-destructive">
                     <Trash className="mr-2 h-4 w-4" />
                     Clear History
