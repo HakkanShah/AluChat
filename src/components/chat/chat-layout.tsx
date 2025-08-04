@@ -221,10 +221,10 @@ function ChatLayoutContent() {
       <div className="flex h-svh flex-1 flex-col">
         <header className="flex-shrink-0 border-b p-2 md:p-4 backdrop-blur-sm bg-background/50 z-10">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 md:gap-3">
+            <div className="flex items-center gap-1 md:gap-3">
               <SidebarTrigger />
               <div className="flex items-center gap-2">
-                <Avatar className="h-10 w-10 border-2 border-primary">
+                <Avatar>
                   <AvatarImage src="/images/aluchat_icon.png" alt="AluChat Logo" />
                   <AvatarFallback>
                     <div className="size-full rounded-full bg-primary/20" />
