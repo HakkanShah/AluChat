@@ -47,7 +47,7 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
   const MessageContent = () => (
      <div
       className={cn(
-        'max-w-[75%] rounded-2xl px-4 py-3 shadow-lg group relative',
+        'max-w-[85%] rounded-2xl px-4 py-3 shadow-lg group relative',
         isUser
           ? 'bg-primary text-primary-foreground rounded-br-none'
           : 'rounded-bl-none',
