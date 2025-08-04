@@ -9,6 +9,7 @@ import { getAiResponse } from '@/lib/actions';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Avatar } from '../ui/avatar';
+import { playReceiveSound, playSendSound } from '@/lib/audio';
 
 
 const vibeCheckMessages = [
@@ -75,6 +76,7 @@ export default function Chat({
   }, [isLoading]);
 
   const handleSendMessage = async (content: string) => {
+    playSendSound();
     const userMessage: Message = {
       id: String(Date.now()),
       content,
@@ -95,6 +97,7 @@ export default function Chat({
         timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, botMessage]);
+      playReceiveSound();
     } catch (error) {
       console.error('Error getting AI response:', error);
       toast({
