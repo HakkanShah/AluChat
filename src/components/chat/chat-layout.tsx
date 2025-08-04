@@ -72,15 +72,25 @@ function ChatLayoutContent() {
   const [isClearAlertOpen, setIsClearAlertOpen] = useState(false);
   const [isSwitching, setIsSwitching] = useState(false);
   const [systemMessage, setSystemMessage] = useState<string | null>(null);
-  const [isTutorialOpen, setIsTutorialOpen] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(false);
+  const [tutorialStep, setTutorialStep] = useState(0);
 
   useEffect(() => {
     const isNewUser = localStorage.getItem('isNewUser');
     if (isNewUser) {
-      setIsTutorialOpen(true);
-      localStorage.removeItem('isNewUser');
+      setShowTutorial(true);
+      setTutorialStep(1); // Start the tutorial at step 1
     }
   }, []);
+
+  const handleTutorialNext = () => {
+    if (tutorialStep < 3) {
+      setTutorialStep(prev => prev + 1);
+    } else {
+      setShowTutorial(false);
+      localStorage.removeItem('isNewUser');
+    }
+  };
 
   const handleSignOut = async () => {
     logout();
@@ -292,7 +302,7 @@ function ChatLayoutContent() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-      <TutorialDialog open={isTutorialOpen} onOpenChange={setIsTutorialOpen} />
+      <TutorialDialog open={showTutorial} step={tutorialStep} onNext={handleTutorialNext} />
     </>
   );
 }
