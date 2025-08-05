@@ -104,7 +104,7 @@ function ChatLayoutContent() {
 
   useEffect(() => {
     fetchAluism();
-  }, [fetchAluism]);
+  }, []);
 
   const handleTutorialNext = () => {
     if (tutorialStep < 3) {
@@ -224,6 +224,7 @@ function ChatLayoutContent() {
               <div>
                 <div className='flex items-center gap-2'>
                   <h1 className="text-xl font-headline font-semibold">AluChat</h1>
+                   <div className="size-2.5 rounded-full bg-green-500 animate-ping-pulse" />
                   <InfoDialog />
                 </div>
                 <p className="text-xs text-muted-foreground">Your AI Companion</p>
