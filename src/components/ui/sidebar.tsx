@@ -4,7 +4,7 @@
 import * as React from "react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
-import { Sheet, SheetContent, SheetOverlay, SheetPortal, SheetClose } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetOverlay, SheetPortal, SheetClose, SheetTitle } from "@/components/ui/sheet"
 import { Button } from "./button"
 import { PanelLeft, X } from "lucide-react"
 
@@ -84,6 +84,7 @@ export const Sidebar = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTM
           <SheetPortal>
             <SheetOverlay />
             <SheetContent side="left" className="w-[16rem] p-0">
+               <SheetTitle className="sr-only">Sidebar Menu</SheetTitle>
               {commonContent}
             </SheetContent>
           </SheetPortal>
