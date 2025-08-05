@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
@@ -114,7 +113,7 @@ export default function Chat({
   return (
     <div className={cn(
         "flex flex-col h-full", 
-        mode === 'Sweet' ? 'good-bro-bg' : 'bad-bro-bg',
+        mode === 'Sweet' ? 'good-bro-bg' : 'bad-bro-bg-v2',
         mode === 'Savage' ? 'font-bro' : '',
         isSwitching && (mode === 'Savage' ? 'animate-glitch' : 'animate-awakening')
       )}

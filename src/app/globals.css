@@ -106,12 +106,12 @@
       radial-gradient(at 20% 90%, hsla(266, 85%, 66%, 0.1) 0px, transparent 50%);
   }
 
-  .bad-bro-bg {
+  .bad-bro-bg-v2 {
     background-color: #020817;
     background-image:
-      radial-gradient(at 20% 20%, hsla(210, 100%, 50%, 0.15) 0px, transparent 50%),
-      radial-gradient(at 80% 0%, hsla(338, 91%, 60%, 0.15) 0px, transparent 50%),
-      radial-gradient(at 80% 80%, hsla(224, 71.4%, 4.1%, 0) 0px, transparent 50%);
+      radial-gradient(at 0% 100%, hsla(338, 91%, 60%, 0.2) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, hsla(210, 100%, 50%, 0.2) 0px, transparent 50%),
+      radial-gradient(at 90% 90%, hsla(224, 71%, 4%, 0) 0px, transparent 50%);
   }
 
   @keyframes slide-in-left {
@@ -158,7 +158,7 @@
     }
     10% {
       transform: translate(-5px, -5px);
-      text-shadow: 2px 2px 0 red, -2px -2px 0 cyan;
+      text-shadow: 2px 2px 0 hsl(var(--accent)), -2px -2px 0 hsl(var(--primary) / 0.5);
     }
     20% {
       transform: translate(5px, 5px);
@@ -172,7 +172,7 @@
     }
     50% {
       transform: translate(-5px, -5px);
-      text-shadow: -2px 2px 0 red, 2px -2px 0 cyan;
+      text-shadow: -2px 2px 0 hsl(var(--accent)), 2px -2px 0 hsl(var(--primary) / 0.5);
     }
     60% {
       transform: translate(5px, 5px);
@@ -186,7 +186,7 @@
     }
     90% {
       transform: translate(-5px, -5px);
-      text-shadow: 2px -2px 0 red, -2px 2px 0 cyan;
+      text-shadow: 2px -2px 0 hsl(var(--accent)), -2px 2px 0 hsl(var(--primary) / 0.5);
     }
   }
 
