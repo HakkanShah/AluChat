@@ -28,10 +28,8 @@ Like a potato (*alu*) that can adapt to any dish, AluChat lets you chat in two d
 ## 🖼 Screenshots
 
 | Sweet Mode 😇 | Savage Mode 😈 |
-|--------------|---------------|
-| ![Sweet Mode](/public/images/sweet_mode.png) | ![Savage Mode](/public/images/savage_mode.png) |
+| ![AluChat Screenshot #2](https://github.com/user-attachments/assets/5a4183e7-4ed0-4db2-b3b1-d42e9261b138) | ![AluChat Screenshot #3](https://github.com/user-attachments/assets/7bbb8281-cfd8-4faa-a9ae-b7436869bd48) |
 
-> Replace the image paths above with your actual screenshot locations.
 
 ---
 
@@ -68,16 +66,3 @@ GEMINI_API_KEY="YOUR_API_KEY"
 # Start the development server
 npm run dev
 
-## 📌 Demo
-🔗 **Live Demo:** [AluChat](https://aluchat.netlify.app/)
-
----
-
-## 👨‍💻 Creator
-Made with ❤️ by **Hakkan**
-
-- GitHub: [@HakkanShah](https://github.com/HakkanShah)
-
----
-
-💡 *Switch moods. Switch vibes. Chat like never before.*
