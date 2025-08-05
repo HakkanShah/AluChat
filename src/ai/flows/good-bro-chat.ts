@@ -81,6 +81,6 @@ const goodBroChatFlow = ai.defineFlow(
       llmResponse = await prompt(input, { toolResponse });
     }
 
-    return llmResponse.output!;
+    return llmResponse.output || { response: '' };
   }
 );
