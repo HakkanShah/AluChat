@@ -32,7 +32,7 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
   const isMobile = useIsMobile();
   const [isCopied, setIsCopied] = useState(false);
   const isUser = message.role === 'user';
-  const isSweetMode = mode === 'Sweet';
+  const isSavageMode = mode === 'Savage';
 
   const onCopy = () => {
     if (isCopied) return;
@@ -47,12 +47,12 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
   const MessageContent = () => (
      <div
       className={cn(
-        'relative max-w-[85%] rounded-2xl px-4 py-3 shadow-lg group',
+        'max-w-[85%] rounded-2xl px-4 py-3 shadow-lg group',
         isUser
-          ? 'user-bubble bg-blue-500 text-primary-foreground'
-          : 'assistant-bubble bg-card text-card-foreground border',
-        !isSweetMode && !isUser 
-          ? 'font-bro bg-gray-900 border-accent/30 shadow-lg shadow-accent/20' 
+          ? 'bg-blue-500 text-white'
+          : 'bg-card text-card-foreground border',
+        isSavageMode && !isUser 
+          ? 'font-bro bg-card-foreground/10 border-accent/30 shadow-lg shadow-accent/20' 
           : ''
       )}
     >
