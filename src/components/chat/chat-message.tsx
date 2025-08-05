@@ -23,7 +23,7 @@ function getInitials(name: string | null | undefined) {
 }
 interface ChatMessageProps {
   message: Message;
-  mode: 'Good Bro' | 'Bad Bro';
+  mode: 'Sweet Mode' | 'Savage Mode';
 }
 
 export function ChatMessage({ message, mode }: ChatMessageProps) {
@@ -32,7 +32,7 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
   const isMobile = useIsMobile();
   const [isCopied, setIsCopied] = useState(false);
   const isUser = message.role === 'user';
-  const isGoodBro = mode === 'Good Bro';
+  const isSweetMode = mode === 'Sweet Mode';
 
   const onCopy = () => {
     if (isCopied) return;
@@ -51,11 +51,11 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
         isUser
           ? 'bg-primary text-primary-foreground rounded-br-none'
           : 'rounded-bl-none',
-        isGoodBro && !isUser ? 'bg-background/80 backdrop-blur-md border border-border/20' : '',
-        !isGoodBro && !isUser ? 'font-bro bg-card/80 backdrop-blur-md border border-accent/20 shadow-accent/20' : '',
-        isGoodBro ? 'text-foreground' : 'text-card-foreground',
-        !isUser && isGoodBro && 'text-foreground',
-        !isUser && !isGoodBro && 'text-primary-foreground',
+        isSweetMode && !isUser ? 'bg-background/80 backdrop-blur-md border border-border/20' : '',
+        !isSweetMode && !isUser ? 'font-bro bg-card/80 backdrop-blur-md border border-accent/20 shadow-accent/20' : '',
+        isSweetMode ? 'text-foreground' : 'text-card-foreground',
+        !isUser && isSweetMode && 'text-foreground',
+        !isUser && !isSweetMode && 'text-primary-foreground',
       )}
     >
       <div className="whitespace-pre-wrap">

@@ -1,7 +1,7 @@
 
 # AluChat 🥔
 
-AluChat is a dual-personality AI chatbot built with Next.js and Google Gemini. Inspired by the versatility of a potato ("alu"), it can switch between a helpful "Good Bro" and a sarcastic "Bad Bro," offering a unique and engaging conversational experience.
+AluChat is a dual-personality AI chatbot built with Next.js and Google Gemini. Inspired by the versatility of a potato ("alu"), it can switch between a helpful "Sweet Mode" and a sarcastic "Savage Mode," offering a unique and engaging conversational experience.
 
 This project was created by **Hakkan Parbej Shah**.
 
@@ -10,8 +10,8 @@ This project was created by **Hakkan Parbej Shah**.
 ## ✨ Features
 
 - **Dual Personalities**: Seamlessly switch between two distinct chat modes:
-  - **😇 Good Bro**: A friendly, respectful, and helpful AI that provides supportive answers and useful external links.
-  - **😈 Bad Bro**: An edgy, sarcastic, and brutally honest AI that delivers witty roasts and humorous commentary, complete with GenZ slang.
+  - **😇 Sweet Mode**: A friendly, respectful, and helpful AI that provides supportive answers and useful external links.
+  - **😈 Savage Mode**: An edgy, sarcastic, and brutally honest AI that delivers witty roasts and humorous commentary, complete with GenZ slang.
 - **Dynamic UI**: The app's theme (colors, fonts, and backgrounds) changes dynamically when switching between modes.
 - **User Authentication**: A simple, mock authentication system for user login and signup.
 - **Customizable Profiles**: Users can upload and change their profile pictures.

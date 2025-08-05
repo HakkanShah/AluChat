@@ -49,17 +49,17 @@ function getInitials(name: string | null | undefined) {
   return name[0].toUpperCase();
 }
 
-const goodBroMessages = [
-  "Switching to Peace Mode 🌈",
+const sweetModeMessages = [
+  "Switching to Sweet Mode 🌈",
   "Aura cleansed. Good vibes only.",
   "Engaging wholesome protocols.",
   "Here to help! 😊",
 ];
 
-const badBroMessages = [
+const savageModeMessages = [
   "Ayo, the demon's out 😈",
   "Alright, let's turn up the heat 🔥",
-  "Mode: Sarcasm. Loading...",
+  "Mode: Savage. Loading...",
   "The gloves are off. Let's go 💀",
 ];
 
@@ -68,7 +68,7 @@ function ChatLayoutContent() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const { setTheme } = useTheme();
-  const [mode, setMode] = useState<'Good Bro' | 'Bad Bro'>('Good Bro');
+  const [mode, setMode] = useState<'Sweet Mode' | 'Savage Mode'>('Sweet Mode');
   const [messages, setMessages] = useState<Message[]>([]);
   const [isClearAlertOpen, setIsClearAlertOpen] = useState(false);
   const [isSwitching, setIsSwitching] = useState(false);
@@ -101,13 +101,13 @@ function ChatLayoutContent() {
     fileInputRef.current?.click();
   };
 
-  const handleModeChange = (newMode: 'Good Bro' | 'Bad Bro') => {
+  const handleModeChange = (newMode: 'Sweet Mode' | 'Savage Mode') => {
     if (mode === newMode || isSwitching) return;
 
     setMode(newMode);
-    setTheme(newMode === 'Good Bro' ? 'light' : 'dark');
+    setTheme(newMode === 'Sweet Mode' ? 'light' : 'dark');
     
-    const messages = newMode === 'Good Bro' ? goodBroMessages : badBroMessages;
+    const messages = newMode === 'Sweet Mode' ? sweetModeMessages : savageModeMessages;
     setSystemMessage(messages[Math.floor(Math.random() * messages.length)]);
     setIsSwitching(true);
   }
@@ -134,7 +134,7 @@ function ChatLayoutContent() {
   const handleShare = async () => {
     const shareData = {
       title: "AluChat – The Spiciest AI Potato 😎🥔",
-      text: "Meet Good Bro and Bad Bro at AluChat – The Desi AI Potato Duo who'll roast, roast, and respect you all at once! 😂 Try it now 👉",
+      text: "Meet Sweet Mode and Savage Mode at AluChat – The Desi AI Potato Duo who'll roast, roast, and respect you all at once! 😂 Try it now 👉",
       url: 'https://aluchat.netlify.app/',
     };
     try {

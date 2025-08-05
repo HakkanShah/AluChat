@@ -4,8 +4,8 @@ import { cn } from '@/lib/utils';
 import { BrainCircuit, Skull } from 'lucide-react';
 
 interface ModeToggleProps {
-  mode: 'Good Bro' | 'Bad Bro';
-  onModeChange: (mode: 'Good Bro' | 'Bad Bro') => void;
+  mode: 'Sweet Mode' | 'Savage Mode';
+  onModeChange: (mode: 'Sweet Mode' | 'Savage Mode') => void;
   isTutorialRunning?: boolean;
   tutorialStep?: number;
 }
@@ -16,14 +16,14 @@ export function ModeToggle({
   isTutorialRunning = false,
   tutorialStep = 0
 }: ModeToggleProps) {
-  const isBadBro = mode === 'Bad Bro';
+  const isSavageMode = mode === 'Savage Mode';
 
-  const getHighlightClass = (buttonMode: 'Good Bro' | 'Bad Bro') => {
+  const getHighlightClass = (buttonMode: 'Sweet Mode' | 'Savage Mode') => {
     if (!isTutorialRunning) return '';
-    if (buttonMode === 'Good Bro' && tutorialStep === 2) {
+    if (buttonMode === 'Sweet Mode' && tutorialStep === 2) {
       return 'ring-2 ring-primary ring-offset-2 ring-offset-background animate-pulse';
     }
-    if (buttonMode === 'Bad Bro' && tutorialStep === 3) {
+    if (buttonMode === 'Savage Mode' && tutorialStep === 3) {
       return 'ring-2 ring-primary ring-offset-2 ring-offset-background animate-pulse';
     }
     return '';
@@ -34,32 +34,32 @@ export function ModeToggle({
       <div
         className={cn(
           'absolute h-10 w-1/2 rounded-full bg-background shadow-md transition-transform duration-300 ease-in-out',
-          isBadBro ? 'translate-x-full' : 'translate-x-0'
+          isSavageMode ? 'translate-x-full' : 'translate-x-0'
         )}
       />
       <button
-        onClick={() => onModeChange('Good Bro')}
+        onClick={() => onModeChange('Sweet Mode')}
         className={cn(
           'z-10 flex w-1/2 items-center justify-center gap-2 rounded-full py-2 text-sm font-medium transition-colors',
-          !isBadBro ? 'text-primary' : 'text-muted-foreground hover:text-foreground',
-          getHighlightClass('Good Bro')
+          !isSavageMode ? 'text-primary' : 'text-muted-foreground hover:text-foreground',
+          getHighlightClass('Sweet Mode')
         )}
-        aria-pressed={!isBadBro}
+        aria-pressed={!isSavageMode}
       >
         <BrainCircuit className="size-5" />
-        <span className="hidden md:inline">Good Bro</span>
+        <span className="hidden md:inline">Sweet Mode</span>
       </button>
       <button
-        onClick={() => onModeChange('Bad Bro')}
+        onClick={() => onModeChange('Savage Mode')}
         className={cn(
           'z-10 flex w-1/2 items-center justify-center gap-2 rounded-full py-2 text-sm font-medium transition-colors',
-          isBadBro ? 'text-primary' : 'text-muted-foreground hover:text-foreground',
-          getHighlightClass('Bad Bro')
+          isSavageMode ? 'text-primary' : 'text-muted-foreground hover:text-foreground',
+          getHighlightClass('Savage Mode')
         )}
-        aria-pressed={isBadBro}
+        aria-pressed={isSavageMode}
       >
         <Skull className="size-5" />
-        <span className="hidden md:inline">Bad Bro</span>
+        <span className="hidden md:inline">Savage Mode</span>
       </button>
     </div>
   );

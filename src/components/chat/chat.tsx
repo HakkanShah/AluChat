@@ -23,7 +23,7 @@ const vibeCheckMessages = [
 const initialMessage: Message = { id: '1', content: 'What\'s up? Ask me anything!', role: 'assistant', timestamp: Date.now() };
 
 interface ChatProps {
-  mode: 'Good Bro' | 'Bad Bro';
+  mode: 'Sweet Mode' | 'Savage Mode';
   messages: Message[];
   setMessages: (messages: Message[]) => void;
   isSwitching: boolean;
@@ -114,9 +114,9 @@ export default function Chat({
   return (
     <div className={cn(
         "flex flex-col h-full", 
-        mode === 'Good Bro' ? 'good-bro-bg' : 'bad-bro-bg',
-        mode === 'Bad Bro' ? 'font-bro' : '',
-        isSwitching && (mode === 'Bad Bro' ? 'animate-glitch' : 'animate-awakening')
+        mode === 'Sweet Mode' ? 'good-bro-bg' : 'bad-bro-bg',
+        mode === 'Savage Mode' ? 'font-bro' : '',
+        isSwitching && (mode === 'Savage Mode' ? 'animate-glitch' : 'animate-awakening')
       )}
     >
       <div className="flex-1 overflow-y-auto p-2 md:p-6" ref={scrollAreaRef}>
@@ -143,7 +143,7 @@ export default function Chat({
                             <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-150"></span>
                             <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-300"></span>
                         </div>
-                        {mode === 'Bad Bro' && <p className="text-sm text-muted-foreground mt-2">{vibeMessage}</p>}
+                        {mode === 'Savage Mode' && <p className="text-sm text-muted-foreground mt-2">{vibeMessage}</p>}
                       </div>
                   </div>
               </div>

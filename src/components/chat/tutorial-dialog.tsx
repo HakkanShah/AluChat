@@ -50,7 +50,7 @@ const TutorialStepContent = ({ step, onNext }: { step: number; onNext: () => voi
                             <BrainCircuit className="size-7 text-blue-500" />
                         </div>
                         <AlertDialogTitle className="text-center text-2xl font-headline">
-                             Meet Good Bro!
+                             Meet Sweet Mode!
                         </AlertDialogTitle>
                         <AlertDialogDescription className="text-center text-base">
                             He’s respectful, polite, and always gives you helpful answers – no matter what you ask. A wholesome buddy for deep convos or chill vibes. 🥔💬
@@ -71,7 +71,7 @@ const TutorialStepContent = ({ step, onNext }: { step: number; onNext: () => voi
                             <Skull className="size-7 text-pink-500" />
                         </div>
                         <AlertDialogTitle className="text-center text-2xl font-headline">
-                            Say hi to Bad Bro!
+                            Say hi to Savage Mode!
                         </AlertDialogTitle>
                         <AlertDialogDescription className="text-center text-base">
                             This side’s spicy, sarcastic, and brutally honest – but still got your back. Perfect for banter, roasts, or unfiltered takes. 🌶️🤘
