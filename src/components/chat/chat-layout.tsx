@@ -13,7 +13,7 @@ import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import Chat from '@/components/chat/chat';
 import { useAuth } from '../providers/auth-provider';
-import { LogOut, Pencil, MoreVertical, Trash, Github, Instagram, Facebook, Linkedin, Mail, Share2, AlertTriangle } from 'lucide-react';
+import { LogOut, Pencil, MoreVertical, Trash, Github, Instagram, Facebook, Linkedin, Mail, Share2, AlertTriangle, MessageCircleQuestion } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { ModeToggle } from '../chat/mode-toggle';
@@ -39,6 +39,7 @@ import type { Message } from '@/lib/types';
 import Image from 'next/image';
 import { TutorialDialog } from './tutorial-dialog';
 import { InfoDialog } from './info-dialog';
+import { getAiResponse, getDailyAluism } from '@/lib/actions';
 
 
 function getInitials(name: string | null | undefined) {
@@ -84,6 +85,31 @@ function ChatLayoutContent() {
       setTutorialStep(1); // Start the tutorial
     }
   }, []);
+
+  // Daily Alu-ism Feature
+  useEffect(() => {
+    const today = new Date().toDateString();
+    const lastFetched = localStorage.getItem('lastAluismDate');
+    
+    if (lastFetched !== today) {
+      const fetchAluism = async () => {
+        try {
+          const aluism = await getDailyAluism(mode);
+          toast({
+            title: `Today's Alu-ism (${mode} Mode)`,
+            description: aluism,
+            duration: 8000,
+          });
+          localStorage.setItem('lastAluismDate', today);
+        } catch (error) {
+          console.error("Failed to fetch Daily Alu-ism:", error);
+        }
+      };
+      
+      // Add a small delay to let the main UI load first
+      setTimeout(fetchAluism, 1000);
+    }
+  }, [mode, toast]);
 
   const handleTutorialNext = () => {
     if (tutorialStep < 3) {
