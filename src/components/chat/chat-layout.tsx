@@ -120,7 +120,7 @@ function ChatLayoutContent() {
     } finally {
       setIsAluismLoading(false);
     }
-  }, []);
+  }, [mode]);
 
   useEffect(() => {
     fetchAluism();
@@ -363,7 +363,7 @@ function ChatLayoutContent() {
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center">
               <ModeToggle 
                 mode={mode} 
                 onModeChange={handleModeChange} 
