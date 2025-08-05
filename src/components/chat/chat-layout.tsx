@@ -100,11 +100,11 @@ function ChatLayoutContent() {
     } finally {
       setIsAluismLoading(false);
     }
-  }, [mode]);
+  }, []);
 
   useEffect(() => {
     fetchAluism();
-  }, []);
+  }, [fetchAluism]);
 
   const handleTutorialNext = () => {
     if (tutorialStep < 3) {
@@ -224,7 +224,6 @@ function ChatLayoutContent() {
               <div>
                 <div className='flex items-center gap-2'>
                   <h1 className="text-xl font-headline font-semibold">AluChat</h1>
-                   <div className="size-2.5 rounded-full bg-green-500 animate-ping-pulse" />
                   <InfoDialog />
                 </div>
                 <p className="text-xs text-muted-foreground">Your AI Companion</p>
@@ -332,8 +331,9 @@ function ChatLayoutContent() {
                     <div className="size-full rounded-full bg-primary/20" />
                   </AvatarFallback>
                 </Avatar>
-                <div>
+                <div className='flex items-center gap-2'>
                   <h2 className="font-headline text-lg font-semibold tracking-wider">AluChat</h2>
+                  <div className="size-2.5 rounded-full bg-green-500 animate-ping-pulse" />
                 </div>
               </div>
             </div>
