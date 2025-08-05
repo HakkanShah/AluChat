@@ -104,7 +104,7 @@ function ChatLayoutContent() {
 
   useEffect(() => {
     fetchAluism();
-  }, []);
+  }, [fetchAluism]);
 
   const handleTutorialNext = () => {
     if (tutorialStep < 3) {
@@ -264,6 +264,7 @@ function ChatLayoutContent() {
                     </Button>
                   </a>
               </div>
+              <Separator />
               <div className="text-center">
                   <p className="font-headline text-lg">Built with brains & banter.</p>
                   <p className="text-sm text-muted-foreground">Connect with the creator:</p>
