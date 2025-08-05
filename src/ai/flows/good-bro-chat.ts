@@ -71,7 +71,11 @@ const goodBroChatFlow = ai.defineFlow(
     outputSchema: GoodBroChatOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
-    return output!;
+    let llmResponse = await prompt(input);
+    while (llmResponse.toolRequest) {
+      const toolResponse = await llmResponse.toolRequest.execute();
+      llmResponse = await prompt(input, {toolResponse});
+    }
+    return llmResponse.output!;
   }
 );
