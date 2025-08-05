@@ -233,37 +233,6 @@ function ChatLayoutContent() {
         </SidebarHeader>
         <SidebarContent>
            <div className="p-2 space-y-4">
-              <div className="text-center">
-                  <p className="font-headline text-lg">Built with brains & banter.</p>
-                  <p className="text-sm text-muted-foreground">Connect with the creator:</p>
-              </div>
-              <div className="flex justify-center gap-4">
-                <a href="https://github.com/HakkanShah" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-                  <Github className="size-6" />
-                </a>
-                <a href="https://www.instagram.com/hakkanshah" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-                  <Instagram className="size-6" />
-                </a>
-                 <a href="https://www.facebook.com/i.hakkan" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-                  <Facebook className="size-6" />
-                </a>
-                <a href="https://www.linkedin.com/in/hakkan" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-                  <Linkedin className="size-6" />
-                </a>
-              </div>
-              <Separator />
-               <div className="p-2 text-center bg-card-foreground/5 dark:bg-card-foreground/10 rounded-lg">
-                  <h3 className="font-headline text-md font-semibold">Got Ideas?</h3>
-                  <p className="text-sm text-muted-foreground mt-1 mb-3">
-                    Your feedback helps make AluChat better. Send your suggestions!
-                  </p>
-                  <a href="mailto:hakkanparbej@gmail.com">
-                    <Button variant="outline" size="sm" className="w-full">
-                      <Mail className="mr-2 size-4" />
-                      Send Mail
-                    </Button>
-                  </a>
-              </div>
               <div className="p-2 text-center bg-card-foreground/5 dark:bg-card-foreground/10 rounded-lg">
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <h3 className="font-headline text-md font-semibold">Daily Alu-ism</h3>
@@ -281,6 +250,37 @@ function ChatLayoutContent() {
                     "{aluism}"
                   </blockquote>
                 )}
+              </div>
+              <Separator />
+               <div className="p-2 text-center bg-card-foreground/5 dark:bg-card-foreground/10 rounded-lg">
+                  <h3 className="font-headline text-md font-semibold">Got Ideas?</h3>
+                  <p className="text-sm text-muted-foreground mt-1 mb-3">
+                    Your feedback helps make AluChat better. Send your suggestions!
+                  </p>
+                  <a href="mailto:hakkanparbej@gmail.com">
+                    <Button variant="outline" size="sm" className="w-full">
+                      <Mail className="mr-2 size-4" />
+                      Send Mail
+                    </Button>
+                  </a>
+              </div>
+              <div className="text-center">
+                  <p className="font-headline text-lg">Built with brains & banter.</p>
+                  <p className="text-sm text-muted-foreground">Connect with the creator:</p>
+              </div>
+              <div className="flex justify-center gap-4">
+                <a href="https://github.com/HakkanShah" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Github className="size-6" />
+                </a>
+                <a href="https://www.instagram.com/hakkanshah" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Instagram className="size-6" />
+                </a>
+                 <a href="https://www.facebook.com/i.hakkan" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Facebook className="size-6" />
+                </a>
+                <a href="https://www.linkedin.com/in/hakkan" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Linkedin className="size-6" />
+                </a>
               </div>
             </div>
         </SidebarContent>
