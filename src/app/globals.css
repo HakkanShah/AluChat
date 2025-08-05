@@ -114,6 +114,35 @@
       radial-gradient(at 80% 80%, hsla(224, 71.4%, 4.1%, 0) 0px, transparent 50%);
   }
 
+  .user-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle at top left, transparent 0, transparent 70%, #60a5fa 71%);
+  }
+
+  .light .user-bubble::after {
+     background: radial-gradient(circle at top left, transparent 0, transparent 70%, #60a5fa 71%);
+  }
+  
+  .dark .user-bubble::after {
+     background: radial-gradient(circle at top left, transparent 0, transparent 70%, #60a5fa 71%);
+  }
+
+
+  .assistant-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -8px;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle at top right, transparent 0, transparent 70%, hsl(var(--card)) 71%);
+    
+  }
 
   @keyframes slide-in-left {
     from {
