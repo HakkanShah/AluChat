@@ -47,16 +47,13 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
   const MessageContent = () => (
      <div
       className={cn(
-        'max-w-[85%] rounded-2xl px-4 py-3 shadow-lg group relative text-foreground',
+        'max-w-[85%] rounded-2xl px-4 py-3 shadow-lg group relative',
         isUser
           ? 'bg-primary text-primary-foreground rounded-br-none'
-          : 'rounded-bl-none',
-        isSweetMode && !isUser 
-          ? 'bg-background/80 backdrop-blur-md border border-border/20' 
-          : '',
+          : 'bg-background text-foreground rounded-bl-none border',
         !isSweetMode && !isUser 
-          ? 'font-bro bg-card/80 backdrop-blur-md border border-accent/20 shadow-accent/20 text-primary-foreground' 
-          : '',
+          ? 'font-bro bg-card/80 backdrop-blur-md border-accent/20 shadow-accent/20' 
+          : 'backdrop-blur-md'
       )}
     >
       <div className="whitespace-pre-wrap">
