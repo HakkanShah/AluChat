@@ -342,7 +342,7 @@ function ChatLayoutContent() {
       <div className="flex h-svh flex-1 flex-col">
         <header className="flex-shrink-0 border-b p-2 md:p-4 backdrop-blur-sm bg-background/50 z-10">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 md:gap-2">
               <SidebarTrigger />
               <div className="flex items-center gap-2">
                 <Avatar>
@@ -351,7 +351,7 @@ function ChatLayoutContent() {
                     <div className="size-full rounded-full bg-primary/20" />
                   </AvatarFallback>
                 </Avatar>
-                <div className='flex items-center gap-1'>
+                <div className='flex items-center gap-1.5'>
                   <h2 className="font-headline text-lg font-semibold tracking-wider">AluChat</h2>
                    <div 
                     title={isOnline ? 'Online' : 'Offline'}
@@ -363,7 +363,7 @@ function ChatLayoutContent() {
                 </div>
               </div>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center gap-1">
               <ModeToggle 
                 mode={mode} 
                 onModeChange={handleModeChange} 
@@ -439,7 +439,3 @@ export function ChatLayout() {
     </SidebarProvider>
   )
 }
-
-    
-
-    
