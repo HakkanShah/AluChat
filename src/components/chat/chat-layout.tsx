@@ -13,8 +13,8 @@ import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import Chat from '@/components/chat/chat';
 import { useAuth } from '../providers/auth-provider';
-import { LogOut, Pencil, MoreVertical, Trash, Github, Instagram, Facebook, Linkedin, Mail, Share2, AlertTriangle, MessageCircleQuestion } from 'lucide-react';
-import React, { useEffect, useRef, useState } from 'react';
+import { LogOut, Pencil, MoreVertical, Trash, Github, Instagram, Facebook, Linkedin, Mail, Share2, AlertTriangle, MessageCircleQuestion, RefreshCw } from 'lucide-react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { ModeToggle } from '../chat/mode-toggle';
 import { useTheme } from 'next-themes';
@@ -40,6 +40,7 @@ import Image from 'next/image';
 import { TutorialDialog } from './tutorial-dialog';
 import { InfoDialog } from './info-dialog';
 import { getAiResponse, getDailyAluism } from '@/lib/actions';
+import { Skeleton } from '../ui/skeleton';
 
 
 function getInitials(name: string | null | undefined) {
@@ -77,6 +78,8 @@ function ChatLayoutContent() {
   const [systemMessage, setSystemMessage] = useState<string | null>(null);
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
+  const [aluism, setAluism] = useState('');
+  const [isAluismLoading, setIsAluismLoading] = useState(true);
 
   useEffect(() => {
     const isNewUser = localStorage.getItem('isNewUser');
@@ -86,30 +89,22 @@ function ChatLayoutContent() {
     }
   }, []);
 
-  // Daily Alu-ism Feature
-  useEffect(() => {
-    const today = new Date().toDateString();
-    const lastFetched = localStorage.getItem('lastAluismDate');
-    
-    if (lastFetched !== today) {
-      const fetchAluism = async () => {
-        try {
-          const aluism = await getDailyAluism(mode);
-          toast({
-            title: `Today's Alu-ism (${mode} Mode)`,
-            description: aluism,
-            duration: 8000,
-          });
-          localStorage.setItem('lastAluismDate', today);
-        } catch (error) {
-          console.error("Failed to fetch Daily Alu-ism:", error);
-        }
-      };
-      
-      // Add a small delay to let the main UI load first
-      setTimeout(fetchAluism, 1000);
+  const fetchAluism = useCallback(async () => {
+    setIsAluismLoading(true);
+    try {
+      const quote = await getDailyAluism(mode);
+      setAluism(quote);
+    } catch (error) {
+      console.error("Failed to fetch Daily Alu-ism:", error);
+      setAluism("Couldn't fetch today's vibe. Try again later.");
+    } finally {
+      setIsAluismLoading(false);
     }
-  }, [mode, toast]);
+  }, [mode]);
+
+  useEffect(() => {
+    fetchAluism();
+  }, [fetchAluism]);
 
   const handleTutorialNext = () => {
     if (tutorialStep < 3) {
@@ -268,6 +263,24 @@ function ChatLayoutContent() {
                       Send Mail
                     </Button>
                   </a>
+              </div>
+              <div className="p-2 text-center bg-card-foreground/5 dark:bg-card-foreground/10 rounded-lg">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <h3 className="font-headline text-md font-semibold">Daily Alu-ism</h3>
+                  <Button variant="ghost" size="icon" className="size-6" onClick={fetchAluism} disabled={isAluismLoading}>
+                    <RefreshCw className={`size-3 ${isAluismLoading ? 'animate-spin' : ''}`}/>
+                  </Button>
+                </div>
+                {isAluismLoading ? (
+                   <div className="space-y-2">
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-2/3" />
+                    </div>
+                ) : (
+                  <blockquote className="text-sm text-muted-foreground italic border-l-2 border-border pl-3 text-left">
+                    "{aluism}"
+                  </blockquote>
+                )}
               </div>
             </div>
         </SidebarContent>
