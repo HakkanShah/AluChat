@@ -11,6 +11,7 @@
 import {ai} from '@/ai/genkit';
 import { getDeveloperInfo } from '../tools/developer-info';
 import {z} from 'genkit';
+import { Message, Part } from 'genkit/experimental/ai';
 
 const MessageSchema = z.object({
   role: z.enum(['user', 'assistant', 'system']),
@@ -70,12 +71,53 @@ const goodBroChatFlow = ai.defineFlow(
     inputSchema: GoodBroChatInputSchema,
     outputSchema: GoodBroChatOutputSchema,
   },
-  async input => {
-    let llmResponse = await prompt(input);
-    while (llmResponse.toolRequest) {
-      const toolResponse = await llmResponse.toolRequest.execute();
-      llmResponse = await prompt(input, {toolResponse});
+  async (input) => {
+    // Convert the plain history to a format Genkit understands
+    const history: Message[] = input.history.map((msg) => ({
+      role: msg.role as 'user' | 'assistant' | 'system',
+      content: [{ text: msg.content }],
+    }));
+
+    // Add the current user message to the history
+    const messages: Message[] = [
+      ...history,
+      { role: 'user', content: [{ text: input.message }] },
+    ];
+
+    const llmResponse = await ai.generate({
+      prompt: prompt.prompt, // Pass the raw prompt template
+      history: messages,
+      tools: [getDeveloperInfo],
+      output: {
+        schema: GoodBroChatOutputSchema,
+      },
+    });
+
+    const toolRequest = llmResponse.toolRequest;
+    if (toolRequest) {
+      const toolResponse: Part = {
+        toolResponse: await toolRequest.execute(),
+      };
+      
+      // Add the tool request and response to the conversation history
+      const finalMessages: Message[] = [
+        ...messages,
+        { role: 'assistant', content: [toolRequest.asPart()] },
+        { role: 'user', content: [toolResponse] },
+      ];
+
+      const finalLlmResponse = await ai.generate({
+        prompt: prompt.prompt,
+        history: finalMessages,
+        tools: [getDeveloperInfo],
+        output: {
+          schema: GoodBroChatOutputSchema,
+        },
+      });
+
+      return finalLlmResponse.output!;
     }
+
     return llmResponse.output!;
   }
 );
