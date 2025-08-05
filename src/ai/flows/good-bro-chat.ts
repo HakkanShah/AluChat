@@ -11,7 +11,7 @@
 import {ai} from '@/ai/genkit';
 import { getDeveloperInfo } from '../tools/developer-info';
 import {z} from 'genkit';
-import { Message, Part } from 'genkit/experimental/ai';
+import { Message } from 'genkit/experimental/ai';
 
 const MessageSchema = z.object({
   role: z.enum(['user', 'assistant', 'system']),
@@ -72,20 +72,19 @@ const goodBroChatFlow = ai.defineFlow(
     outputSchema: GoodBroChatOutputSchema,
   },
   async (input) => {
-    // Convert the plain history to a format Genkit understands
     const history: Message[] = input.history.map((msg) => ({
       role: msg.role as 'user' | 'assistant' | 'system',
       content: [{ text: msg.content }],
     }));
 
-    // Add the current user message to the history
     const messages: Message[] = [
       ...history,
       { role: 'user', content: [{ text: input.message }] },
     ];
 
     const llmResponse = await ai.generate({
-      prompt: prompt.prompt, // Pass the raw prompt template
+      model: 'googleai/gemini-2.0-flash',
+      prompt: prompt.prompt,
       history: messages,
       tools: [getDeveloperInfo],
       output: {
@@ -95,11 +94,10 @@ const goodBroChatFlow = ai.defineFlow(
 
     const toolRequest = llmResponse.toolRequest;
     if (toolRequest) {
-      const toolResponse: Part = {
+      const toolResponse = {
         toolResponse: await toolRequest.execute(),
       };
       
-      // Add the tool request and response to the conversation history
       const finalMessages: Message[] = [
         ...messages,
         { role: 'assistant', content: [toolRequest.asPart()] },
@@ -107,6 +105,7 @@ const goodBroChatFlow = ai.defineFlow(
       ];
 
       const finalLlmResponse = await ai.generate({
+        model: 'googleai/gemini-2.0-flash',
         prompt: prompt.prompt,
         history: finalMessages,
         tools: [getDeveloperInfo],
