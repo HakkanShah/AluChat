@@ -41,6 +41,7 @@ import { TutorialDialog } from './tutorial-dialog';
 import { InfoDialog } from './info-dialog';
 import { getAiResponse, getDailyAluism } from '@/lib/actions';
 import { Skeleton } from '../ui/skeleton';
+import { cn } from '@/lib/utils';
 
 
 function getInitials(name: string | null | undefined) {
@@ -80,6 +81,25 @@ function ChatLayoutContent() {
   const [tutorialStep, setTutorialStep] = useState(0);
   const [aluism, setAluism] = useState('');
   const [isAluismLoading, setIsAluismLoading] = useState(true);
+  const [isOnline, setIsOnline] = useState(true);
+
+  useEffect(() => {
+    // Check for navigator on mount for SSR safety
+    if (typeof navigator !== 'undefined') {
+      setIsOnline(navigator.onLine);
+    }
+    
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   useEffect(() => {
     const isNewUser = localStorage.getItem('isNewUser');
@@ -100,7 +120,7 @@ function ChatLayoutContent() {
     } finally {
       setIsAluismLoading(false);
     }
-  }, []);
+  }, [mode]);
 
   useEffect(() => {
     fetchAluism();
@@ -333,7 +353,13 @@ function ChatLayoutContent() {
                 </Avatar>
                 <div className='flex items-center gap-2'>
                   <h2 className="font-headline text-lg font-semibold tracking-wider">AluChat</h2>
-                  <div className="size-2.5 rounded-full bg-green-500 animate-ping-pulse" />
+                   <div 
+                    title={isOnline ? 'Online' : 'Offline'}
+                    className={cn(
+                      "size-2.5 rounded-full",
+                      isOnline ? 'bg-green-500 animate-ping-pulse' : 'bg-red-500'
+                    )} 
+                  />
                 </div>
               </div>
             </div>
@@ -413,3 +439,5 @@ export function ChatLayout() {
     </SidebarProvider>
   )
 }
+
+    
