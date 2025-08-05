@@ -38,7 +38,7 @@ If the mode is 'Sweet' 😇:
 
 If the mode is 'Savage' 😈:
 - Generate a sarcastic, witty, edgy, or brutally honest quote with a strong Indian "dank meme" or "desi internet" context.
-- Reference relatable Indian scenarios, slang (e.g., "babu", "shona", "thak gaye"), or meme culture.
+- Reference relatable Indian scenarios, slang, or recent and classic meme culture (e.g., "Moye Moye", "Elvish bhai ke aage koi bol sakta hai kya", "So beautiful so elegant just looking like a wow").
 - Use emojis like 💀, 😭, 🤌, 🤡.
 - Make it a roast of life, fake-deep, or mock-motivational from a desi perspective (e.g., "Relationship status: married to my kaam. At least it pays the bills 💀").
 
