@@ -6,7 +6,7 @@ import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import { Sheet, SheetContent, SheetOverlay, SheetPortal, SheetClose, SheetTitle } from "@/components/ui/sheet"
 import { Button } from "./button"
-import { PanelLeft, X } from "lucide-react"
+import { Menu, X } from "lucide-react"
 
 type SidebarContextType = {
   isMobile: boolean
@@ -113,7 +113,7 @@ export const SidebarTrigger = () => {
 
     return (
         <Button variant="ghost" size="icon" onClick={toggle}>
-            <PanelLeft />
+            <Menu />
             <span className="sr-only">Toggle Sidebar</span>
         </Button>
     )
