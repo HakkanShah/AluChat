@@ -199,7 +199,10 @@ function ChatLayoutContent() {
           <div className="flex items-center justify-between p-2">
             <div className='flex items-center gap-2'>
               <Image src="/images/aluchat_icon.png" alt="AluChat Logo" width={32} height={32} className="rounded-full" />
-              <h1 className="text-xl font-headline font-semibold">AluChat</h1>
+              <div>
+                <h1 className="text-xl font-headline font-semibold">AluChat</h1>
+                <p className="text-xs text-muted-foreground">Your AI Companion</p>
+              </div>
             </div>
           </div>
         </SidebarHeader>
@@ -286,7 +289,6 @@ function ChatLayoutContent() {
                 </Avatar>
                 <div>
                   <h2 className="font-headline text-lg font-semibold tracking-wider">AluChat</h2>
-                  <p className="text-xs md:text-sm text-muted-foreground">Your AI Companion</p>
                 </div>
               </div>
             </div>
