@@ -120,11 +120,11 @@ function ChatLayoutContent() {
     } finally {
       setIsAluismLoading(false);
     }
-  }, [mode]);
+  }, []);
 
   useEffect(() => {
     fetchAluism();
-  }, []);
+  }, [fetchAluism]);
 
   const handleTutorialNext = () => {
     if (tutorialStep < 3) {
@@ -253,7 +253,7 @@ function ChatLayoutContent() {
         </SidebarHeader>
         <SidebarContent>
            <div className="p-2 space-y-4">
-               <div className="p-2 text-center bg-card-foreground/5 dark:bg-card-foreground/10 rounded-lg">
+              <div className="p-2 text-center bg-card-foreground/5 dark:bg-card-foreground/10 rounded-lg">
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <h3 className="font-headline text-md font-semibold">Daily Alu-ism</h3>
                   <Button variant="ghost" size="icon" className="size-6" onClick={fetchAluism} disabled={isAluismLoading}>
@@ -351,7 +351,7 @@ function ChatLayoutContent() {
                     <div className="size-full rounded-full bg-primary/20" />
                   </AvatarFallback>
                 </Avatar>
-                <div className='flex items-center gap-2'>
+                <div className='flex items-center gap-1'>
                   <h2 className="font-headline text-lg font-semibold tracking-wider">AluChat</h2>
                    <div 
                     title={isOnline ? 'Online' : 'Offline'}
@@ -439,5 +439,7 @@ export function ChatLayout() {
     </SidebarProvider>
   )
 }
+
+    
 
     
