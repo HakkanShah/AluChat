@@ -66,7 +66,9 @@ Conversation History:
 {{/each}}
 
 User: {{{message}}}
-AI (Good Bro):`,
+AI (Good Bro):
+
+IMPORTANT: Your final output MUST be a valid JSON object with a single key "response" that contains your text response. For example: {"response": "Your helpful answer here."}`,
 });
 
 const goodBroChatFlow = ai.defineFlow(
