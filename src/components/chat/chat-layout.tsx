@@ -104,7 +104,7 @@ function ChatLayoutContent() {
 
   useEffect(() => {
     fetchAluism();
-  }, [fetchAluism]);
+  }, []);
 
   const handleTutorialNext = () => {
     if (tutorialStep < 3) {
