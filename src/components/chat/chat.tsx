@@ -23,7 +23,7 @@ const vibeCheckMessages = [
 const initialMessage: Message = { id: '1', content: 'What\'s up? Ask me anything!', role: 'assistant', timestamp: Date.now() };
 
 interface ChatProps {
-  mode: 'Sweet Mode' | 'Savage Mode';
+  mode: 'Sweet' | 'Savage';
   messages: Message[];
   setMessages: (messages: Message[]) => void;
   isSwitching: boolean;
@@ -114,23 +114,23 @@ export default function Chat({
   return (
     <div className={cn(
         "flex flex-col h-full", 
-        mode === 'Sweet Mode' ? 'good-bro-bg' : 'bad-bro-bg',
-        mode === 'Savage Mode' ? 'font-bro' : '',
-        isSwitching && (mode === 'Savage Mode' ? 'animate-glitch' : 'animate-awakening')
+        mode === 'Sweet' ? 'good-bro-bg' : 'bad-bro-bg',
+        mode === 'Savage' ? 'font-bro' : '',
+        isSwitching && (mode === 'Savage' ? 'animate-glitch' : 'animate-awakening')
       )}
     >
+      {systemMessage && (
+        <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+          <div className="rounded-full bg-background/80 px-8 py-4 text-center font-headline text-2xl font-bold text-foreground shadow-2xl backdrop-blur-md animate-mode-switch">
+            {systemMessage}
+          </div>
+        </div>
+      )}
       <div className="flex-1 overflow-y-auto p-2 md:p-6" ref={scrollAreaRef}>
           <div className="space-y-6">
             {messages.map((message) => (
               <ChatMessage key={message.id} message={message} mode={mode}/>
             ))}
-            {systemMessage && (
-                <div className="flex justify-center my-2 animate-slide-in-left">
-                  <div className="text-xs text-muted-foreground bg-card/80 backdrop-blur-md rounded-full px-3 py-1">
-                    {systemMessage}
-                  </div>
-                </div>
-              )}
             {isLoading && (
               <div className="flex items-start gap-4 animate-slide-in-left">
                   <Avatar className="h-10 w-10 border-2 border-primary">
@@ -143,7 +143,7 @@ export default function Chat({
                             <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-150"></span>
                             <span className="h-2 w-2 rounded-full bg-slate-400 animate-bounce delay-300"></span>
                         </div>
-                        {mode === 'Savage Mode' && <p className="text-sm text-muted-foreground mt-2">{vibeMessage}</p>}
+                        {mode === 'Savage' && <p className="text-sm text-muted-foreground mt-2">{vibeMessage}</p>}
                       </div>
                   </div>
               </div>

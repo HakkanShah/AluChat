@@ -50,17 +50,17 @@ function getInitials(name: string | null | undefined) {
 }
 
 const sweetModeMessages = [
-  "Switching to Sweet Mode 🌈",
+  "Sweet Mode Activated! 🌈",
   "Aura cleansed. Good vibes only.",
   "Engaging wholesome protocols.",
   "Here to help! 😊",
 ];
 
 const savageModeMessages = [
-  "Ayo, the demon's out 😈",
+  "Savage Mode Activated! 😈",
   "Alright, let's turn up the heat 🔥",
-  "Mode: Savage. Loading...",
   "The gloves are off. Let's go 💀",
+  "Ayo, the demon's out.",
 ];
 
 function ChatLayoutContent() {
@@ -68,7 +68,7 @@ function ChatLayoutContent() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const { setTheme } = useTheme();
-  const [mode, setMode] = useState<'Sweet Mode' | 'Savage Mode'>('Sweet Mode');
+  const [mode, setMode] = useState<'Sweet' | 'Savage'>('Sweet');
   const [messages, setMessages] = useState<Message[]>([]);
   const [isClearAlertOpen, setIsClearAlertOpen] = useState(false);
   const [isSwitching, setIsSwitching] = useState(false);
@@ -101,13 +101,13 @@ function ChatLayoutContent() {
     fileInputRef.current?.click();
   };
 
-  const handleModeChange = (newMode: 'Sweet Mode' | 'Savage Mode') => {
+  const handleModeChange = (newMode: 'Sweet' | 'Savage') => {
     if (mode === newMode || isSwitching) return;
 
     setMode(newMode);
-    setTheme(newMode === 'Sweet Mode' ? 'light' : 'dark');
+    setTheme(newMode === 'Sweet' ? 'light' : 'dark');
     
-    const messages = newMode === 'Sweet Mode' ? sweetModeMessages : savageModeMessages;
+    const messages = newMode === 'Sweet' ? sweetModeMessages : savageModeMessages;
     setSystemMessage(messages[Math.floor(Math.random() * messages.length)]);
     setIsSwitching(true);
   }
@@ -319,7 +319,7 @@ function ChatLayoutContent() {
             </div>
           </div>
         </header>
-        <main className='flex-1 flex flex-col min-h-0'>
+        <main className='flex-1 flex flex-col min-h-0 relative'>
              <Chat 
                 mode={mode} 
                 messages={messages}
@@ -331,12 +331,12 @@ function ChatLayoutContent() {
       </div>
       <AlertDialog open={isClearAlertOpen} onOpenChange={setIsClearAlertOpen}>
         <AlertDialogContent>
-          <AlertDialogHeader className="text-center">
+          <AlertDialogHeader>
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-destructive/10 mb-2">
               <AlertTriangle className="h-6 w-6 text-destructive" />
             </div>
-            <AlertDialogTitle>Clear Chat History?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-center">Clear Chat History?</AlertDialogTitle>
+            <AlertDialogDescription className="text-center">
               This action cannot be undone. All your messages will be
               permanently deleted.
             </AlertDialogDescription>

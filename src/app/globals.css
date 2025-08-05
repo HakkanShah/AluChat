@@ -93,6 +93,9 @@
   .animate-glitch {
     animation: glitch 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   }
+  .animate-mode-switch {
+    animation: mode-switch 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
   
   .good-bro-bg {
     background-color: hsl(var(--background));
@@ -185,6 +188,21 @@
     90% {
       transform: translate(-5px, -5px);
       text-shadow: 2px -2px 0 red, -2px 2px 0 cyan;
+    }
+  }
+
+  @keyframes mode-switch {
+    0% {
+      opacity: 0;
+      transform: scale(0.8) translateY(20px);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05) translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1) translateY(-10px);
     }
   }
 }

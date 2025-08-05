@@ -4,8 +4,8 @@ import { cn } from '@/lib/utils';
 import { BrainCircuit, Skull } from 'lucide-react';
 
 interface ModeToggleProps {
-  mode: 'Sweet Mode' | 'Savage Mode';
-  onModeChange: (mode: 'Sweet Mode' | 'Savage Mode') => void;
+  mode: 'Sweet' | 'Savage';
+  onModeChange: (mode: 'Sweet' | 'Savage') => void;
   isTutorialRunning?: boolean;
   tutorialStep?: number;
 }
@@ -16,14 +16,14 @@ export function ModeToggle({
   isTutorialRunning = false,
   tutorialStep = 0
 }: ModeToggleProps) {
-  const isSavageMode = mode === 'Savage Mode';
+  const isSavageMode = mode === 'Savage';
 
-  const getHighlightClass = (buttonMode: 'Sweet Mode' | 'Savage Mode') => {
+  const getHighlightClass = (buttonMode: 'Sweet' | 'Savage') => {
     if (!isTutorialRunning) return '';
-    if (buttonMode === 'Sweet Mode' && tutorialStep === 2) {
+    if (buttonMode === 'Sweet' && tutorialStep === 2) {
       return 'ring-2 ring-primary ring-offset-2 ring-offset-background animate-pulse';
     }
-    if (buttonMode === 'Savage Mode' && tutorialStep === 3) {
+    if (buttonMode === 'Savage' && tutorialStep === 3) {
       return 'ring-2 ring-primary ring-offset-2 ring-offset-background animate-pulse';
     }
     return '';
@@ -38,28 +38,28 @@ export function ModeToggle({
         )}
       />
       <button
-        onClick={() => onModeChange('Sweet Mode')}
+        onClick={() => onModeChange('Sweet')}
         className={cn(
           'z-10 flex w-1/2 items-center justify-center gap-2 rounded-full py-2 text-sm font-medium transition-colors',
           !isSavageMode ? 'text-primary' : 'text-muted-foreground hover:text-foreground',
-          getHighlightClass('Sweet Mode')
+          getHighlightClass('Sweet')
         )}
         aria-pressed={!isSavageMode}
       >
         <BrainCircuit className="size-5" />
-        <span className="hidden md:inline">Sweet Mode</span>
+        <span className="hidden md:inline">Sweet</span>
       </button>
       <button
-        onClick={() => onModeChange('Savage Mode')}
+        onClick={() => onModeChange('Savage')}
         className={cn(
           'z-10 flex w-1/2 items-center justify-center gap-2 rounded-full py-2 text-sm font-medium transition-colors',
           isSavageMode ? 'text-primary' : 'text-muted-foreground hover:text-foreground',
-          getHighlightClass('Savage Mode')
+          getHighlightClass('Savage')
         )}
         aria-pressed={isSavageMode}
       >
         <Skull className="size-5" />
-        <span className="hidden md:inline">Savage Mode</span>
+        <span className="hidden md:inline">Savage</span>
       </button>
     </div>
   );
