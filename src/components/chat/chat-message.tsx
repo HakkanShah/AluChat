@@ -23,7 +23,7 @@ function getInitials(name: string | null | undefined) {
 }
 interface ChatMessageProps {
   message: Message;
-  mode: 'Sweet Mode' | 'Savage Mode';
+  mode: 'Sweet' | 'Savage';
 }
 
 export function ChatMessage({ message, mode }: ChatMessageProps) {
@@ -32,7 +32,7 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
   const isMobile = useIsMobile();
   const [isCopied, setIsCopied] = useState(false);
   const isUser = message.role === 'user';
-  const isSweetMode = mode === 'Sweet Mode';
+  const isSweetMode = mode === 'Sweet';
 
   const onCopy = () => {
     if (isCopied) return;
@@ -47,15 +47,16 @@ export function ChatMessage({ message, mode }: ChatMessageProps) {
   const MessageContent = () => (
      <div
       className={cn(
-        'max-w-[85%] rounded-2xl px-4 py-3 shadow-lg group relative',
+        'max-w-[85%] rounded-2xl px-4 py-3 shadow-lg group relative text-foreground',
         isUser
           ? 'bg-primary text-primary-foreground rounded-br-none'
           : 'rounded-bl-none',
-        isSweetMode && !isUser ? 'bg-background/80 backdrop-blur-md border border-border/20' : '',
-        !isSweetMode && !isUser ? 'font-bro bg-card/80 backdrop-blur-md border border-accent/20 shadow-accent/20' : '',
-        isSweetMode ? 'text-foreground' : 'text-card-foreground',
-        !isUser && isSweetMode && 'text-foreground',
-        !isUser && !isSweetMode && 'text-primary-foreground',
+        isSweetMode && !isUser 
+          ? 'bg-background/80 backdrop-blur-md border border-border/20' 
+          : '',
+        !isSweetMode && !isUser 
+          ? 'font-bro bg-card/80 backdrop-blur-md border border-accent/20 shadow-accent/20 text-primary-foreground' 
+          : '',
       )}
     >
       <div className="whitespace-pre-wrap">
