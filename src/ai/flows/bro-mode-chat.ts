@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -71,49 +72,11 @@ const broModeChatFlow = ai.defineFlow(
     outputSchema: BroModeChatOutputSchema,
   },
   async (input) => {
-    const history: Message[] = input.history.map((msg) => ({
-      role: msg.role as 'user' | 'assistant' | 'system',
-      content: [{ text: msg.content }],
-    }));
-
-    const messages: Message[] = [
-      ...history,
-      { role: 'user', content: [{ text: input.message }] },
-    ];
-
-    const llmResponse = await ai.generate({
-      model: 'googleai/gemini-2.0-flash',
-      prompt: prompt.prompt, 
-      history: messages,
-      tools: [getDeveloperInfo],
-      output: {
-        schema: BroModeChatOutputSchema,
-      },
-    });
-
-    const toolRequest = llmResponse.toolRequest;
-    if (toolRequest) {
-      const toolResponse = {
-        toolResponse: await toolRequest.execute(),
-      };
-      
-      const finalMessages: Message[] = [
-        ...messages,
-        { role: 'assistant', content: [toolRequest.asPart()] },
-        { role: 'user', content: [toolResponse] },
-      ];
-
-      const finalLlmResponse = await ai.generate({
-        model: 'googleai/gemini-2.0-flash',
-        prompt: prompt.prompt,
-        history: finalMessages,
-        tools: [getDeveloperInfo],
-        output: {
-          schema: BroModeChatOutputSchema,
-        },
-      });
-
-      return finalLlmResponse.output!;
+    let llmResponse = await prompt(input);
+    
+    if (llmResponse.toolRequest) {
+      const toolResponse = await llmResponse.toolRequest.execute();
+      llmResponse = await prompt(input, { toolResponse });
     }
 
     return llmResponse.output!;
