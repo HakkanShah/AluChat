@@ -48,7 +48,7 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
                 onKeyDown={handleKeyDown}
                 rows={1}
                 maxRows={5}
-                className="flex-1 resize-none bg-transparent p-3 focus:outline-none"
+                className="flex-1 resize-none bg-transparent py-3 pl-4 pr-2 focus:outline-none"
                 disabled={isLoading}
             />
             <Button

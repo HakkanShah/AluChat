@@ -124,7 +124,7 @@ function ChatLayoutContent() {
 
   useEffect(() => {
     fetchAluism();
-  }, [fetchAluism]);
+  }, []);
 
   const handleTutorialNext = () => {
     if (tutorialStep < 3) {
@@ -253,7 +253,7 @@ function ChatLayoutContent() {
         </SidebarHeader>
         <SidebarContent>
            <div className="p-2 space-y-4">
-              <div className="p-2 text-center bg-card-foreground/5 dark:bg-card-foreground/10 rounded-lg">
+               <div className="p-2 text-center bg-card-foreground/5 dark:bg-card-foreground/10 rounded-lg">
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <h3 className="font-headline text-md font-semibold">Daily Alu-ism</h3>
                   <Button variant="ghost" size="icon" className="size-6" onClick={fetchAluism} disabled={isAluismLoading}>
@@ -272,7 +272,7 @@ function ChatLayoutContent() {
                 )}
               </div>
               <Separator />
-               <div className="p-2 text-center bg-card-foreground/5 dark:bg-card-foreground/10 rounded-lg">
+              <div className="p-2 text-center bg-card-foreground/5 dark:bg-card-foreground/10 rounded-lg">
                   <h3 className="font-headline text-md font-semibold">Got Ideas?</h3>
                   <p className="text-sm text-muted-foreground mt-1 mb-3">
                     Your feedback helps make AluChat better. Send your suggestions!
@@ -342,7 +342,7 @@ function ChatLayoutContent() {
       <div className="flex h-svh flex-1 flex-col">
         <header className="flex-shrink-0 border-b p-2 md:p-4 backdrop-blur-sm bg-background/50 z-10">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1 md:gap-3">
+            <div className="flex items-center gap-1">
               <SidebarTrigger />
               <div className="flex items-center gap-2">
                 <Avatar>
@@ -363,7 +363,7 @@ function ChatLayoutContent() {
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-1 md:gap-2">
+            <div className="flex items-center gap-1">
               <ModeToggle 
                 mode={mode} 
                 onModeChange={handleModeChange} 

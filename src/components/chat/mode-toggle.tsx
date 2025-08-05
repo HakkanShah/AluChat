@@ -30,10 +30,10 @@ export function ModeToggle({
   };
 
   return (
-    <div className="relative flex w-32 md:w-64 items-center rounded-full border-2 border-border bg-muted p-1">
+    <div className="relative flex w-24 md:w-32 items-center rounded-full border-2 border-border bg-muted p-1">
       <div
         className={cn(
-          'absolute h-10 w-1/2 rounded-full bg-background shadow-md transition-transform duration-300 ease-in-out',
+          'absolute h-8 md:h-10 w-1/2 rounded-full bg-background shadow-md transition-transform duration-300 ease-in-out',
           isSavageMode ? 'translate-x-full' : 'translate-x-0'
         )}
       />
