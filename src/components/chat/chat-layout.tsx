@@ -38,6 +38,7 @@ import {
 import type { Message } from '@/lib/types';
 import Image from 'next/image';
 import { TutorialDialog } from './tutorial-dialog';
+import { InfoDialog } from './info-dialog';
 
 
 function getInitials(name: string | null | undefined) {
@@ -200,7 +201,10 @@ function ChatLayoutContent() {
             <div className='flex items-center gap-2'>
               <Image src="/images/aluchat_icon.png" alt="AluChat Logo" width={32} height={32} className="rounded-full" />
               <div>
-                <h1 className="text-xl font-headline font-semibold">AluChat</h1>
+                <div className='flex items-center gap-2'>
+                  <h1 className="text-xl font-headline font-semibold">AluChat</h1>
+                  <InfoDialog />
+                </div>
                 <p className="text-xs text-muted-foreground">Your AI Companion</p>
               </div>
             </div>
