@@ -9,11 +9,6 @@ Like a potato (*alu*) that can adapt to any dish, AluChat lets you chat in two d
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)  
 ---
 
-## 📌 Demo  
-🔗 **Live Demo:** [AluChat](https://aluchat.netlify.app/)  
-
----
-
 ## ✨ Features  
 
 - **Dual Personalities**  
@@ -35,6 +30,11 @@ Like a potato (*alu*) that can adapt to any dish, AluChat lets you chat in two d
   <img src="https://github.com/user-attachments/assets/5a4183e7-4ed0-4db2-b3b1-d42e9261b138" alt="Sweet Mode" width="45%" />
   <img src="https://github.com/user-attachments/assets/7bbb8281-cfd8-4faa-a9ae-b7436869bd48" alt="Savage Mode" width="45%" />
 </p>  
+
+---
+
+## 📌 Demo  
+🔗 **Live Demo:** [AluChat](https://aluchat.netlify.app/)  
 
 ---
 
