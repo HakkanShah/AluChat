@@ -77,7 +77,7 @@ export const playReceiveSound = () => {
 };
 
 
-// Function to play the easter egg "pop" sound
+// Function to play the easter egg "pop" sound continuously
 export const playAluChopSound = () => {
     const context = getAudioContext();
     if (!context) return;
@@ -85,22 +85,32 @@ export const playAluChopSound = () => {
     if (context.state === 'suspended') {
         context.resume();
     }
+    
+    const playPop = () => {
+        const oscillator = context.createOscillator();
+        const gainNode = context.createGain();
+        const now = context.currentTime;
 
-    const oscillator = context.createOscillator();
-    const gainNode = context.createGain();
-    const now = context.currentTime;
+        oscillator.type = 'sine';
+        const randomPitch = 200 + Math.random() * 300; // Pitch between 200Hz and 500Hz
+        oscillator.frequency.setValueAtTime(randomPitch, now);
+        oscillator.frequency.exponentialRampToValueAtTime(100, now + 0.15);
 
-    oscillator.type = 'sine';
-    // A quick pitch drop to create a "boop" or "pop" sound
-    oscillator.frequency.setValueAtTime(350, now);
-    oscillator.frequency.exponentialRampToValueAtTime(100, now + 0.1);
+        gainNode.gain.setValueAtTime(0.2, now);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
 
-    gainNode.gain.setValueAtTime(0.3, now);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+        oscillator.connect(gainNode);
+        gainNode.connect(context.destination);
 
-    oscillator.connect(gainNode);
-    gainNode.connect(context.destination);
+        oscillator.start(now);
+        oscillator.stop(now + 0.2);
+    };
 
-    oscillator.start(now);
-    oscillator.stop(now + 0.2);
+    const intervalId = setInterval(playPop, 120 + Math.random() * 80);
+
+    // Stop the sounds after 5 seconds
+    setTimeout(() => {
+        clearInterval(intervalId);
+    }, 4800); // Stop slightly before the visual animation ends
 };
+
