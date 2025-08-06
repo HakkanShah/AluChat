@@ -1,4 +1,3 @@
-
 'use client';
 import {
   SidebarProvider,
@@ -81,12 +80,14 @@ function ChatLayoutContent() {
   const [systemMessage, setSystemMessage] = useState<string | null>(null);
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
+
+  // Daily Alu-ism states (manual fetch)
   const [aluism, setAluism] = useState('');
-  const [isAluismLoading, setIsAluismLoading] = useState(true);
+  const [isAluismLoading, setIsAluismLoading] = useState(false); // manual, so false by default
+
   const [isOnline, setIsOnline] = useState(true);
   const [isAluChopActive, setIsAluChopActive] = useState(false);
   const [isHakkanLoveActive, setIsHakkanLoveActive] = useState(false);
-
 
   const triggerAluChop = () => {
     setIsAluChopActive(true);
@@ -94,7 +95,7 @@ function ChatLayoutContent() {
       setIsAluChopActive(false);
     }, 5000);
   };
-  
+
   const triggerHakkanLove = () => {
     setIsHakkanLoveActive(true);
     setTimeout(() => {
@@ -102,13 +103,12 @@ function ChatLayoutContent() {
     }, 5000);
   };
 
-
   useEffect(() => {
     // Check for navigator on mount for SSR safety
     if (typeof navigator !== 'undefined') {
       setIsOnline(navigator.onLine);
     }
-    
+
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
 
@@ -129,6 +129,7 @@ function ChatLayoutContent() {
     }
   }, []);
 
+  // Manual fetch function for Daily Alu-ism
   const fetchAluism = useCallback(async () => {
     setIsAluismLoading(true);
     try {
@@ -142,22 +143,21 @@ function ChatLayoutContent() {
     }
   }, [mode]);
 
-
+  // Only handle switching animation/state; don't auto-fetch Alu-ism here
   useEffect(() => {
     if (isSwitching) {
-        fetchAluism();
-        const timer = setTimeout(() => {
-            setSystemMessage(null);
-            setIsSwitching(false);
-        }, 1500);
-        return () => clearTimeout(timer);
+      const timer = setTimeout(() => {
+        setSystemMessage(null);
+        setIsSwitching(false);
+      }, 1500);
+      return () => clearTimeout(timer);
     }
-  }, [isSwitching, fetchAluism]);
+  }, [isSwitching]);
 
-  useEffect(() => {
-    fetchAluism();
-  }, [fetchAluism]);
-
+  // ❌ Removed: auto-fetch on mount
+  // useEffect(() => {
+  //   fetchAluism();
+  // }, [fetchAluism]);
 
   const handleTutorialNext = () => {
     if (tutorialStep < 3) {
@@ -181,10 +181,11 @@ function ChatLayoutContent() {
 
     setMode(newMode);
     setTheme(newMode === 'Sweet' ? 'light' : 'dark');
-    
+
     const messages = newMode === 'Sweet' ? sweetModeMessages : savageModeMessages;
     setSystemMessage(messages[Math.floor(Math.random() * messages.length)]);
     setIsSwitching(true);
+    // ✅ No Alu-ism fetch here; user must tap refresh
   }
 
   const handleClearChat = () => {
@@ -195,7 +196,7 @@ function ChatLayoutContent() {
     });
     setIsClearAlertOpen(false);
   };
-  
+
   const handleShare = async () => {
     const shareData = {
       title: "AluChat – The Spiciest AI Potato 😎🥔",
@@ -217,7 +218,6 @@ function ChatLayoutContent() {
         });
       }
     } catch (error) {
-      // Don't show an error toast if the user cancels the share dialog
       if (error instanceof Error && error.name === 'AbortError') {
         return;
       }
@@ -228,7 +228,6 @@ function ChatLayoutContent() {
       });
     }
   };
-
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -288,10 +287,14 @@ function ChatLayoutContent() {
                       <Skeleton className="h-4 w-full" />
                       <Skeleton className="h-4 w-2/3" />
                     </div>
-                ) : (
+                ) : aluism ? (
                   <blockquote className="text-sm text-muted-foreground italic border-l-2 border-border pl-3 text-left">
                     "{aluism}"
                   </blockquote>
+                ) : (
+                  <p className="text-sm text-muted-foreground">
+                    Tap refresh to get today’s Alu-ism.
+                  </p>
                 )}
               </div>
               <Separator />
@@ -466,5 +469,3 @@ export function ChatLayout() {
     </SidebarProvider>
   )
 }
-
-    
