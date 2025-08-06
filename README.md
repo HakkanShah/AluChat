@@ -11,7 +11,7 @@ Like a potato (*alu*) that can adapt to any dish, AluChat lets you chat in two d
 ---
 
 ## 📌 Demo  
-🔗 **Live Demo:** [AluChat](https://netlify.aluchat.app/)  
+🔗 **Live Demo:** [AluChat](https://aluchat.netlify.app/)  
 
 ---
 
@@ -72,10 +72,4 @@ GEMINI_API_KEY="YOUR_API_KEY"
 # Start the development server
 npm run dev
 
-## Demo 
-[Chat Now](netlify.aluchat.app)
 
----
-
-## Author ~ [@HakkanShah](https://www.github.com/HakkanShah)
- 
