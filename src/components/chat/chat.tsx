@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
@@ -27,6 +28,7 @@ interface ChatProps {
   setMessages: (messages: Message[]) => void;
   isSwitching: boolean;
   systemMessage: string | null;
+  onAluChop: () => void;
 }
 
 export default function Chat({ 
@@ -35,6 +37,7 @@ export default function Chat({
   setMessages,
   isSwitching,
   systemMessage,
+  onAluChop,
 }: ChatProps) {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -75,6 +78,12 @@ export default function Chat({
   }, [isLoading]);
 
   const handleSendMessage = async (content: string) => {
+    if (content.trim().toLowerCase() === '@aluchop') {
+      onAluChop();
+      playSendSound();
+      return;
+    }
+
     playSendSound();
     const userMessage: Message = {
       id: String(Date.now()),

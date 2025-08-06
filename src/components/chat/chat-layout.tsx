@@ -42,6 +42,7 @@ import { InfoDialog } from './info-dialog';
 import { getAiResponse, getDailyAluism } from '@/lib/actions';
 import { Skeleton } from '../ui/skeleton';
 import { cn } from '@/lib/utils';
+import { EasterEgg } from './easter-egg';
 
 
 function getInitials(name: string | null | undefined) {
@@ -82,6 +83,15 @@ function ChatLayoutContent() {
   const [aluism, setAluism] = useState('');
   const [isAluismLoading, setIsAluismLoading] = useState(true);
   const [isOnline, setIsOnline] = useState(true);
+  const [isAluChopActive, setIsAluChopActive] = useState(false);
+
+  const triggerAluChop = () => {
+    setIsAluChopActive(true);
+    setTimeout(() => {
+      setIsAluChopActive(false);
+    }, 5000);
+  };
+
 
   useEffect(() => {
     // Check for navigator on mount for SSR safety
@@ -122,9 +132,22 @@ function ChatLayoutContent() {
     }
   }, [mode]);
 
+
+  useEffect(() => {
+    if (isSwitching) {
+        fetchAluism();
+        const timer = setTimeout(() => {
+            setSystemMessage(null);
+            setIsSwitching(false);
+        }, 1500);
+        return () => clearTimeout(timer);
+    }
+  }, [isSwitching, fetchAluism]);
+
   useEffect(() => {
     fetchAluism();
   }, [fetchAluism]);
+
 
   const handleTutorialNext = () => {
     if (tutorialStep < 3) {
@@ -153,16 +176,6 @@ function ChatLayoutContent() {
     setSystemMessage(messages[Math.floor(Math.random() * messages.length)]);
     setIsSwitching(true);
   }
-
-  useEffect(() => {
-    if (isSwitching) {
-        const timer = setTimeout(() => {
-            setSystemMessage(null);
-            setIsSwitching(false);
-        }, 1500);
-        return () => clearTimeout(timer);
-    }
-  }, [isSwitching]);
 
   const handleClearChat = () => {
     setMessages([]);
@@ -399,6 +412,7 @@ function ChatLayoutContent() {
                 setMessages={setMessages}
                 isSwitching={isSwitching}
                 systemMessage={systemMessage}
+                onAluChop={triggerAluChop}
                 />
         </main>
       </div>
@@ -427,6 +441,7 @@ function ChatLayoutContent() {
         step={tutorialStep}
         onNext={handleTutorialNext}
       />
+      <EasterEgg isActive={isAluChopActive} />
     </>
   );
 }

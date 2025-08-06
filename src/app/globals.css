@@ -222,4 +222,22 @@
   .animate-ping-pulse {
     animation: ping-pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
+
+  .animate-logo-rain {
+    animation: logo-rain 5s ease-in-out forwards;
+  }
+  @keyframes logo-rain {
+    0% {
+      opacity: 0;
+      transform: translateY(-50px) scale(0.8);
+    }
+    20%, 80% {
+      opacity: 0.7;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(50px) scale(0.8);
+    }
+  }
 }
