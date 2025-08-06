@@ -9,7 +9,7 @@ import { getAiResponse } from '@/lib/actions';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Avatar } from '../ui/avatar';
-import { playReceiveSound, playSendSound, playAluChopSound } from '@/lib/audio';
+import { playReceiveSound, playSendSound, playAluChopSound, playLoveSound } from '@/lib/audio';
 
 
 const vibeCheckMessages = [
@@ -29,6 +29,7 @@ interface ChatProps {
   isSwitching: boolean;
   systemMessage: string | null;
   onAluChop: () => void;
+  onHakkanLove: () => void;
 }
 
 export default function Chat({ 
@@ -38,6 +39,7 @@ export default function Chat({
   isSwitching,
   systemMessage,
   onAluChop,
+  onHakkanLove,
 }: ChatProps) {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -78,9 +80,16 @@ export default function Chat({
   }, [isLoading]);
 
   const handleSendMessage = async (content: string) => {
-    if (content.trim().toLowerCase() === '@aluchop') {
+    const trimmedContent = content.trim().toLowerCase();
+    if (trimmedContent === '@aluchop') {
       onAluChop();
       playAluChopSound();
+      return;
+    }
+
+    if (trimmedContent === '@hakkan') {
+      onHakkanLove();
+      playLoveSound();
       return;
     }
 
@@ -164,3 +173,5 @@ export default function Chat({
     </div>
   );
 }
+
+    

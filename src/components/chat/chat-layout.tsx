@@ -43,6 +43,7 @@ import { getAiResponse, getDailyAluism } from '@/lib/actions';
 import { Skeleton } from '../ui/skeleton';
 import { cn } from '@/lib/utils';
 import { EasterEgg } from './easter-egg';
+import { LoveEasterEgg } from './love-easter-egg';
 
 
 function getInitials(name: string | null | undefined) {
@@ -84,11 +85,20 @@ function ChatLayoutContent() {
   const [isAluismLoading, setIsAluismLoading] = useState(true);
   const [isOnline, setIsOnline] = useState(true);
   const [isAluChopActive, setIsAluChopActive] = useState(false);
+  const [isHakkanLoveActive, setIsHakkanLoveActive] = useState(false);
+
 
   const triggerAluChop = () => {
     setIsAluChopActive(true);
     setTimeout(() => {
       setIsAluChopActive(false);
+    }, 5000);
+  };
+  
+  const triggerHakkanLove = () => {
+    setIsHakkanLoveActive(true);
+    setTimeout(() => {
+      setIsHakkanLoveActive(false);
     }, 5000);
   };
 
@@ -413,6 +423,7 @@ function ChatLayoutContent() {
                 isSwitching={isSwitching}
                 systemMessage={systemMessage}
                 onAluChop={triggerAluChop}
+                onHakkanLove={triggerHakkanLove}
                 />
         </main>
       </div>
@@ -442,6 +453,7 @@ function ChatLayoutContent() {
         onNext={handleTutorialNext}
       />
       <EasterEgg isActive={isAluChopActive} />
+      <LoveEasterEgg isActive={isHakkanLoveActive} />
     </>
   );
 }
@@ -454,3 +466,5 @@ export function ChatLayout() {
     </SidebarProvider>
   )
 }
+
+    

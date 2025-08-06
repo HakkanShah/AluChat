@@ -226,6 +226,10 @@
   .animate-logo-pop {
     animation: logo-pop 1s ease-in-out forwards;
   }
+  
+  .animate-emoji-pop {
+    animation: emoji-pop 1s ease-in-out forwards;
+  }
 
   @keyframes logo-pop {
     0% {
@@ -241,4 +245,21 @@
       transform: scale(0.8);
     }
   }
+  
+  @keyframes emoji-pop {
+    0% {
+      opacity: 0;
+      transform: scale(0.5) rotate(0deg);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1) rotate(15deg);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.8) rotate(-15deg);
+    }
+  }
 }
+
+    

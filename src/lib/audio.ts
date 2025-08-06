@@ -16,6 +16,10 @@ const getAudioContext = (): AudioContext | null => {
                 return null;
             }
         }
+        // Ensure the context is resumed if it was suspended
+        if (audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
         return audioContext;
     }
     return null;
@@ -114,3 +118,39 @@ export const playAluChopSound = () => {
     }, 4800); // Stop slightly before the visual animation ends
 };
 
+export const playLoveSound = () => {
+    const context = getAudioContext();
+    if (!context) return;
+
+    if (context.state === 'suspended') {
+        context.resume();
+    }
+
+    const playSparkle = () => {
+        const oscillator = context.createOscillator();
+        const gainNode = context.createGain();
+        const now = context.currentTime;
+
+        oscillator.type = 'triangle'; // Gives a "brighter" sound
+        const randomPitch = 800 + Math.random() * 400; // High pitch for a "sparkle"
+        oscillator.frequency.setValueAtTime(randomPitch, now);
+        
+        gainNode.gain.setValueAtTime(0.1, now);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+        oscillator.connect(gainNode);
+        gainNode.connect(context.destination);
+
+        oscillator.start(now);
+        oscillator.stop(now + 0.2);
+    };
+
+    const intervalId = setInterval(playSparkle, 130 + Math.random() * 90);
+
+    // Stop after 5 seconds
+    setTimeout(() => {
+        clearInterval(intervalId);
+    }, 4800);
+}
+
+    
