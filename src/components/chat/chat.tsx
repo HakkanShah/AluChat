@@ -81,7 +81,7 @@ export default function Chat({
 
   const handleSendMessage = async (content: string) => {
     const trimmedContent = content.trim().toLowerCase();
-    if (trimmedContent === '@aluchop') {
+    if (trimmedContent === '@aluchat') {
       onAluChop();
       playAluChopSound();
       return;
@@ -173,5 +173,3 @@ export default function Chat({
     </div>
   );
 }
-
-    
