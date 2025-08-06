@@ -224,7 +224,7 @@
   }
 
   .animate-logo-pop {
-    animation: logo-pop 3s ease-in-out forwards;
+    animation: logo-pop 1s ease-in-out forwards;
   }
 
   @keyframes logo-pop {
@@ -232,8 +232,8 @@
       opacity: 0;
       transform: scale(0.5);
     }
-    20%, 60% {
-      opacity: 0.9;
+    50% {
+      opacity: 1;
       transform: scale(1);
     }
     100% {

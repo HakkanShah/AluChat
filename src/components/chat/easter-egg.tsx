@@ -8,24 +8,28 @@ interface EasterEggProps {
   isActive: boolean;
 }
 
-const LOGO_COUNT = 30; // Number of logos to display
-
 export function EasterEgg({ isActive }: EasterEggProps) {
   const [logos, setLogos] = useState<React.ReactNode[]>([]);
 
   useEffect(() => {
+    let intervalId: NodeJS.Timeout | null = null;
+
     if (isActive) {
-      const newLogos = Array.from({ length: LOGO_COUNT }).map((_, i) => {
+      // Clear any existing logos before starting a new animation
+      setLogos([]); 
+      
+      let key = 0;
+      intervalId = setInterval(() => {
         const style = {
           left: `${Math.random() * 100}vw`,
           top: `${Math.random() * 100}vh`,
-          animationDuration: `${Math.random() * 2 + 1}s`, // 1-3 seconds
-          animationDelay: `${Math.random() * 0.5}s`, // 0-0.5 seconds delay
+          animationDuration: `1s`, // Quick pop animation
           transform: `scale(${Math.random() * 0.5 + 0.5})`, // 0.5x to 1x size
         };
-        return (
+
+        const newLogo = (
           <Image
-            key={i}
+            key={key}
             src="/images/aluchat_icon.png"
             alt="AluChat Logo"
             width={80}
@@ -34,16 +38,30 @@ export function EasterEgg({ isActive }: EasterEggProps) {
             style={style}
           />
         );
-      });
-      setLogos(newLogos);
+        
+        setLogos(prev => [...prev, newLogo]);
+        key++;
+
+      }, 150); // Add a new logo every 150ms
+
+      // Stop creating logos after ~4.8 seconds
+      setTimeout(() => {
+        if (intervalId) clearInterval(intervalId);
+      }, 4800);
+
     } else {
-      // Clear logos when not active
-      const timer = setTimeout(() => setLogos([]), 3000); // Allow fade-out animation to complete
-      return () => clearTimeout(timer);
+        // When not active, clear out the logos after the animation finishes
+        const timer = setTimeout(() => setLogos([]), 1000);
+        return () => clearTimeout(timer);
     }
+    
+    return () => {
+        if (intervalId) clearInterval(intervalId);
+    };
   }, [isActive]);
 
-  if (!isActive && logos.length === 0) {
+
+  if (logos.length === 0) {
     return null;
   }
 
