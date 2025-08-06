@@ -9,7 +9,7 @@ import { getAiResponse } from '@/lib/actions';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Avatar } from '../ui/avatar';
-import { playReceiveSound, playSendSound } from '@/lib/audio';
+import { playReceiveSound, playSendSound, playAluChopSound } from '@/lib/audio';
 
 
 const vibeCheckMessages = [
@@ -80,7 +80,7 @@ export default function Chat({
   const handleSendMessage = async (content: string) => {
     if (content.trim().toLowerCase() === '@aluchop') {
       onAluChop();
-      playSendSound();
+      playAluChopSound();
       return;
     }
 

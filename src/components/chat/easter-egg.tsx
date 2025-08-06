@@ -19,8 +19,8 @@ export function EasterEgg({ isActive }: EasterEggProps) {
         const style = {
           left: `${Math.random() * 100}vw`,
           top: `${Math.random() * 100}vh`,
-          animationDuration: `${Math.random() * 3 + 4}s`, // 4-7 seconds
-          animationDelay: `${Math.random() * 2}s`, // 0-2 seconds delay
+          animationDuration: `${Math.random() * 2 + 1}s`, // 1-3 seconds
+          animationDelay: `${Math.random() * 0.5}s`, // 0-0.5 seconds delay
           transform: `scale(${Math.random() * 0.5 + 0.5})`, // 0.5x to 1x size
         };
         return (
@@ -30,7 +30,7 @@ export function EasterEgg({ isActive }: EasterEggProps) {
             alt="AluChat Logo"
             width={80}
             height={80}
-            className="absolute rounded-full opacity-0 animate-logo-rain pointer-events-none"
+            className="absolute rounded-full opacity-0 animate-logo-pop pointer-events-none"
             style={style}
           />
         );
@@ -38,7 +38,7 @@ export function EasterEgg({ isActive }: EasterEggProps) {
       setLogos(newLogos);
     } else {
       // Clear logos when not active
-      const timer = setTimeout(() => setLogos([]), 500); // Allow fade-out animation
+      const timer = setTimeout(() => setLogos([]), 3000); // Allow fade-out animation to complete
       return () => clearTimeout(timer);
     }
   }, [isActive]);
@@ -49,7 +49,7 @@ export function EasterEgg({ isActive }: EasterEggProps) {
 
   return (
     <div
-      className={`fixed inset-0 z-50 overflow-hidden transition-opacity duration-500 ${
+      className={`fixed inset-0 z-50 overflow-hidden transition-opacity duration-500 pointer-events-none ${
         isActive ? 'opacity-100' : 'opacity-0'
       }`}
     >

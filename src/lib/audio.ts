@@ -75,3 +75,32 @@ export const playReceiveSound = () => {
     oscillator.start();
     oscillator.stop(context.currentTime + 0.25);
 };
+
+
+// Function to play the easter egg "pop" sound
+export const playAluChopSound = () => {
+    const context = getAudioContext();
+    if (!context) return;
+
+    if (context.state === 'suspended') {
+        context.resume();
+    }
+
+    const oscillator = context.createOscillator();
+    const gainNode = context.createGain();
+    const now = context.currentTime;
+
+    oscillator.type = 'sine';
+    // A quick pitch drop to create a "boop" or "pop" sound
+    oscillator.frequency.setValueAtTime(350, now);
+    oscillator.frequency.exponentialRampToValueAtTime(100, now + 0.1);
+
+    gainNode.gain.setValueAtTime(0.3, now);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+    oscillator.connect(gainNode);
+    gainNode.connect(context.destination);
+
+    oscillator.start(now);
+    oscillator.stop(now + 0.2);
+};
