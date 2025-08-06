@@ -36,13 +36,16 @@ const DEV_INFO = {
 // Pre-format parts to avoid nested template literal gotchas
 const DEV_SKILLS = DEV_INFO.skills.join(', ');
 const DEV_PROJECT_LINES = DEV_INFO.projects
-  .map((p) => `  • ${p.name}${p.link ? ' — ' + p.link : ''}`)
+  .map((p) =>
+    `  • ${p.link ? `[${p.name}](${p.link})` : p.name}`
+  )
   .join('\n');
+
 const DEV_CONTACT_BLOCK = [
-  `  • Email: ${DEV_INFO.contact.email}`,
-  `  • GitHub: ${DEV_INFO.contact.github}`,
-  `  • LinkedIn: ${DEV_INFO.contact.linkedin}`,
-  `  • Portfolio: ${DEV_INFO.contact.portfolio}`,
+  `  • Email: [${DEV_INFO.contact.email}](mailto:${DEV_INFO.contact.email})`,
+  `  • GitHub: [GitHub](${DEV_INFO.contact.github})`,
+  `  • LinkedIn: [LinkedIn](${DEV_INFO.contact.linkedin})`,
+  `  • Portfolio: [Portfolio](${DEV_INFO.contact.portfolio})`,
 ].join('\n');
 
 // Schemas
