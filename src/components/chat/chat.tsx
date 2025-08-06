@@ -118,8 +118,8 @@ export default function Chat({
     } catch (error) {
       console.error('Error getting AI response:', error);
       toast({
-        title: 'Uh oh! Something went wrong.',
-        description: "There was a problem with your request. Please try again.",
+        title: 'Oops! API ka fuse udd gaya ⚡',
+        description: "Hakkan is fixing it… You’ll be able to use AluChat very soon 🚀",
         variant: 'destructive',
         className: 'font-mono text-accent-foreground border-accent',
       })
