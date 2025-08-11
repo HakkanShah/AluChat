@@ -4,6 +4,7 @@
  * 
  * - getDeveloperInfo - A tool that returns a structured object with Hakkan's professional and personal details.
  */
+
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
