@@ -3,8 +3,7 @@
 **AluChat** is a **dual-personality AI chatbot** built with **Next.js** and **Google Gemini**.  
 Like a potato (*alu*) that can adapt to any dish, AluChat lets you chat in two distinct moods — **Sweet Mode** 😇 and **Savage Mode** 😈 — giving you a fresh and fun conversation experience every time.  
 
-[![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org/)  
-[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)  
+[![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org/)[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)  
 [![Google Gemini](https://img.shields.io/badge/Google%20Gemini-AI-blueviolet?logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)  
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)  
 ---
