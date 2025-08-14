@@ -71,6 +71,6 @@ GEMINI_API_KEY="YOUR_API_KEY"
 # Start the development server
 npm run dev
 ```
-## Author: @HakkanShah[https://www.github.com/HakkanShah]
+## Author: [@HakkanShah](https://www.github.com/HakkanShah)
 
 
