@@ -22,13 +22,13 @@ const DEV_INFO = {
   projects: [
     { name: 'AluChat', link: 'https://aluchat.netlify.app/' },
     { name: 'MemeMate', link: 'https://mememate.netlify.app/' },
-    { name: 'BuildMyCV', link: '' },
+    { name: 'BuildMyCV', link: 'cvbanao.netlify.app' },
   ],
   contact: {
-    email: 'hakkan@example.com',
+    email: 'hakkanparbej@gmail.com',
     github: 'https://github.com/HakkanShah',
     linkedin: 'https://www.linkedin.com/in/hakkan/',
-    portfolio: 'https://your-portfolio.example.com/',
+    portfolio: 'https://hakkan.netlify.app/',
   },
 } as const;
 // --------------------------------------------------------
