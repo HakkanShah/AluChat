@@ -19,13 +19,13 @@ const MessageSchema = z.object({
 });
 
 const NormalChatInputSchema = z.object({
-  history: z.array(MessageSchema).describe('Conversation history'),
-  message: z.string().describe('The user\'s message'),
+  history: z.array(MessageSchema).describe("Conversation history"),
+  message: z.string().describe("The user's message"),
 });
 export type NormalChatInput = z.infer<typeof NormalChatInputSchema>;
 
 const NormalChatOutputSchema = z.object({
-  response: z.string().describe('AI's friendly and helpful response'),
+  response: z.string().describe("AI's friendly and helpful response"),
 });
 export type NormalChatOutput = z.infer<typeof NormalChatOutputSchema>;
 
