@@ -22,7 +22,7 @@ const DEV_INFO = {
   projects: [
     { name: 'AluChat', link: 'https://aluchat.netlify.app/' },
     { name: 'MemeMate', link: 'https://mememate.netlify.app/' },
-    { name: 'BuildMyCV', link: 'cvbanao.netlify.app' },
+    { name: 'BuildMyCV', link: 'https://cvbanao.netlify.app' },
   ],
   contact: {
     email: 'hakkanparbej@gmail.com',
