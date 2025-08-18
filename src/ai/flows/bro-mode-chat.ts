@@ -4,12 +4,11 @@ import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import { Message } from 'genkit/experimental/ai';
 
-// ---------- Inline Developer Info (EDIT THESE) ----------
+// ---------- Inline Developer Info ----------
 const DEV_INFO = {
   name: 'Hakkan Parbej Shah',
-  alias: 'Hakkan',
+  aka: 'Hakkan',
   title: 'Creative Developer & Meme Master',
-  bio: 'Full-stack web dev who ships fast, breaks limits, and sprinkles memes.',
   skills: [
     'MERN stack',
     'Next.js',
