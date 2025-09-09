@@ -461,7 +461,6 @@ function ChatLayoutContent() {
   );
 }
 
-
 export function ChatLayout() {
   return (
     <SidebarProvider>
