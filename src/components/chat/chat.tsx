@@ -13,6 +13,7 @@ import { playReceiveSound, playSendSound, playAluChopSound, playLoveSound } from
 
 
 const vibeCheckMessages = [
+  "Ruko zara sabar karo...",
   "Checking if you're down bad...",
   "Manifesting the right response ✨",
   "Assembling the memes...",
