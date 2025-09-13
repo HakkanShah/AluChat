@@ -62,6 +62,7 @@ const sweetModeMessages = [
 ];
 
 const savageModeMessages = [
+  "Aaja tujhe roast karun 🌝"
   "Savage Mode Activated! 😈",
   "Alright, let's turn up the heat 🔥",
   "The gloves are off. Let's go 💀",
